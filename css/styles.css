@@ -1204,6 +1204,21 @@ a.proof-card:hover {
   font-size: 0.75rem;
 }
 
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.1rem;
+  font-size: 0.82rem;
+}
+
+.footer-links a {
+  color: var(--accent);
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
 /* Mobile nav open state */
 body.nav-open {
   overflow: hidden;
