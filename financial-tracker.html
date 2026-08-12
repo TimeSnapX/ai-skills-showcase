@@ -1,0 +1,2438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Financial Tracker UI Showcase — Demo Data</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --surface2: #243044;
+      --border: #2d3a4f;
+      --text: #e8eef6;
+      --muted: #8b9bb4;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --green: #22c55e;
+      --red: #ef4444;
+      --amber: #f59e0b;
+      --purple: #a78bfa;
+      --cyan: #22d3ee;
+      --radius: 12px;
+      --shadow: 0 4px 24px rgba(0,0,0,.35);
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.45;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1a2332 0%, #0f172a 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(8px);
+    }
+
+    .header-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    header h1 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    header .sub {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 0.15rem;
+    }
+
+    .header-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text);
+      padding: 0.5rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s, border-color .15s, transform .1s;
+    }
+
+    .btn:hover { background: #2e3d56; border-color: #3d4f6a; }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+    .btn-danger {
+      background: transparent;
+      border-color: #7f1d1d;
+      color: #fca5a5;
+    }
+    .btn-danger:hover { background: #7f1d1d33; }
+    .btn-sm { padding: 0.3rem 0.55rem; font-size: 0.78rem; }
+    .btn-icon {
+      width: 2rem;
+      height: 2rem;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+    }
+
+    .save-status {
+      font-size: 0.78rem;
+      color: var(--muted);
+      min-width: 7rem;
+    }
+    .save-status.saved { color: var(--green); }
+    .save-status.dirty { color: var(--amber); }
+
+    main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 1.25rem 1.5rem 3rem;
+    }
+
+    /* Snapshot cards */
+    .snapshot {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-metric {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.1rem;
+      box-shadow: var(--shadow);
+    }
+
+    .card-metric .label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .card-metric .value {
+      font-size: 1.35rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .card-metric .note {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+
+    .value.neg { color: var(--red); }
+    .value.pos { color: var(--green); }
+    .value.amber { color: var(--amber); }
+    .value.cyan { color: var(--cyan); }
+    .value.purple { color: var(--purple); }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
+    }
+
+    .tab {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      padding: 0.55rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: color .15s, background .15s;
+    }
+
+    .tab:hover { color: var(--text); background: var(--surface); }
+    .tab.active {
+      color: #fff;
+      background: var(--accent);
+    }
+
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .section-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin: 1.25rem 0 0.75rem;
+    }
+
+    .section-head h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .section-head .subtotal {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .section-head .subtotal strong {
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .table-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow-x: auto;
+      box-shadow: var(--shadow);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+
+    th {
+      text-align: left;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      padding: 0.75rem 0.85rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface2);
+      white-space: nowrap;
+      position: sticky;
+      top: 0;
+    }
+
+    td {
+      padding: 0.35rem 0.5rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(59, 130, 246, 0.04); }
+
+    .drag-cell {
+      width: 2rem;
+      text-align: center;
+      vertical-align: middle;
+      user-select: none;
+    }
+
+    .drag-handle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.6rem;
+      height: 1.6rem;
+      border-radius: 6px;
+      color: var(--muted);
+      cursor: grab;
+      font-size: 1rem;
+      line-height: 1;
+      letter-spacing: -0.08em;
+      user-select: none;
+      touch-action: none;
+    }
+
+    .drag-handle:hover {
+      color: var(--text);
+      background: var(--surface2);
+    }
+
+    .drag-handle:active { cursor: grabbing; }
+
+    tr.dragging {
+      opacity: 0.45;
+    }
+
+    tr.dragging td {
+      background: rgba(59, 130, 246, 0.08) !important;
+    }
+
+    tr.drag-over-above td {
+      box-shadow: inset 0 2px 0 0 var(--accent);
+    }
+
+    tr.drag-over-below td {
+      box-shadow: inset 0 -2px 0 0 var(--accent);
+    }
+
+    tbody.drag-active tr:not(.dragging):hover td {
+      background: transparent;
+    }
+
+    tfoot td {
+      background: var(--surface2);
+      font-weight: 700;
+      border-top: 1px solid var(--border);
+      padding: 0.75rem 0.85rem;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 6px;
+      padding: 0.4rem 0.55rem;
+      font-size: 0.875rem;
+      font-family: inherit;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+    }
+
+    input[type="number"] {
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+    }
+
+    .money-cell { min-width: 6.5rem; }
+    .freq-cell { min-width: 7.5rem; }
+    .name-cell { min-width: 9rem; }
+    .notes-cell { min-width: 10rem; }
+    .actions-cell {
+      width: 2.5rem;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.15rem 0.45rem;
+      border-radius: 999px;
+      background: var(--surface2);
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .badge.bank { color: #93c5fd; border-color: #1e40af; background: #1e3a5f; }
+    .badge.bnpl { color: #fcd34d; border-color: #92400e; background: #422006; }
+    .badge.loan { color: #c4b5fd; border-color: #5b21b6; background: #2e1065; }
+    .badge.fine { color: #fca5a5; border-color: #991b1b; background: #450a0a; }
+    .badge.bill { color: #6ee7b7; border-color: #065f46; background: #064e3b; }
+    .badge.living { color: #fda4af; border-color: #9f1239; background: #4c0519; }
+    .badge.income { color: #67e8f9; border-color: #155e75; background: #083344; }
+
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 2rem;
+      font-size: 0.9rem;
+    }
+
+    .income-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    @media (max-width: 800px) {
+      .income-grid { grid-template-columns: 1fr; }
+    }
+
+    .form-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
+    }
+
+    .form-card h3 {
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      color: var(--cyan);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .form-row.full { grid-template-columns: 1fr; }
+
+    .field label {
+      display: block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .hint {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.75rem;
+      line-height: 1.5;
+    }
+
+    .cashflow-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      margin-top: 0.5rem;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 9rem 1fr 5.5rem;
+      gap: 0.75rem;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+
+    .bar-track {
+      height: 0.65rem;
+      background: var(--bg);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width .35s ease;
+    }
+
+    .bar-fill.income { background: var(--cyan); }
+    .bar-fill.debt { background: var(--purple); }
+    .bar-fill.bills { background: var(--green); }
+    .bar-fill.living { background: var(--amber); }
+    .bar-fill.out { background: var(--red); }
+
+    .bar-amt {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      font-weight: 600;
+    }
+
+    footer {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.5rem 2rem;
+      color: var(--muted);
+      font-size: 0.75rem;
+      line-height: 1.5;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.75rem 1.1rem;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      font-size: 0.875rem;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity .2s, transform .2s;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .group-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      padding: 0.65rem 0.85rem 0.35rem;
+      background: rgba(0,0,0,.2);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .print-only { display: none; }
+
+    /* Next week ahead */
+    .week-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .week-days {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .day-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.85rem 0.95rem;
+      box-shadow: var(--shadow);
+      min-height: 8rem;
+    }
+
+    .day-card.today {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent), var(--shadow);
+    }
+
+    .day-card.has-due {
+      border-color: #3d4f6a;
+    }
+
+    .day-card .day-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.55rem;
+      gap: 0.5rem;
+    }
+
+    .day-card .day-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .day-card .day-date {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .day-card .day-total {
+      font-size: 0.8rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: var(--amber);
+    }
+
+    .day-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.35rem 0.5rem;
+      padding: 0.4rem 0;
+      border-top: 1px solid var(--border);
+      font-size: 0.82rem;
+    }
+
+    .day-item:first-of-type { border-top: none; }
+
+    .day-item .item-name {
+      font-weight: 600;
+    }
+
+    .day-item .item-meta {
+      grid-column: 1 / -1;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .day-item .item-amt {
+      font-variant-numeric: tabular-nums;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .day-empty {
+      color: var(--muted);
+      font-size: 0.8rem;
+      padding: 0.35rem 0;
+    }
+
+    .kind-pill {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.1rem 0.4rem;
+      border-radius: 999px;
+      margin-right: 0.3rem;
+      vertical-align: middle;
+    }
+
+    .kind-pill.debt {
+      background: #2e1065;
+      color: #c4b5fd;
+      border: 1px solid #5b21b6;
+    }
+
+    .kind-pill.bill {
+      background: #064e3b;
+      color: #6ee7b7;
+      border: 1px solid #065f46;
+    }
+
+    .kind-pill.fine {
+      background: #450a0a;
+      color: #fca5a5;
+      border: 1px solid #991b1b;
+    }
+
+    .sched-cell { min-width: 11rem; }
+    .sched-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .sched-wrap select,
+    .sched-wrap input {
+      font-size: 0.8rem;
+    }
+
+    .week-list-wrap {
+      margin-top: 1.25rem;
+    }
+
+    .week-list-wrap h3 {
+      font-size: 0.95rem;
+      margin-bottom: 0.6rem;
+    }
+
+    /* ——— Print / Save as PDF: show every tab ——— */
+    @media print {
+      @page {
+        size: A4;
+        margin: 12mm 10mm;
+      }
+
+      :root {
+        --bg: #ffffff;
+        --surface: #ffffff;
+        --surface2: #f3f4f6;
+        --border: #d1d5db;
+        --text: #111827;
+        --muted: #4b5563;
+        --accent: #1d4ed8;
+        --green: #15803d;
+        --red: #b91c1c;
+        --amber: #b45309;
+        --purple: #6d28d9;
+        --cyan: #0e7490;
+        --shadow: none;
+      }
+
+      html, body {
+        background: #fff !important;
+        color: #111827 !important;
+        min-height: auto;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .no-print,
+      .tabs,
+      .header-actions,
+      .toast,
+      .actions-cell,
+      .drag-cell,
+      .btn,
+      button {
+        display: none !important;
+      }
+
+      .print-only { display: block !important; }
+
+      header {
+        position: static;
+        background: none !important;
+        border-bottom: 2px solid #111827;
+        padding: 0 0 0.75rem;
+        margin-bottom: 0.75rem;
+      }
+
+      header h1 {
+        color: #111827 !important;
+        font-size: 1.2rem;
+      }
+
+      header .sub {
+        color: #4b5563 !important;
+      }
+
+      main {
+        max-width: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      footer {
+        max-width: none;
+        padding: 0.75rem 0 0;
+        margin-top: 0.75rem;
+        border-top: 1px solid #d1d5db;
+        color: #6b7280 !important;
+      }
+
+      .snapshot {
+        break-inside: avoid;
+        margin-bottom: 1rem;
+        gap: 0.5rem;
+      }
+
+      .card-metric {
+        box-shadow: none;
+        border: 1px solid #d1d5db;
+        background: #f9fafb !important;
+        padding: 0.55rem 0.7rem;
+      }
+
+      .card-metric .value {
+        font-size: 1.05rem;
+        color: #111827 !important;
+      }
+
+      .value.neg { color: #b91c1c !important; }
+      .value.pos { color: #15803d !important; }
+      .value.amber { color: #b45309 !important; }
+      .value.cyan { color: #0e7490 !important; }
+      .value.purple { color: #6d28d9 !important; }
+
+      /* Force every tab panel visible */
+      .panel {
+        display: block !important;
+        break-inside: avoid;
+        page-break-inside: avoid;
+        margin-bottom: 1.1rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .panel:last-of-type {
+        border-bottom: none;
+      }
+
+      .section-head {
+        margin: 0.5rem 0 0.4rem;
+      }
+
+      .section-head h2 {
+        color: #111827 !important;
+        font-size: 1rem;
+      }
+
+      .section-head .subtotal {
+        color: #4b5563 !important;
+      }
+
+      .section-head .subtotal strong {
+        color: #111827 !important;
+      }
+
+      .table-wrap {
+        box-shadow: none;
+        border: 1px solid #d1d5db;
+        overflow: visible;
+        background: #fff !important;
+      }
+
+      table {
+        min-width: 0 !important;
+        width: 100%;
+        font-size: 0.78rem;
+      }
+
+      th {
+        background: #f3f4f6 !important;
+        color: #374151 !important;
+        padding: 0.4rem 0.45rem;
+        border-bottom: 1px solid #d1d5db;
+      }
+
+      td {
+        padding: 0.2rem 0.25rem;
+        border-bottom: 1px solid #e5e7eb;
+        background: #fff !important;
+      }
+
+      tr:hover td { background: #fff !important; }
+
+      tfoot td {
+        background: #f3f4f6 !important;
+        color: #111827 !important;
+      }
+
+      /* Form controls → clean printed values */
+      input, select, textarea {
+        border: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        color: #111827 !important;
+        padding: 0.15rem 0.2rem !important;
+        font-size: 0.78rem !important;
+        border-radius: 0;
+        -webkit-appearance: none;
+        appearance: none;
+      }
+
+      input[type="number"] {
+        text-align: right;
+      }
+
+      textarea {
+        resize: none;
+        overflow: visible !important;
+        height: auto !important;
+      }
+
+      .form-card {
+        box-shadow: none;
+        border: 1px solid #d1d5db;
+        background: #fff !important;
+        break-inside: avoid;
+      }
+
+      .form-card h3 {
+        color: #0e7490 !important;
+      }
+
+      .field label {
+        color: #6b7280 !important;
+      }
+
+      .hint {
+        color: #6b7280 !important;
+      }
+
+      .income-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+      }
+
+      .bar-track {
+        border: 1px solid #d1d5db;
+        background: #f3f4f6 !important;
+      }
+
+      .bar-fill.income { background: #0891b2 !important; }
+      .bar-fill.debt { background: #7c3aed !important; }
+      .bar-fill.bills { background: #16a34a !important; }
+      .bar-fill.living { background: #d97706 !important; }
+      .bar-fill.out { background: #dc2626 !important; }
+
+      .print-meta {
+        font-size: 0.75rem;
+        color: #6b7280;
+        margin-top: 0.25rem;
+      }
+
+      .day-card {
+        box-shadow: none;
+        border: 1px solid #d1d5db;
+        background: #fff !important;
+        break-inside: avoid;
+        min-height: auto;
+      }
+
+      .day-card.today {
+        border-color: #1d4ed8;
+        box-shadow: none;
+      }
+
+      .week-days {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .kind-pill.debt {
+        background: #ede9fe !important;
+        color: #5b21b6 !important;
+        border-color: #c4b5fd !important;
+      }
+
+      .kind-pill.bill {
+        background: #d1fae5 !important;
+        color: #065f46 !important;
+        border-color: #6ee7b7 !important;
+      }
+
+      .kind-pill.fine {
+        background: #fee2e2 !important;
+        color: #991b1b !important;
+        border-color: #fca5a5 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div>
+        <h1>Financial Position Overview</h1>
+        <div class="sub">UI Showcase · Sample household (mock data) · AUD · Fully interactive demo</div>
+      </div>
+      <div class="header-actions no-print">
+        <span class="save-status" id="saveStatus">Saved</span>
+        <button class="btn btn-primary" type="button" id="btnPrint" title="Print or save as PDF (all sections)">Save PDF / Print</button>
+        <button class="btn" type="button" id="btnExport">Export JSON</button>
+        <button class="btn" type="button" id="btnImport">Import JSON</button>
+        <button class="btn btn-danger" type="button" id="btnReset">Reset demo data</button>
+        <input type="file" id="importFile" accept="application/json,.json" hidden />
+      </div>
+      <div class="print-only print-meta" id="printMeta"></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="snapshot" id="snapshot"></section>
+
+    <nav class="tabs" role="tablist">
+      <button class="tab active" data-tab="week" type="button">Next week</button>
+      <button class="tab" data-tab="debts" type="button">Debts</button>
+      <button class="tab" data-tab="bills" type="button">Bills</button>
+      <button class="tab" data-tab="living" type="button">Living</button>
+      <button class="tab" data-tab="income" type="button">Income</button>
+      <button class="tab" data-tab="cashflow" type="button">Cashflow</button>
+    </nav>
+
+    <!-- NEXT WEEK AHEAD -->
+    <section class="panel active" id="panel-week">
+      <div class="section-head">
+        <h2>Next week ahead</h2>
+        <span class="subtotal" id="weekRangeLabel">Bills &amp; debts due in the next 7 days</span>
+      </div>
+      <div class="week-summary" id="weekSummary"></div>
+      <div class="week-days" id="weekDays"></div>
+      <div class="week-list-wrap form-card" style="margin-top:1.25rem">
+        <h3>All due this week (chronological)</h3>
+        <div class="table-wrap" style="box-shadow:none;margin-top:.5rem">
+          <table style="min-width:560px">
+            <thead>
+              <tr>
+                <th>When</th>
+                <th>What</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody id="weekListBody"></tbody>
+            <tfoot>
+              <tr>
+                <td colspan="3">Week total (bills + debts)</td>
+                <td id="weekListTotal">$0.00</td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <p class="hint" style="margin-top:.85rem">
+          Schedules come from the <strong>Schedule</strong> column on Debts and Bills.
+          Set weekday, day-of-month, a specific date, or fortnightly anchor so this view stays accurate.
+          Items with no schedule are listed under “Unscheduled”.
+        </p>
+      </div>
+    </section>
+
+    <!-- DEBTS -->
+    <section class="panel" id="panel-debts">
+      <div class="section-head">
+        <h2>Debts, loans &amp; fines</h2>
+        <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
+          <span class="subtotal">Balance <strong id="debtBalanceTotal">$0</strong> · Monthly repayments <strong id="debtRepayTotal">$0</strong></span>
+          <button class="btn btn-primary btn-sm" type="button" id="addDebt">+ Add debt</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="drag-cell" title="Drag rows to reorder"></th>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Balance</th>
+              <th>Repayment</th>
+              <th>Frequency</th>
+              <th>Schedule</th>
+              <th>Due / notes</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="debtsBody"></tbody>
+          <tfoot>
+            <tr>
+              <td class="drag-cell"></td>
+              <td colspan="2">Total outstanding</td>
+              <td id="debtFootBalance" class="money-cell">$0.00</td>
+              <td id="debtFootMonthly" class="money-cell">$0.00 <span style="font-weight:500;color:var(--muted);font-size:.75rem">/mo</span></td>
+              <td colspan="4"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <!-- BILLS -->
+    <section class="panel" id="panel-bills">
+      <div class="section-head">
+        <h2>Recurring bills</h2>
+        <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
+          <span class="subtotal">Monthly total <strong id="billsMonthlyTotal">$0</strong></span>
+          <button class="btn btn-primary btn-sm" type="button" id="addBill">+ Add bill</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="drag-cell" title="Drag rows to reorder"></th>
+              <th>Bill</th>
+              <th>Provider</th>
+              <th>Amount</th>
+              <th>Frequency</th>
+              <th>Monthly equiv.</th>
+              <th>Schedule</th>
+              <th>Due / notes</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="billsBody"></tbody>
+          <tfoot>
+            <tr>
+              <td class="drag-cell"></td>
+              <td colspan="4">Total monthly bills</td>
+              <td id="billsFootMonthly">$0.00</td>
+              <td colspan="3"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <!-- LIVING -->
+    <section class="panel" id="panel-living">
+      <div class="section-head">
+        <h2>Living expenses</h2>
+        <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
+          <span class="subtotal">Monthly total <strong id="livingMonthlyTotal">$0</strong></span>
+          <button class="btn btn-primary btn-sm" type="button" id="addLiving">+ Add expense</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="drag-cell" title="Drag rows to reorder"></th>
+              <th>Expense</th>
+              <th>Amount</th>
+              <th>Frequency</th>
+              <th>Monthly equiv.</th>
+              <th>Notes</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="livingBody"></tbody>
+          <tfoot>
+            <tr>
+              <td class="drag-cell"></td>
+              <td colspan="3">Total monthly living</td>
+              <td id="livingFootMonthly">$0.00</td>
+              <td colspan="2"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <!-- INCOME -->
+    <section class="panel" id="panel-income">
+      <div class="section-head">
+        <h2>Income — Sample employer</h2>
+      </div>
+      <div class="income-grid">
+        <div class="form-card">
+          <h3>Pay settings</h3>
+          <div class="form-row">
+            <div class="field">
+              <label for="employer">Employer</label>
+              <input id="employer" type="text" />
+            </div>
+            <div class="field">
+              <label for="payDay">Pay day</label>
+              <input id="payDay" type="text" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="hourlyRate">Hourly rate (AUD)</label>
+              <input id="hourlyRate" type="number" min="0" step="0.01" />
+            </div>
+            <div class="field">
+              <label for="ordinaryHours">Ordinary hours / week</label>
+              <input id="ordinaryHours" type="number" min="0" step="0.5" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="weeklyMid">Planning weekly net (mid-point)</label>
+              <input id="weeklyMid" type="number" min="0" step="0.01" />
+            </div>
+            <div class="field">
+              <label for="weeklyLow">5-day low estimate</label>
+              <input id="weeklyLow" type="number" min="0" step="0.01" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="weeklyHigh">5-day high estimate</label>
+              <input id="weeklyHigh" type="number" min="0" step="0.01" />
+            </div>
+            <div class="field">
+              <label for="sixDayLow">6-day low estimate</label>
+              <input id="sixDayLow" type="number" min="0" step="0.01" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="sixDayHigh">6-day high estimate</label>
+              <input id="sixDayHigh" type="number" min="0" step="0.01" />
+            </div>
+            <div class="field">
+              <label for="otMultiplier">OT multiplier</label>
+              <input id="otMultiplier" type="number" min="1" step="0.1" />
+            </div>
+          </div>
+          <div class="form-row full">
+            <div class="field">
+              <label for="incomeNotes">Notes</label>
+              <textarea id="incomeNotes" rows="3"></textarea>
+            </div>
+          </div>
+          <p class="hint">Monthly net is calculated as weekly mid-point × 52 ÷ 12. Change the weekly mid-point to replan the whole snapshot.</p>
+        </div>
+
+        <div class="form-card">
+          <h3>Derived income</h3>
+          <div class="snapshot" style="margin:0">
+            <div class="card-metric">
+              <div class="label">Monthly net (planning)</div>
+              <div class="value cyan" id="incomeMonthly">$0</div>
+              <div class="note">Weekly mid × 52 ÷ 12</div>
+            </div>
+            <div class="card-metric">
+              <div class="label">Weekly mid-point</div>
+              <div class="value" id="incomeWeekly">$0</div>
+              <div class="note">Used for surplus / shortfall</div>
+            </div>
+            <div class="card-metric">
+              <div class="label">5-day range</div>
+              <div class="value" id="income5Day" style="font-size:1.05rem">—</div>
+              <div class="note">Typical week</div>
+            </div>
+            <div class="card-metric">
+              <div class="label">6-day range</div>
+              <div class="value" id="income6Day" style="font-size:1.05rem">—</div>
+              <div class="note">Extra buffer weeks</div>
+            </div>
+          </div>
+          <p class="hint" id="incomeHint" style="margin-top:1rem"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CASHFLOW -->
+    <section class="panel" id="panel-cashflow">
+      <div class="section-head">
+        <h2>Monthly cashflow summary</h2>
+      </div>
+      <div class="form-card">
+        <div class="cashflow-bars" id="cashflowBars"></div>
+        <p class="hint" id="cashflowHint" style="margin-top:1.25rem"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    UI Showcase demo — fictional sample household only. Not real personal finances.
+    Not financial, legal, or credit advice. Edits stay in this browser’s local storage (demo key).
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const STORAGE_KEY = "financial-tracker-ui-showcase-demo-v1";
+    const FREQ_OPTIONS = ["Daily", "Weekly", "Fortnightly", "Monthly", "Final", "One-off"];
+    const DEBT_CATS = [
+      { value: "bank", label: "Bank / card" },
+      { value: "bnpl", label: "BNPL" },
+      { value: "loan", label: "Small loan" },
+      { value: "fine", label: "Fine" },
+    ];
+    const DUE_TYPES = [
+      { value: "none", label: "Not set" },
+      { value: "weekday", label: "Weekly on…" },
+      { value: "monthday", label: "Monthly on…" },
+      { value: "date", label: "On date…" },
+      { value: "fortnightly", label: "Fortnightly from…" },
+    ];
+    const WEEKDAYS = [
+      { value: "0", label: "Sunday" },
+      { value: "1", label: "Monday" },
+      { value: "2", label: "Tuesday" },
+      { value: "3", label: "Wednesday" },
+      { value: "4", label: "Thursday" },
+      { value: "5", label: "Friday" },
+      { value: "6", label: "Saturday" },
+    ];
+
+    /** Convert payment amount + frequency → monthly equivalent */
+    function toMonthly(amount, frequency) {
+      const a = Number(amount) || 0;
+      switch (frequency) {
+        case "Daily": return a * (365.25 / 12);
+        case "Weekly": return a * (52 / 12);
+        case "Fortnightly": return a * (26 / 12);
+        case "Monthly": return a;
+        case "Final":
+        case "One-off":
+          return 0; // not ongoing
+        default: return a;
+      }
+    }
+
+    function money(n) {
+      const v = Number(n) || 0;
+      const abs = Math.abs(v).toLocaleString("en-AU", {
+        style: "currency",
+        currency: "AUD",
+        minimumFractionDigits: 2,
+      });
+      return v < 0 ? `(${abs})` : abs;
+    }
+
+    function uid() {
+      return "id_" + Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+    }
+
+    function startOfDay(d) {
+      const x = new Date(d);
+      x.setHours(0, 0, 0, 0);
+      return x;
+    }
+
+    function toISODate(d) {
+      const x = startOfDay(d);
+      const y = x.getFullYear();
+      const m = String(x.getMonth() + 1).padStart(2, "0");
+      const day = String(x.getDate()).padStart(2, "0");
+      return `${y}-${m}-${day}`;
+    }
+
+    function parseISODate(s) {
+      if (!s) return null;
+      const m = String(s).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+      if (!m) return null;
+      const d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+      return Number.isNaN(d.getTime()) ? null : startOfDay(d);
+    }
+
+    function daysInMonth(year, monthIndex) {
+      return new Date(year, monthIndex + 1, 0).getDate();
+    }
+
+    function formatDayLabel(d) {
+      return d.toLocaleDateString("en-AU", {
+        weekday: "long",
+        day: "numeric",
+        month: "short",
+      });
+    }
+
+    function formatShortDate(d) {
+      return d.toLocaleDateString("en-AU", {
+        weekday: "short",
+        day: "numeric",
+        month: "short",
+      });
+    }
+
+    /** Ensure schedule fields exist; infer from notes when missing */
+    function ensureSchedule(row) {
+      if (!row.dueType) {
+        const inferred = inferSchedule(row);
+        Object.assign(row, inferred);
+      }
+      if (row.dueWeekday == null) row.dueWeekday = 4;
+      if (row.dueMonthDay == null) row.dueMonthDay = 1;
+      if (row.dueDate == null) row.dueDate = "";
+      if (row.anchorDate == null) row.anchorDate = "";
+      return row;
+    }
+
+    function inferSchedule(row) {
+      const notes = String(row.notes || "");
+      const name = String(row.name || "");
+      const text = `${name} ${notes}`.toLowerCase();
+
+      // Explicit AU dates DD/MM/YYYY
+      const dateMatch = notes.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+      if (dateMatch && (row.frequency === "Final" || row.frequency === "One-off" || /due|final|approx/i.test(notes))) {
+        const dd = dateMatch[1].padStart(2, "0");
+        const mm = dateMatch[2].padStart(2, "0");
+        const yyyy = dateMatch[3];
+        return { dueType: "date", dueDate: `${yyyy}-${mm}-${dd}`, dueWeekday: 4, dueMonthDay: 1, anchorDate: "" };
+      }
+
+      // "3rd each month" / "27th each month" / "31st"
+      const monthDay = notes.match(/\b(\d{1,2})(?:st|nd|rd|th)?\s*(?:each|every)?\s*month/i)
+        || notes.match(/due\s+(\d{1,2})(?:st|nd|rd|th)?/i);
+      if (monthDay && (row.frequency === "Monthly" || /month/i.test(notes))) {
+        return {
+          dueType: "monthday",
+          dueMonthDay: Math.min(31, Math.max(1, Number(monthDay[1]))),
+          dueWeekday: 4,
+          dueDate: "",
+          anchorDate: "",
+        };
+      }
+
+      // Weekdays
+      const wdMap = {
+        sunday: 0, monday: 1, tuesday: 2, wednesday: 3,
+        thursday: 4, friday: 5, saturday: 6,
+      };
+      for (const [word, num] of Object.entries(wdMap)) {
+        if (text.includes(word)) {
+          if (row.frequency === "Fortnightly" || text.includes("fortnight")) {
+            // Prefer a known next date if present
+            let anchor = "";
+            if (dateMatch) {
+              const dd = dateMatch[1].padStart(2, "0");
+              const mm = dateMatch[2].padStart(2, "0");
+              const yyyy = dateMatch[3];
+              anchor = `${yyyy}-${mm}-${dd}`;
+            }
+            return {
+              dueType: "fortnightly",
+              dueWeekday: num,
+              dueMonthDay: 1,
+              dueDate: "",
+              anchorDate: anchor || "",
+            };
+          }
+          return {
+            dueType: "weekday",
+            dueWeekday: num,
+            dueMonthDay: 1,
+            dueDate: "",
+            anchorDate: "",
+          };
+        }
+      }
+
+      // Frequency fallbacks
+      if (row.frequency === "Weekly") {
+        return { dueType: "weekday", dueWeekday: 4, dueMonthDay: 1, dueDate: "", anchorDate: "" };
+      }
+      if (row.frequency === "Fortnightly") {
+        return { dueType: "fortnightly", dueWeekday: 5, dueMonthDay: 1, dueDate: "", anchorDate: "" };
+      }
+      if (row.frequency === "Monthly") {
+        return { dueType: "monthday", dueWeekday: 4, dueMonthDay: 1, dueDate: "", anchorDate: "" };
+      }
+      if (row.frequency === "Daily") {
+        return { dueType: "none", dueWeekday: 4, dueMonthDay: 1, dueDate: "", anchorDate: "" };
+      }
+
+      return { dueType: "none", dueWeekday: 4, dueMonthDay: 1, dueDate: "", anchorDate: "" };
+    }
+
+    /**
+     * Return list of Date objects in [from, to] inclusive where this item is due.
+     */
+    function occurrencesInRange(row, from, to) {
+      ensureSchedule(row);
+      const hits = [];
+      const fromD = startOfDay(from);
+      const toD = startOfDay(to);
+
+      if (row.dueType === "date") {
+        const d = parseISODate(row.dueDate);
+        if (d && d >= fromD && d <= toD) hits.push(d);
+        return hits;
+      }
+
+      if (row.dueType === "weekday") {
+        const wd = Number(row.dueWeekday);
+        for (let t = new Date(fromD); t <= toD; t.setDate(t.getDate() + 1)) {
+          if (t.getDay() === wd) hits.push(startOfDay(t));
+        }
+        return hits;
+      }
+
+      if (row.dueType === "monthday") {
+        const md = Math.min(31, Math.max(1, Number(row.dueMonthDay) || 1));
+        // Check months that the range may span
+        const cursor = new Date(fromD.getFullYear(), fromD.getMonth(), 1);
+        const endMonth = new Date(toD.getFullYear(), toD.getMonth(), 1);
+        while (cursor <= endMonth) {
+          const dim = daysInMonth(cursor.getFullYear(), cursor.getMonth());
+          const day = Math.min(md, dim);
+          const d = startOfDay(new Date(cursor.getFullYear(), cursor.getMonth(), day));
+          if (d >= fromD && d <= toD) hits.push(d);
+          cursor.setMonth(cursor.getMonth() + 1);
+        }
+        return hits;
+      }
+
+      if (row.dueType === "fortnightly") {
+        let anchor = parseISODate(row.anchorDate);
+        if (!anchor) {
+          // Fall back to next matching weekday from fromD as pseudo-anchor
+          const wd = Number(row.dueWeekday);
+          anchor = new Date(fromD);
+          while (anchor.getDay() !== wd) anchor.setDate(anchor.getDate() + 1);
+          anchor = startOfDay(anchor);
+        }
+        // Walk backwards/forwards in 14-day steps to cover range
+        let d = new Date(anchor);
+        // step back until before fromD
+        while (d > fromD) d.setDate(d.getDate() - 14);
+        while (d < fromD) d.setDate(d.getDate() + 14);
+        for (; d <= toD; d.setDate(d.getDate() + 14)) {
+          hits.push(startOfDay(d));
+        }
+        return hits;
+      }
+
+      return hits;
+    }
+
+    function buildWeekAhead() {
+      const today = startOfDay(new Date());
+      const end = new Date(today);
+      end.setDate(end.getDate() + 6);
+
+      const days = [];
+      for (let i = 0; i < 7; i++) {
+        const d = new Date(today);
+        d.setDate(d.getDate() + i);
+        days.push({
+          date: startOfDay(d),
+          iso: toISODate(d),
+          items: [],
+        });
+      }
+      const byIso = Object.fromEntries(days.map((x) => [x.iso, x]));
+
+      const allItems = [];
+      const unscheduled = [];
+
+      const pushItem = (kind, row, amount, dateObj) => {
+        const item = {
+          id: row.id,
+          kind,
+          name: row.name,
+          amount: Number(amount) || 0,
+          date: dateObj,
+          iso: toISODate(dateObj),
+          notes: row.notes || "",
+          category: row.category || "",
+          provider: row.provider || "",
+        };
+        allItems.push(item);
+        if (byIso[item.iso]) byIso[item.iso].items.push(item);
+      };
+
+      // Debts
+      for (const d of data.debts) {
+        ensureSchedule(d);
+        const bal = Number(d.balance) || 0;
+        // Skip cleared debts
+        if (bal <= 0 && d.frequency !== "One-off" && d.frequency !== "Final") continue;
+
+        if (!d.dueType || d.dueType === "none") {
+          unscheduled.push({
+            kind: d.category === "fine" ? "fine" : "debt",
+            name: d.name,
+            amount: Number(d.repayment) || 0,
+            notes: d.notes || "No schedule set",
+            frequency: d.frequency,
+          });
+          continue;
+        }
+
+        const occ = occurrencesInRange(d, today, end);
+        const kind = d.category === "fine" ? "fine" : "debt";
+        for (const od of occ) {
+          // One-off/final: use balance if repayment missing
+          const amt = Number(d.repayment) || bal || 0;
+          pushItem(kind, d, amt, od);
+        }
+      }
+
+      // Bills
+      for (const b of data.bills) {
+        ensureSchedule(b);
+        if (!b.dueType || b.dueType === "none") {
+          unscheduled.push({
+            kind: "bill",
+            name: b.name,
+            amount: Number(b.amount) || 0,
+            notes: b.notes || "No schedule set",
+            frequency: b.frequency,
+          });
+          continue;
+        }
+        const occ = occurrencesInRange(b, today, end);
+        for (const od of occ) {
+          pushItem("bill", b, b.amount, od);
+        }
+      }
+
+      allItems.sort((a, b) => a.iso.localeCompare(b.iso) || a.name.localeCompare(b.name));
+      for (const day of days) {
+        day.items.sort((a, b) => a.name.localeCompare(b.name));
+        day.total = day.items.reduce((s, it) => s + it.amount, 0);
+      }
+
+      const weekTotal = allItems.reduce((s, it) => s + it.amount, 0);
+      const debtTotal = allItems.filter((i) => i.kind === "debt" || i.kind === "fine").reduce((s, it) => s + it.amount, 0);
+      const billTotal = allItems.filter((i) => i.kind === "bill").reduce((s, it) => s + it.amount, 0);
+
+      return { today, end, days, allItems, unscheduled, weekTotal, debtTotal, billTotal };
+    }
+
+    function scheduleCellHtml(row) {
+      ensureSchedule(row);
+      const type = row.dueType || "none";
+      let detail = "";
+      if (type === "weekday") {
+        detail = `<select data-field="dueWeekday">${optionHtml(WEEKDAYS, String(row.dueWeekday))}</select>`;
+      } else if (type === "monthday") {
+        detail = `<input type="number" min="1" max="31" data-field="dueMonthDay" value="${num(row.dueMonthDay)}" title="Day of month" />`;
+      } else if (type === "date") {
+        detail = `<input type="date" data-field="dueDate" value="${esc(row.dueDate || "")}" />`;
+      } else if (type === "fortnightly") {
+        detail = `<input type="date" data-field="anchorDate" value="${esc(row.anchorDate || "")}" title="Anchor / next due date" />
+                  <select data-field="dueWeekday" title="Weekday">${optionHtml(WEEKDAYS, String(row.dueWeekday))}</select>`;
+      }
+      return `
+        <div class="sched-wrap">
+          <select data-field="dueType">${optionHtml(DUE_TYPES, type)}</select>
+          ${detail}
+        </div>`;
+    }
+
+    const DEFAULT_DATA = {
+      meta: {
+        name: "Sample Household (Demo)",
+        asAt: "2026-08-12",
+        currency: "AUD",
+        demo: true,
+      },
+      debts: [
+        { id: uid(), name: "Everyday Credit Card", category: "bank", balance: 4200, repayment: 180, frequency: "Monthly", notes: "Due 5th each month", dueType: "monthday", dueMonthDay: 5, dueWeekday: 4, dueDate: "", anchorDate: "" },
+        { id: uid(), name: "Car Loan", category: "bank", balance: 9800, repayment: 320, frequency: "Monthly", notes: "Due 1st each month", dueType: "monthday", dueMonthDay: 1, dueWeekday: 4, dueDate: "", anchorDate: "" },
+        { id: uid(), name: "Buy Now Pay Later", category: "bnpl", balance: 640, repayment: 80, frequency: "Fortnightly", notes: "Fridays — sample BNPL plan", dueType: "fortnightly", dueWeekday: 5, dueMonthDay: 1, dueDate: "", anchorDate: "2026-08-14" },
+        { id: uid(), name: "Small personal loan", category: "loan", balance: 890, repayment: 45, frequency: "Weekly", notes: "Thursdays until clear", dueType: "weekday", dueWeekday: 4, dueMonthDay: 1, dueDate: "", anchorDate: "" },
+        { id: uid(), name: "Council fine (sample)", category: "fine", balance: 220, repayment: 220, frequency: "One-off", notes: "Due 20/08/2026", dueType: "date", dueWeekday: 4, dueMonthDay: 1, dueDate: "2026-08-20", anchorDate: "" },
+      ],
+      bills: [
+        { id: uid(), name: "Rent", provider: "Sample Landlord", amount: 480, frequency: "Weekly", notes: "Every Thursday", dueType: "weekday", dueWeekday: 4, dueMonthDay: 1, dueDate: "", anchorDate: "" },
+        { id: uid(), name: "Mobile phone", provider: "Demo Telco", amount: 69, frequency: "Monthly", notes: "15th each month", dueType: "monthday", dueMonthDay: 15, dueWeekday: 4, dueDate: "", anchorDate: "" },
+        { id: uid(), name: "Home internet", provider: "Demo NBN", amount: 89, frequency: "Monthly", notes: "15th each month", dueType: "monthday", dueMonthDay: 15, dueWeekday: 4, dueDate: "", anchorDate: "" },
+        { id: uid(), name: "Electricity", provider: "Demo Power Co", amount: 45, frequency: "Weekly", notes: "Weekly (Thursday)", dueType: "weekday", dueWeekday: 4, dueMonthDay: 1, dueDate: "", anchorDate: "" },
+        { id: uid(), name: "Water", provider: "Demo Water", amount: 18, frequency: "Weekly", notes: "Weekly (Thursday)", dueType: "weekday", dueWeekday: 4, dueMonthDay: 1, dueDate: "", anchorDate: "" },
+        { id: uid(), name: "Streaming bundle", provider: "Demo Stream", amount: 32, frequency: "Monthly", notes: "1st each month", dueType: "monthday", dueMonthDay: 1, dueWeekday: 4, dueDate: "", anchorDate: "" },
+      ],
+      living: [
+        { id: uid(), name: "Groceries", amount: 140, frequency: "Weekly", notes: "Household food shop" },
+        { id: uid(), name: "Fuel / transport", amount: 85, frequency: "Weekly", notes: "" },
+        { id: uid(), name: "Health / pharmacy", amount: 35, frequency: "Weekly", notes: "" },
+        { id: uid(), name: "Daily spending money", amount: 20, frequency: "Daily", notes: "$20/day buffer" },
+        { id: uid(), name: "Savings target", amount: 75, frequency: "Weekly", notes: "Pay yourself first" },
+      ],
+      income: {
+        employer: "Sample Logistics Co",
+        payDay: "Thursdays",
+        hourlyRate: 32.5,
+        ordinaryHours: 38,
+        otMultiplier: 1.5,
+        weeklyMid: 1350,
+        weeklyLow: 1280,
+        weeklyHigh: 1420,
+        sixDayLow: 1480,
+        sixDayHigh: 1550,
+        notes: "Demo income only — fictional employer and pay figures for UI showcase.",
+      },
+    };
+
+    let data = null;
+    let dirty = false;
+    let saveTimer = null;
+
+    function deepClone(obj) {
+      return JSON.parse(JSON.stringify(obj));
+    }
+
+    function load() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          data = JSON.parse(raw);
+          ["debts", "bills", "living"].forEach((k) => {
+            (data[k] || []).forEach((row) => {
+              if (!row.id) row.id = uid();
+            });
+          });
+          // Migrate schedule fields for older saves
+          (data.debts || []).forEach(ensureSchedule);
+          (data.bills || []).forEach(ensureSchedule);
+          return;
+        }
+      } catch (e) {
+        console.warn("Could not load saved data", e);
+      }
+      data = deepClone(DEFAULT_DATA);
+      data.debts.forEach((r) => (r.id = uid()));
+      data.bills.forEach((r) => (r.id = uid()));
+      data.living.forEach((r) => (r.id = uid()));
+    }
+
+    function markDirty() {
+      dirty = true;
+      const el = document.getElementById("saveStatus");
+      el.textContent = "Unsaved…";
+      el.className = "save-status dirty";
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(save, 400);
+    }
+
+    function save() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        dirty = false;
+        const el = document.getElementById("saveStatus");
+        el.textContent = "Saved";
+        el.className = "save-status saved";
+      } catch (e) {
+        toast("Save failed — storage may be full");
+      }
+    }
+
+    function toast(msg) {
+      const t = document.getElementById("toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      setTimeout(() => t.classList.remove("show"), 2200);
+    }
+
+    function totals() {
+      const debtBalance = data.debts.reduce((s, d) => s + (Number(d.balance) || 0), 0);
+      const debtMonthly = data.debts.reduce(
+        (s, d) => s + toMonthly(d.repayment, d.frequency),
+        0
+      );
+      const billsMonthly = data.bills.reduce(
+        (s, b) => s + toMonthly(b.amount, b.frequency),
+        0
+      );
+      const livingMonthly = data.living.reduce(
+        (s, e) => s + toMonthly(e.amount, e.frequency),
+        0
+      );
+      const weekly = Number(data.income.weeklyMid) || 0;
+      const incomeMonthly = weekly * 52 / 12;
+      const outgoings = debtMonthly + billsMonthly + livingMonthly;
+      const surplus = incomeMonthly - outgoings;
+      return {
+        debtBalance,
+        debtMonthly,
+        billsMonthly,
+        livingMonthly,
+        incomeMonthly,
+        weekly,
+        outgoings,
+        surplus,
+        weeklyOut: outgoings * 12 / 52,
+        weeklySurplus: surplus * 12 / 52,
+      };
+    }
+
+    function renderSnapshot() {
+      const t = totals();
+      const pct = (part) =>
+        t.incomeMonthly ? ((part / t.incomeMonthly) * 100).toFixed(1) + "%" : "—";
+
+      document.getElementById("snapshot").innerHTML = `
+        <div class="card-metric">
+          <div class="label">Total debt</div>
+          <div class="value amber">${money(t.debtBalance)}</div>
+          <div class="note">All loans, BNPL &amp; fines</div>
+        </div>
+        <div class="card-metric">
+          <div class="label">Debt repayments / mo</div>
+          <div class="value purple">${money(t.debtMonthly)}</div>
+          <div class="note">Ongoing only (excludes finals)</div>
+        </div>
+        <div class="card-metric">
+          <div class="label">Monthly bills</div>
+          <div class="value pos">${money(t.billsMonthly)}</div>
+          <div class="note">Rent, utilities, phone, internet</div>
+        </div>
+        <div class="card-metric">
+          <div class="label">Living expenses / mo</div>
+          <div class="value">${money(t.livingMonthly)}</div>
+          <div class="note">Food, fuel, smokes, allowance, savings</div>
+        </div>
+        <div class="card-metric">
+          <div class="label">Net income / mo</div>
+          <div class="value cyan">${money(t.incomeMonthly)}</div>
+          <div class="note">Mid-point ${money(t.weekly)} / week</div>
+        </div>
+        <div class="card-metric">
+          <div class="label">Surplus / (shortfall)</div>
+          <div class="value ${t.surplus >= 0 ? "pos" : "neg"}">${money(t.surplus)}</div>
+          <div class="note">Weekly ~${money(t.weeklySurplus)} · Outgoings ${pct(t.outgoings)}</div>
+        </div>
+      `;
+    }
+
+    function optionHtml(list, selected) {
+      return list
+        .map((v) => {
+          const val = typeof v === "object" ? v.value : v;
+          const label = typeof v === "object" ? v.label : v;
+          return `<option value="${val}" ${val === selected ? "selected" : ""}>${label}</option>`;
+        })
+        .join("");
+    }
+
+    function dragHandleCell() {
+      return `<td class="drag-cell"><span class="drag-handle" title="Drag to reorder" aria-label="Drag to reorder">⠿</span></td>`;
+    }
+
+    function renderDebts() {
+      const body = document.getElementById("debtsBody");
+      if (!data.debts.length) {
+        body.innerHTML = `<tr><td colspan="9" class="empty">No debts — add one to get started.</td></tr>`;
+      } else {
+        body.innerHTML = data.debts
+          .map(
+            (d) => `
+          <tr data-id="${d.id}">
+            ${dragHandleCell()}
+            <td class="name-cell"><input type="text" data-field="name" value="${esc(d.name)}" /></td>
+            <td>
+              <select data-field="category">${optionHtml(DEBT_CATS, d.category)}</select>
+            </td>
+            <td class="money-cell"><input type="number" min="0" step="0.01" data-field="balance" value="${num(d.balance)}" /></td>
+            <td class="money-cell"><input type="number" min="0" step="0.01" data-field="repayment" value="${num(d.repayment)}" /></td>
+            <td class="freq-cell"><select data-field="frequency">${optionHtml(FREQ_OPTIONS, d.frequency)}</select></td>
+            <td class="sched-cell">${scheduleCellHtml(d)}</td>
+            <td class="notes-cell"><input type="text" data-field="notes" value="${esc(d.notes || "")}" /></td>
+            <td class="actions-cell"><button class="btn btn-icon btn-danger btn-sm" type="button" data-del title="Delete">×</button></td>
+          </tr>`
+          )
+          .join("");
+      }
+
+      const t = totals();
+      document.getElementById("debtBalanceTotal").textContent = money(t.debtBalance);
+      document.getElementById("debtRepayTotal").textContent = money(t.debtMonthly);
+      document.getElementById("debtFootBalance").textContent = money(t.debtBalance);
+      document.getElementById("debtFootMonthly").innerHTML =
+        money(t.debtMonthly) +
+        ` <span style="font-weight:500;color:var(--muted);font-size:.75rem">/mo ongoing</span>`;
+    }
+
+    function renderBills() {
+      const body = document.getElementById("billsBody");
+      if (!data.bills.length) {
+        body.innerHTML = `<tr><td colspan="9" class="empty">No bills yet.</td></tr>`;
+      } else {
+        body.innerHTML = data.bills
+          .map((b) => {
+            const m = toMonthly(b.amount, b.frequency);
+            return `
+          <tr data-id="${b.id}">
+            ${dragHandleCell()}
+            <td class="name-cell"><input type="text" data-field="name" value="${esc(b.name)}" /></td>
+            <td class="name-cell"><input type="text" data-field="provider" value="${esc(b.provider || "")}" /></td>
+            <td class="money-cell"><input type="number" min="0" step="0.01" data-field="amount" value="${num(b.amount)}" /></td>
+            <td class="freq-cell"><select data-field="frequency">${optionHtml(FREQ_OPTIONS, b.frequency)}</select></td>
+            <td class="money-cell" style="padding:.55rem .85rem;font-variant-numeric:tabular-nums">${money(m)}</td>
+            <td class="sched-cell">${scheduleCellHtml(b)}</td>
+            <td class="notes-cell"><input type="text" data-field="notes" value="${esc(b.notes || "")}" /></td>
+            <td class="actions-cell"><button class="btn btn-icon btn-danger btn-sm" type="button" data-del title="Delete">×</button></td>
+          </tr>`;
+          })
+          .join("");
+      }
+      const t = totals();
+      document.getElementById("billsMonthlyTotal").textContent = money(t.billsMonthly);
+      document.getElementById("billsFootMonthly").textContent = money(t.billsMonthly);
+    }
+
+    function kindLabel(kind) {
+      if (kind === "bill") return "Bill";
+      if (kind === "fine") return "Fine";
+      return "Debt";
+    }
+
+    function renderWeekAhead() {
+      const week = buildWeekAhead();
+      const rangeEl = document.getElementById("weekRangeLabel");
+      if (rangeEl) {
+        rangeEl.innerHTML = `${formatShortDate(week.today)} → ${formatShortDate(week.end)} · <strong>${money(week.weekTotal)}</strong> due`;
+      }
+
+      document.getElementById("weekSummary").innerHTML = `
+        <div class="card-metric">
+          <div class="label">Due next 7 days</div>
+          <div class="value amber">${money(week.weekTotal)}</div>
+          <div class="note">${week.allItems.length} payment${week.allItems.length === 1 ? "" : "s"} scheduled</div>
+        </div>
+        <div class="card-metric">
+          <div class="label">Bills this week</div>
+          <div class="value pos">${money(week.billTotal)}</div>
+          <div class="note">Rent, utilities &amp; other bills</div>
+        </div>
+        <div class="card-metric">
+          <div class="label">Debts &amp; fines</div>
+          <div class="value purple">${money(week.debtTotal)}</div>
+          <div class="note">Loans, BNPL, repayments &amp; fines</div>
+        </div>
+        <div class="card-metric">
+          <div class="label">Unscheduled</div>
+          <div class="value">${week.unscheduled.length}</div>
+          <div class="note">Need a Schedule on Debts/Bills</div>
+        </div>
+      `;
+
+      const todayIso = toISODate(week.today);
+      document.getElementById("weekDays").innerHTML = week.days
+        .map((day) => {
+          const isToday = day.iso === todayIso;
+          const itemsHtml = day.items.length
+            ? day.items
+                .map(
+                  (it) => `
+              <div class="day-item">
+                <div class="item-name">
+                  <span class="kind-pill ${it.kind}">${kindLabel(it.kind)}</span>${esc(it.name)}
+                </div>
+                <div class="item-amt">${money(it.amount)}</div>
+                ${it.notes ? `<div class="item-meta">${esc(it.notes)}</div>` : ""}
+              </div>`
+                )
+                .join("")
+            : `<div class="day-empty">Nothing scheduled</div>`;
+
+          return `
+            <div class="day-card ${isToday ? "today" : ""} ${day.items.length ? "has-due" : ""}">
+              <div class="day-head">
+                <div>
+                  <div class="day-name">${isToday ? "Today · " : ""}${day.date.toLocaleDateString("en-AU", { weekday: "long" })}</div>
+                  <div class="day-date">${day.date.toLocaleDateString("en-AU", { day: "numeric", month: "short", year: "numeric" })}</div>
+                </div>
+                <div class="day-total">${day.items.length ? money(day.total) : "—"}</div>
+              </div>
+              ${itemsHtml}
+            </div>`;
+        })
+        .join("");
+
+      const listBody = document.getElementById("weekListBody");
+      let rows = week.allItems
+        .map(
+          (it) => `
+        <tr>
+          <td style="padding:.55rem .85rem;white-space:nowrap">${formatDayLabel(it.date)}</td>
+          <td style="padding:.55rem .85rem">${esc(it.name)}</td>
+          <td style="padding:.55rem .85rem"><span class="kind-pill ${it.kind}">${kindLabel(it.kind)}</span></td>
+          <td style="padding:.55rem .85rem;font-variant-numeric:tabular-nums;font-weight:600">${money(it.amount)}</td>
+          <td style="padding:.55rem .85rem;color:var(--muted);font-size:.82rem">${esc(it.notes || "")}</td>
+        </tr>`
+        )
+        .join("");
+
+      if (week.unscheduled.length) {
+        rows += week.unscheduled
+          .map(
+            (u) => `
+          <tr>
+            <td style="padding:.55rem .85rem;color:var(--muted)">Unscheduled</td>
+            <td style="padding:.55rem .85rem">${esc(u.name)}</td>
+            <td style="padding:.55rem .85rem"><span class="kind-pill ${u.kind}">${kindLabel(u.kind)}</span></td>
+            <td style="padding:.55rem .85rem;font-variant-numeric:tabular-nums">${money(u.amount)}</td>
+            <td style="padding:.55rem .85rem;color:var(--muted);font-size:.82rem">${esc(u.frequency || "")} · set Schedule to include</td>
+          </tr>`
+          )
+          .join("");
+      }
+
+      if (!rows) {
+        rows = `<tr><td colspan="5" class="empty">Nothing due in the next 7 days.</td></tr>`;
+      }
+      listBody.innerHTML = rows;
+      document.getElementById("weekListTotal").textContent = money(week.weekTotal);
+    }
+
+    function renderLiving() {
+      const body = document.getElementById("livingBody");
+      if (!data.living.length) {
+        body.innerHTML = `<tr><td colspan="7" class="empty">No living expenses yet.</td></tr>`;
+      } else {
+        body.innerHTML = data.living
+          .map((e) => {
+            const m = toMonthly(e.amount, e.frequency);
+            return `
+          <tr data-id="${e.id}">
+            ${dragHandleCell()}
+            <td class="name-cell"><input type="text" data-field="name" value="${esc(e.name)}" /></td>
+            <td class="money-cell"><input type="number" min="0" step="0.01" data-field="amount" value="${num(e.amount)}" /></td>
+            <td class="freq-cell"><select data-field="frequency">${optionHtml(FREQ_OPTIONS, e.frequency)}</select></td>
+            <td class="money-cell" style="padding:.55rem .85rem;font-variant-numeric:tabular-nums">${money(m)}</td>
+            <td class="notes-cell"><input type="text" data-field="notes" value="${esc(e.notes || "")}" /></td>
+            <td class="actions-cell"><button class="btn btn-icon btn-danger btn-sm" type="button" data-del title="Delete">×</button></td>
+          </tr>`;
+          })
+          .join("");
+      }
+      const t = totals();
+      document.getElementById("livingMonthlyTotal").textContent = money(t.livingMonthly);
+      document.getElementById("livingFootMonthly").textContent = money(t.livingMonthly);
+    }
+
+    function bindIncomeFields() {
+      const map = {
+        employer: "employer",
+        payDay: "payDay",
+        hourlyRate: "hourlyRate",
+        ordinaryHours: "ordinaryHours",
+        weeklyMid: "weeklyMid",
+        weeklyLow: "weeklyLow",
+        weeklyHigh: "weeklyHigh",
+        sixDayLow: "sixDayLow",
+        sixDayHigh: "sixDayHigh",
+        otMultiplier: "otMultiplier",
+        incomeNotes: "notes",
+      };
+      Object.entries(map).forEach(([elId, key]) => {
+        const el = document.getElementById(elId);
+        const val = data.income[key];
+        el.value = val == null ? "" : val;
+        el.oninput = () => {
+          const isNum = el.type === "number";
+          data.income[key] = isNum ? (el.value === "" ? 0 : Number(el.value)) : el.value;
+          renderIncomeDerived();
+          renderSnapshot();
+          renderCashflow();
+          markDirty();
+        };
+      });
+    }
+
+    function renderIncomeDerived() {
+      const t = totals();
+      const i = data.income;
+      document.getElementById("incomeMonthly").textContent = money(t.incomeMonthly);
+      document.getElementById("incomeWeekly").textContent = money(t.weekly);
+      document.getElementById("income5Day").textContent =
+        `${money(i.weeklyLow)} – ${money(i.weeklyHigh)}`;
+      document.getElementById("income6Day").textContent =
+        `${money(i.sixDayLow)} – ${money(i.sixDayHigh)}`;
+      document.getElementById("incomeHint").textContent =
+        `${i.employer || "Employer"} · Paid ${i.payDay || "—"} · $${Number(i.hourlyRate).toFixed(2)}/hr · ${i.ordinaryHours} ordinary hrs/week · OT ×${i.otMultiplier}`;
+    }
+
+    function renderCashflow() {
+      const t = totals();
+      const max = Math.max(t.incomeMonthly, t.outgoings, 1);
+      const rows = [
+        { label: "Net income", amt: t.incomeMonthly, cls: "income", pct: 100 },
+        { label: "Debt repayments", amt: t.debtMonthly, cls: "debt", pct: t.incomeMonthly ? (t.debtMonthly / t.incomeMonthly) * 100 : 0 },
+        { label: "Bills", amt: t.billsMonthly, cls: "bills", pct: t.incomeMonthly ? (t.billsMonthly / t.incomeMonthly) * 100 : 0 },
+        { label: "Living expenses", amt: t.livingMonthly, cls: "living", pct: t.incomeMonthly ? (t.livingMonthly / t.incomeMonthly) * 100 : 0 },
+        { label: "Total outgoings", amt: t.outgoings, cls: "out", pct: t.incomeMonthly ? (t.outgoings / t.incomeMonthly) * 100 : 0 },
+      ];
+
+      document.getElementById("cashflowBars").innerHTML =
+        rows
+          .map(
+            (r) => `
+          <div class="bar-row">
+            <div>${r.label}</div>
+            <div class="bar-track"><div class="bar-fill ${r.cls}" style="width:${Math.min(100, (r.amt / max) * 100)}%"></div></div>
+            <div class="bar-amt">${money(r.amt)} <span style="color:var(--muted);font-weight:500;font-size:.72rem">${r.pct.toFixed(1)}%</span></div>
+          </div>`
+          )
+          .join("") +
+        `
+        <div class="bar-row" style="margin-top:.5rem;padding-top:.75rem;border-top:1px solid var(--border)">
+          <div style="font-weight:700">Surplus / (shortfall)</div>
+          <div></div>
+          <div class="bar-amt" style="color:${t.surplus >= 0 ? "var(--green)" : "var(--red)"}">${money(t.surplus)}</div>
+        </div>
+        <div class="bar-row">
+          <div style="color:var(--muted)">Weekly view</div>
+          <div style="color:var(--muted);font-size:.85rem">Income ${money(t.weekly)} · Out ${money(t.weeklyOut)}</div>
+          <div class="bar-amt" style="color:${t.weeklySurplus >= 0 ? "var(--green)" : "var(--red)"}">${money(t.weeklySurplus)}</div>
+        </div>`;
+
+      document.getElementById("cashflowHint").textContent =
+        t.surplus >= 0
+          ? "You are in surplus on the planning mid-point. Keep minimum savings protected and roll free cash onto highest-pressure debts."
+          : "Five-day mid-point leaves a shortfall. Six-day weeks improve the buffer; prioritise rent, food, fuel, and debt minimums on tight weeks.";
+    }
+
+    function esc(s) {
+      return String(s ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/"/g, "&quot;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+    }
+
+    function num(n) {
+      if (n == null || n === "") return "";
+      return Number(n);
+    }
+
+    function wireTable(tbodyId, collectionKey) {
+      const body = document.getElementById(tbodyId);
+      body.addEventListener("input", (e) => {
+        const tr = e.target.closest("tr");
+        if (!tr || !tr.dataset.id) return;
+        const field = e.target.dataset.field;
+        if (!field) return;
+        const row = data[collectionKey].find((r) => r.id === tr.dataset.id);
+        if (!row) return;
+        const isNum = e.target.type === "number";
+        const numFields = new Set([
+          "balance", "repayment", "amount", "dueMonthDay", "dueWeekday",
+        ]);
+        const isNumField = e.target.type === "number" || numFields.has(field);
+        row[field] = isNumField
+          ? e.target.value === ""
+            ? 0
+            : Number(e.target.value)
+          : e.target.value;
+        // re-render monthly columns + snapshot without full rebind where possible
+        if (collectionKey === "debts") {
+          const t = totals();
+          document.getElementById("debtBalanceTotal").textContent = money(t.debtBalance);
+          document.getElementById("debtRepayTotal").textContent = money(t.debtMonthly);
+          document.getElementById("debtFootBalance").textContent = money(t.debtBalance);
+          document.getElementById("debtFootMonthly").innerHTML =
+            money(t.debtMonthly) +
+            ` <span style="font-weight:500;color:var(--muted);font-size:.75rem">/mo ongoing</span>`;
+          // Re-render schedule cell when type changes via input (rare)
+          if (field === "dueMonthDay" || field === "dueDate" || field === "anchorDate") {
+            renderWeekAhead();
+          } else {
+            renderWeekAhead();
+          }
+        } else if (collectionKey === "bills") {
+          renderBills();
+          restoreFocus(body, tr.dataset.id, field);
+          renderWeekAhead();
+        } else if (collectionKey === "living") {
+          renderLiving();
+          restoreFocus(body, tr.dataset.id, field);
+        }
+        renderSnapshot();
+        renderCashflow();
+        markDirty();
+      });
+
+      body.addEventListener("change", (e) => {
+        if (e.target.tagName !== "SELECT" && e.target.type !== "date") return;
+        const tr = e.target.closest("tr");
+        if (!tr || !tr.dataset.id) return;
+        const field = e.target.dataset.field;
+        const row = data[collectionKey].find((r) => r.id === tr.dataset.id);
+        if (!row || !field) return;
+        if (field === "dueWeekday" || field === "dueMonthDay") {
+          row[field] = Number(e.target.value);
+        } else {
+          row[field] = e.target.value;
+        }
+        if (collectionKey === "debts") renderDebts();
+        else if (collectionKey === "bills") renderBills();
+        else renderLiving();
+        renderSnapshot();
+        renderCashflow();
+        if (collectionKey === "debts" || collectionKey === "bills") renderWeekAhead();
+        markDirty();
+      });
+
+      body.addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-del]");
+        if (!btn) return;
+        const tr = btn.closest("tr");
+        const id = tr?.dataset.id;
+        if (!id) return;
+        if (!confirm("Delete this row?")) return;
+        data[collectionKey] = data[collectionKey].filter((r) => r.id !== id);
+        fullRender();
+        markDirty();
+        toast("Row deleted");
+      });
+
+      wireRowDrag(body, collectionKey);
+    }
+
+    /** Drag-and-drop reorder via the ⠿ handle (won't fight with inputs) */
+    function wireRowDrag(body, collectionKey) {
+      let dragId = null;
+      let dropPlacement = "before"; // before | after target row
+
+      const clearIndicators = () => {
+        body.querySelectorAll("tr.drag-over-above, tr.drag-over-below, tr.dragging").forEach((tr) => {
+          tr.classList.remove("drag-over-above", "drag-over-below", "dragging");
+        });
+        body.classList.remove("drag-active");
+      };
+
+      // Only enable dragging when the user grabs the handle
+      body.addEventListener("pointerdown", (e) => {
+        const handle = e.target.closest(".drag-handle");
+        if (!handle) return;
+        const tr = handle.closest("tr[data-id]");
+        if (!tr) return;
+        tr.setAttribute("draggable", "true");
+      });
+
+      body.addEventListener("dragstart", (e) => {
+        const tr = e.target.closest("tr[data-id]");
+        if (!tr || tr.getAttribute("draggable") !== "true") {
+          e.preventDefault();
+          return;
+        }
+        // Don't start a drag from form controls
+        if (e.target.closest("input, select, textarea, button")) {
+          e.preventDefault();
+          return;
+        }
+        dragId = tr.dataset.id;
+        tr.classList.add("dragging");
+        body.classList.add("drag-active");
+        e.dataTransfer.effectAllowed = "move";
+        e.dataTransfer.setData("text/plain", dragId);
+        // Slight delay so the drag ghost paints with the dragging class
+        requestAnimationFrame(() => tr.classList.add("dragging"));
+      });
+
+      body.addEventListener("dragend", (e) => {
+        const tr = e.target.closest("tr");
+        if (tr) tr.removeAttribute("draggable");
+        dragId = null;
+        clearIndicators();
+      });
+
+      body.addEventListener("dragover", (e) => {
+        if (!dragId) return;
+        e.preventDefault();
+        e.dataTransfer.dropEffect = "move";
+        const tr = e.target.closest("tr[data-id]");
+        if (!tr || tr.dataset.id === dragId) return;
+
+        const rect = tr.getBoundingClientRect();
+        const before = e.clientY < rect.top + rect.height / 2;
+        dropPlacement = before ? "before" : "after";
+
+        body.querySelectorAll("tr.drag-over-above, tr.drag-over-below").forEach((r) => {
+          r.classList.remove("drag-over-above", "drag-over-below");
+        });
+        tr.classList.add(before ? "drag-over-above" : "drag-over-below");
+      });
+
+      body.addEventListener("dragleave", (e) => {
+        const tr = e.target.closest("tr[data-id]");
+        if (!tr) return;
+        // Only clear if truly leaving the row
+        if (!tr.contains(e.relatedTarget)) {
+          tr.classList.remove("drag-over-above", "drag-over-below");
+        }
+      });
+
+      body.addEventListener("drop", (e) => {
+        e.preventDefault();
+        const targetTr = e.target.closest("tr[data-id]");
+        const fromId = dragId || e.dataTransfer.getData("text/plain");
+        if (!fromId || !targetTr) {
+          clearIndicators();
+          return;
+        }
+        const toId = targetTr.dataset.id;
+        if (fromId === toId) {
+          clearIndicators();
+          return;
+        }
+
+        const list = data[collectionKey];
+        const fromIdx = list.findIndex((r) => r.id === fromId);
+        let toIdx = list.findIndex((r) => r.id === toId);
+        if (fromIdx < 0 || toIdx < 0) {
+          clearIndicators();
+          return;
+        }
+
+        const [item] = list.splice(fromIdx, 1);
+        // Adjust target index after removal
+        if (fromIdx < toIdx) toIdx -= 1;
+        const insertAt = dropPlacement === "after" ? toIdx + 1 : toIdx;
+        list.splice(insertAt, 0, item);
+
+        clearIndicators();
+        if (collectionKey === "debts") renderDebts();
+        else if (collectionKey === "bills") renderBills();
+        else renderLiving();
+        markDirty();
+        toast("Order updated");
+      });
+    }
+
+    function restoreFocus(body, id, field) {
+      requestAnimationFrame(() => {
+        const input = body.querySelector(`tr[data-id="${id}"] [data-field="${field}"]`);
+        if (input) {
+          input.focus();
+          if (input.setSelectionRange && input.type !== "number") {
+            const len = input.value.length;
+            input.setSelectionRange(len, len);
+          }
+        }
+      });
+    }
+
+    function fullRender() {
+      renderSnapshot();
+      renderDebts();
+      renderBills();
+      renderLiving();
+      bindIncomeFields();
+      renderIncomeDerived();
+      renderCashflow();
+      renderWeekAhead();
+    }
+
+    // Tabs
+    document.querySelectorAll(".tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach((t) => t.classList.remove("active"));
+        document.querySelectorAll(".panel").forEach((p) => p.classList.remove("active"));
+        tab.classList.add("active");
+        document.getElementById("panel-" + tab.dataset.tab).classList.add("active");
+      });
+    });
+
+    document.getElementById("addDebt").onclick = () => {
+      data.debts.push({
+        id: uid(),
+        name: "New debt",
+        category: "loan",
+        balance: 0,
+        repayment: 0,
+        frequency: "Monthly",
+        notes: "",
+        dueType: "monthday",
+        dueMonthDay: 1,
+        dueWeekday: 4,
+        dueDate: "",
+        anchorDate: "",
+      });
+      renderDebts();
+      renderSnapshot();
+      renderCashflow();
+      renderWeekAhead();
+      markDirty();
+    };
+
+    document.getElementById("addBill").onclick = () => {
+      data.bills.push({
+        id: uid(),
+        name: "New bill",
+        provider: "",
+        amount: 0,
+        frequency: "Monthly",
+        notes: "",
+        dueType: "monthday",
+        dueMonthDay: 1,
+        dueWeekday: 4,
+        dueDate: "",
+        anchorDate: "",
+      });
+      renderBills();
+      renderSnapshot();
+      renderCashflow();
+      renderWeekAhead();
+      markDirty();
+    };
+
+    document.getElementById("addLiving").onclick = () => {
+      data.living.push({
+        id: uid(),
+        name: "New expense",
+        amount: 0,
+        frequency: "Weekly",
+        notes: "",
+      });
+      renderLiving();
+      renderSnapshot();
+      renderCashflow();
+      markDirty();
+    };
+
+    document.getElementById("btnPrint").onclick = () => {
+      save();
+      // Ensure all panels are rendered with current data before print
+      fullRender();
+      const printed = new Date().toLocaleString("en-AU", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      });
+      const meta = document.getElementById("printMeta");
+      if (meta) {
+        meta.textContent = `Printed ${printed} · All sections · Figures in AUD`;
+      }
+      // Brief delay so layout paints fully, then open system print dialog (Save as PDF)
+      requestAnimationFrame(() => {
+        setTimeout(() => window.print(), 50);
+      });
+    };
+
+    // While the print dialog is open, force every section visible even if
+    // a browser ignores some @media print display rules on .panel
+    window.addEventListener("beforeprint", () => {
+      document.querySelectorAll(".panel").forEach((p) => {
+        p.dataset.wasActive = p.classList.contains("active") ? "1" : "0";
+        p.classList.add("active");
+        p.style.display = "block";
+      });
+    });
+
+    window.addEventListener("afterprint", () => {
+      document.querySelectorAll(".panel").forEach((p) => {
+        p.style.display = "";
+        if (p.dataset.wasActive !== "1") {
+          p.classList.remove("active");
+        }
+        delete p.dataset.wasActive;
+      });
+    });
+
+    document.getElementById("btnExport").onclick = () => {
+      save();
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `financial-position-${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+      toast("Exported JSON");
+    };
+
+    document.getElementById("btnImport").onclick = () => {
+      document.getElementById("importFile").click();
+    };
+
+    document.getElementById("importFile").onchange = (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const parsed = JSON.parse(reader.result);
+          if (!parsed.debts || !parsed.bills || !parsed.living || !parsed.income) {
+            throw new Error("Invalid shape");
+          }
+          data = parsed;
+          (data.debts || []).forEach(ensureSchedule);
+          (data.bills || []).forEach(ensureSchedule);
+          fullRender();
+          save();
+          toast("Imported successfully");
+        } catch {
+          toast("Import failed — invalid file");
+        }
+      };
+      reader.readAsText(file);
+      e.target.value = "";
+    };
+
+    document.getElementById("btnReset").onclick = () => {
+      if (!confirm("Reset all figures to the original PDF values? Your edits will be lost.")) return;
+      localStorage.removeItem(STORAGE_KEY);
+      data = deepClone(DEFAULT_DATA);
+      data.debts.forEach((r) => (r.id = uid()));
+      data.bills.forEach((r) => (r.id = uid()));
+      data.living.forEach((r) => (r.id = uid()));
+      fullRender();
+      save();
+      toast("Reset to PDF baseline");
+    };
+
+    // Init
+    load();
+    wireTable("debtsBody", "debts");
+    wireTable("billsBody", "bills");
+    wireTable("livingBody", "living");
+    fullRender();
+    document.getElementById("saveStatus").textContent = "Saved";
+    document.getElementById("saveStatus").className = "save-status saved";
+  </script>
+</body>
+</html>
