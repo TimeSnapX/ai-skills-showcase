@@ -509,6 +509,153 @@
 
     .print-only { display: none; }
 
+    /* Top-level Personal / Business modes */
+    .mode-tabs {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.15rem;
+      padding: 0.35rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .mode-tab {
+      flex: 1 1 180px;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--muted);
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: color .15s, background .15s, border-color .15s;
+      text-align: left;
+    }
+
+    .mode-tab small {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+
+    .mode-tab:hover {
+      color: var(--text);
+      background: var(--surface2);
+    }
+
+    .mode-tab.active {
+      color: #fff;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      border-color: #3b82f6;
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+    }
+
+    .mode-tab.active small { color: rgba(255,255,255,0.8); }
+
+    .mode-panel { display: none; }
+    .mode-panel.active { display: block; }
+
+    .biz-intro {
+      background: linear-gradient(135deg, #1a2332 0%, #0f172a 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.15rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow);
+    }
+
+    .biz-intro h2 {
+      font-size: 1.05rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .biz-intro p {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.55;
+      max-width: 70rem;
+    }
+
+    .biz-capability-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 0.65rem;
+      margin-bottom: 1.15rem;
+    }
+
+    .biz-cap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.75rem 0.85rem;
+      box-shadow: var(--shadow);
+      min-height: 5.5rem;
+    }
+
+    .biz-cap .cap-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .biz-cap .cap-value {
+      font-size: 1.05rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 0.2rem;
+    }
+
+    .biz-cap .cap-note {
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .status-pill {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.12rem 0.4rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      vertical-align: middle;
+      margin-right: 0.25rem;
+    }
+
+    .status-pill.ok { color: #6ee7b7; border-color: #065f46; background: #064e3b; }
+    .status-pill.warn { color: #fcd34d; border-color: #92400e; background: #422006; }
+    .status-pill.due { color: #fca5a5; border-color: #991b1b; background: #450a0a; }
+    .status-pill.info { color: #93c5fd; border-color: #1e40af; background: #1e3a5f; }
+
+    .biz-section-block {
+      margin-bottom: 1.25rem;
+    }
+
+    .biz-section-block h3 {
+      font-size: 0.95rem;
+      margin-bottom: 0.55rem;
+      color: var(--cyan);
+    }
+
+    .biz-two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    @media (max-width: 900px) {
+      .biz-two-col { grid-template-columns: 1fr; }
+    }
+
     /* Next week ahead */
     .week-summary {
       display: grid;
@@ -682,6 +829,7 @@
 
       .no-print,
       .tabs,
+      .mode-tabs,
       .header-actions,
       .toast,
       .actions-cell,
@@ -689,6 +837,14 @@
       .btn,
       button {
         display: none !important;
+      }
+
+      .mode-panel {
+        display: block !important;
+      }
+
+      .biz-panel {
+        display: block !important;
       }
 
       .print-only { display: block !important; }
@@ -917,8 +1073,8 @@
   <header>
     <div class="header-inner">
       <div>
-        <h1>Financial Position Overview</h1>
-        <div class="sub">UI Showcase · Sample household (mock data) · AUD · Fully interactive demo</div>
+        <h1>Finance UI Showcase</h1>
+        <div class="sub">Personal finances · Business operations · Mock data only · AUD · Fully interactive</div>
       </div>
       <div class="header-actions no-print">
         <span class="save-status" id="saveStatus">Saved</span>
@@ -933,19 +1089,33 @@
   </header>
 
   <main>
+    <!-- Top-level: Personal vs Business -->
+    <nav class="mode-tabs no-print" role="tablist" aria-label="Finance view">
+      <button class="mode-tab active" type="button" data-mode="personal" id="modePersonalBtn">
+        Personal finances
+        <small>Household bills, debts, income &amp; cashflow</small>
+      </button>
+      <button class="mode-tab" type="button" data-mode="business" id="modeBusinessBtn">
+        Business operations
+        <small>AP, AR, payroll, GST, POs &amp; controls</small>
+      </button>
+    </nav>
+
+    <!-- ===================== PERSONAL FINANCES ===================== -->
+    <div class="mode-panel active" id="mode-personal" data-mode-panel="personal">
     <section class="snapshot" id="snapshot"></section>
 
-    <nav class="tabs" role="tablist">
-      <button class="tab active" data-tab="week" type="button">Next week</button>
-      <button class="tab" data-tab="debts" type="button">Debts</button>
-      <button class="tab" data-tab="bills" type="button">Bills</button>
-      <button class="tab" data-tab="living" type="button">Living</button>
-      <button class="tab" data-tab="income" type="button">Income</button>
-      <button class="tab" data-tab="cashflow" type="button">Cashflow</button>
+    <nav class="tabs personal-tabs" role="tablist" aria-label="Personal finance sections">
+      <button class="tab personal-tab active" data-tab="week" type="button">Next week</button>
+      <button class="tab personal-tab" data-tab="debts" type="button">Debts</button>
+      <button class="tab personal-tab" data-tab="bills" type="button">Bills</button>
+      <button class="tab personal-tab" data-tab="living" type="button">Living</button>
+      <button class="tab personal-tab" data-tab="income" type="button">Income</button>
+      <button class="tab personal-tab" data-tab="cashflow" type="button">Cashflow</button>
     </nav>
 
     <!-- NEXT WEEK AHEAD -->
-    <section class="panel active" id="panel-week">
+    <section class="panel personal-panel active" id="panel-week">
       <div class="section-head">
         <h2>Next week ahead</h2>
         <span class="subtotal" id="weekRangeLabel">Bills &amp; debts due in the next 7 days</span>
@@ -984,7 +1154,7 @@
     </section>
 
     <!-- DEBTS -->
-    <section class="panel" id="panel-debts">
+    <section class="panel personal-panel" id="panel-debts">
       <div class="section-head">
         <h2>Debts, loans &amp; fines</h2>
         <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
@@ -1022,7 +1192,7 @@
     </section>
 
     <!-- BILLS -->
-    <section class="panel" id="panel-bills">
+    <section class="panel personal-panel" id="panel-bills">
       <div class="section-head">
         <h2>Recurring bills</h2>
         <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
@@ -1059,7 +1229,7 @@
     </section>
 
     <!-- LIVING -->
-    <section class="panel" id="panel-living">
+    <section class="panel personal-panel" id="panel-living">
       <div class="section-head">
         <h2>Living expenses</h2>
         <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
@@ -1094,7 +1264,7 @@
     </section>
 
     <!-- INCOME -->
-    <section class="panel" id="panel-income">
+    <section class="panel personal-panel" id="panel-income">
       <div class="section-head">
         <h2>Income — Sample employer</h2>
       </div>
@@ -1190,7 +1360,7 @@
     </section>
 
     <!-- CASHFLOW -->
-    <section class="panel" id="panel-cashflow">
+    <section class="panel personal-panel" id="panel-cashflow">
       <div class="section-head">
         <h2>Monthly cashflow summary</h2>
       </div>
@@ -1199,6 +1369,356 @@
         <p class="hint" id="cashflowHint" style="margin-top:1.25rem"></p>
       </div>
     </section>
+    </div><!-- /mode-personal -->
+
+    <!-- ===================== BUSINESS OPERATIONS ===================== -->
+    <div class="mode-panel" id="mode-business" data-mode-panel="business">
+      <div class="biz-intro">
+        <h2>Business finance operations — what matters to running a company</h2>
+        <p>
+          Mock company: <strong>Harbourline Supplies Pty Ltd</strong> (demo only).
+          This tab shows initiative in surfacing the operational finance areas businesses rely on daily —
+          payables, receivables, cash control, payroll compliance, and tax basics —
+          the same practical visibility AI agents and training should support.
+        </p>
+      </div>
+
+      <section class="snapshot" id="bizSnapshot"></section>
+
+      <div class="biz-capability-grid" id="bizCapabilityGrid" aria-label="Business finance capability overview"></div>
+
+      <nav class="tabs biz-tabs" role="tablist" aria-label="Business finance sections">
+        <button class="tab biz-tab active" data-biz-tab="overview" type="button">Overview</button>
+        <button class="tab biz-tab" data-biz-tab="payables" type="button">Payables</button>
+        <button class="tab biz-tab" data-biz-tab="receivables" type="button">Receivables</button>
+        <button class="tab biz-tab" data-biz-tab="cash" type="button">Cash &amp; control</button>
+        <button class="tab biz-tab" data-biz-tab="people" type="button">Payroll &amp; tax</button>
+        <button class="tab biz-tab" data-biz-tab="records" type="button">Records</button>
+      </nav>
+
+      <!-- BUSINESS OVERVIEW -->
+      <section class="panel biz-panel active" id="biz-panel-overview">
+        <div class="section-head">
+          <h2>Operations overview</h2>
+          <span class="subtotal">All 16 finance functions · mock AUD figures</span>
+        </div>
+        <div class="biz-two-col">
+          <div class="form-card">
+            <h3>Why this layout matters for business</h3>
+            <p class="hint" style="margin:0">
+              Owners and teams need clear views of money in, money out, and compliance —
+              not just a bank balance. This demo packages the core operational stack:
+              <strong>AP · AR · invoicing · receipting · purchase orders · payments ·
+              reconciliations · petty cash · budgeting · cash flow · financial records ·
+              payroll · timesheets · superannuation · tax/GST · expense management</strong>.
+            </p>
+          </div>
+          <div class="form-card">
+            <h3>This week’s action queue</h3>
+            <div class="table-wrap" style="box-shadow:none;margin-top:.35rem">
+              <table style="min-width:0">
+                <thead>
+                  <tr><th>Priority</th><th>Area</th><th>Action</th><th>Amount</th></tr>
+                </thead>
+                <tbody id="bizActionQueue"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="biz-section-block" style="margin-top:1.15rem">
+          <h3>Cash flow snapshot (next 4 weeks)</h3>
+          <div class="form-card">
+            <div class="cashflow-bars" id="bizCashflowBars"></div>
+            <p class="hint" id="bizCashflowHint" style="margin-top:1rem"></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAYABLES: AP, POs, payments, expenses -->
+      <section class="panel biz-panel" id="biz-panel-payables">
+        <div class="section-head">
+          <h2>Accounts payable · Purchase orders · Payments · Expenses</h2>
+          <span class="subtotal" id="bizPayablesSubtotal"></span>
+        </div>
+
+        <div class="biz-section-block">
+          <h3>Accounts payable — supplier bills to pay</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Bill #</th><th>Supplier</th><th>Due</th><th>Amount (inc GST)</th><th>GST</th><th>Status</th><th>Notes</th>
+                </tr>
+              </thead>
+              <tbody id="bizApBody"></tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="3">Open AP total</td>
+                  <td id="bizApTotal">$0.00</td>
+                  <td id="bizApGst">$0.00</td>
+                  <td colspan="2"></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        <div class="biz-section-block">
+          <h3>Purchase orders — approved / awaiting goods</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>PO #</th><th>Vendor</th><th>Requested by</th><th>Ordered</th><th>Amount</th><th>Status</th><th>Expected</th>
+                </tr>
+              </thead>
+              <tbody id="bizPoBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="biz-section-block">
+          <h3>Processing payments — payment run queue</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Batch</th><th>Method</th><th>Items</th><th>Scheduled</th><th>Amount</th><th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="bizPayBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="biz-section-block">
+          <h3>Expense management — staff claims</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Claim #</th><th>Employee</th><th>Category</th><th>Submitted</th><th>Amount</th><th>Status</th><th>Receipt</th>
+                </tr>
+              </thead>
+              <tbody id="bizExpBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- RECEIVABLES: AR, invoicing, receipting -->
+      <section class="panel biz-panel" id="biz-panel-receivables">
+        <div class="section-head">
+          <h2>Accounts receivable · Invoicing · Receipting</h2>
+          <span class="subtotal" id="bizReceivablesSubtotal"></span>
+        </div>
+
+        <div class="biz-section-block">
+          <h3>Accounts receivable — customer balances</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Customer</th><th>Invoice #</th><th>Issued</th><th>Due</th><th>Amount</th><th>Days overdue</th><th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="bizArBody"></tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="4">Outstanding AR</td>
+                  <td id="bizArTotal">$0.00</td>
+                  <td colspan="2" id="bizArAging"></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        <div class="biz-section-block">
+          <h3>Invoicing — recently raised</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Invoice #</th><th>Customer</th><th>Date</th><th>Net</th><th>GST</th><th>Total</th><th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="bizInvBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="biz-section-block">
+          <h3>Receipting — payments received</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Receipt #</th><th>Customer</th><th>Method</th><th>Date</th><th>Amount</th><th>Allocated to</th>
+                </tr>
+              </thead>
+              <tbody id="bizRcptBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- CASH & CONTROL -->
+      <section class="panel biz-panel" id="biz-panel-cash">
+        <div class="section-head">
+          <h2>Reconciliations · Petty cash · Budgeting · Cash flow</h2>
+          <span class="subtotal">Bank, float &amp; planning controls</span>
+        </div>
+
+        <div class="biz-section-block">
+          <h3>Reconciliations — bank &amp; clearing</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Account</th><th>Period</th><th>Statement bal.</th><th>Book bal.</th><th>Difference</th><th>Status</th><th>Owner</th>
+                </tr>
+              </thead>
+              <tbody id="bizRecBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="biz-two-col">
+          <div class="biz-section-block">
+            <h3>Petty cash</h3>
+            <div class="table-wrap">
+              <table style="min-width:0">
+                <thead>
+                  <tr><th>Date</th><th>Description</th><th>In / Out</th><th>Amount</th><th>Balance</th></tr>
+                </thead>
+                <tbody id="bizPettyBody"></tbody>
+              </table>
+            </div>
+            <p class="hint" id="bizPettyHint"></p>
+          </div>
+          <div class="biz-section-block">
+            <h3>Budgeting — month to date vs budget</h3>
+            <div class="table-wrap">
+              <table style="min-width:0">
+                <thead>
+                  <tr><th>Category</th><th>Budget</th><th>Actual</th><th>Variance</th><th>%</th></tr>
+                </thead>
+                <tbody id="bizBudgetBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="biz-section-block">
+          <h3>Cash flow — weekly forecast</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Week starting</th><th>Inflows</th><th>Outflows</th><th>Net</th><th>Closing cash</th>
+                </tr>
+              </thead>
+              <tbody id="bizCfBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAYROLL & TAX -->
+      <section class="panel biz-panel" id="biz-panel-people">
+        <div class="section-head">
+          <h2>Payroll · Timesheets · Superannuation · Tax / GST</h2>
+          <span class="subtotal">People costs &amp; compliance basics</span>
+        </div>
+
+        <div class="biz-section-block">
+          <h3>Payroll processing — current pay run</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Employee</th><th>Role</th><th>Gross</th><th>Tax withheld</th><th>Super (11.5%)</th><th>Net pay</th><th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="bizPayrunBody"></tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="2">Pay run totals</td>
+                  <td id="bizGrossTotal">$0</td>
+                  <td id="bizTaxTotal">$0</td>
+                  <td id="bizSuperTotal">$0</td>
+                  <td id="bizNetTotal">$0</td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        <div class="biz-section-block">
+          <h3>Timesheets — approval status</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Employee</th><th>Week ending</th><th>Ordinary hrs</th><th>OT hrs</th><th>Submitted</th><th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="bizTsBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="biz-two-col">
+          <div class="biz-section-block">
+            <h3>Superannuation — SG contributions</h3>
+            <div class="table-wrap">
+              <table style="min-width:0">
+                <thead>
+                  <tr><th>Fund / clearing</th><th>Employees</th><th>Period</th><th>Amount</th><th>Due</th><th>Status</th></tr>
+                </thead>
+                <tbody id="bizSuperBody"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="biz-section-block">
+            <h3>Tax / GST basics — BAS draft</h3>
+            <div class="table-wrap">
+              <table style="min-width:0">
+                <thead>
+                  <tr><th>Label</th><th>Description</th><th>Amount</th></tr>
+                </thead>
+                <tbody id="bizGstBody"></tbody>
+              </table>
+            </div>
+            <p class="hint">Demo BAS figures only — not lodged, not advice. Shows GST on sales, purchases, and PAYG withholding at a glance.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FINANCIAL RECORDS -->
+      <section class="panel biz-panel" id="biz-panel-records">
+        <div class="section-head">
+          <h2>Financial records</h2>
+          <span class="subtotal">Document register · audit-ready trail</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Record</th><th>Type</th><th>Period</th><th>Owner</th><th>Last updated</th><th>Status</th><th>Location</th>
+              </tr>
+            </thead>
+            <tbody id="bizRecordsBody"></tbody>
+          </table>
+        </div>
+        <p class="hint" style="margin-top:.85rem">
+          Clean records support reconciliations, BAS, payroll, and client handovers —
+          the same discipline useful when documenting AI agents and business workflows.
+        </p>
+      </section>
+    </div><!-- /mode-business -->
   </main>
 
   <footer>
@@ -2267,15 +2787,583 @@
       renderIncomeDerived();
       renderCashflow();
       renderWeekAhead();
+      renderBusiness();
     }
 
-    // Tabs
-    document.querySelectorAll(".tab").forEach((tab) => {
+    // ---------- Business operations mock data ----------
+    const BIZ = {
+      company: "Harbourline Supplies Pty Ltd",
+      ap: [
+        { bill: "AP-1042", supplier: "Pacific Packaging Co", due: "2026-08-15", amount: 2860, gst: 260, status: "Due soon", notes: "Cartons & tape" },
+        { bill: "AP-1048", supplier: "Metro Freight Group", due: "2026-08-18", amount: 1540, gst: 140, status: "Open", notes: "Outbound freight" },
+        { bill: "AP-1051", supplier: "Office Hub Supplies", due: "2026-08-22", amount: 486.2, gst: 44.2, status: "Open", notes: "Stationery restock" },
+        { bill: "AP-1039", supplier: "Coastal Utilities", due: "2026-08-12", amount: 920, gst: 83.64, status: "Overdue", notes: "Warehouse power" },
+      ],
+      po: [
+        { po: "PO-331", vendor: "Northline Plastics", by: "Ops · Mia", ordered: "2026-08-08", amount: 4200, status: "Awaiting delivery", expected: "2026-08-19" },
+        { po: "PO-334", vendor: "SafeStep PPE", by: "WHS · Tom", ordered: "2026-08-10", amount: 980, status: "Part received", expected: "2026-08-16" },
+        { po: "PO-336", vendor: "ByteCloud SaaS", by: "Admin · Priya", ordered: "2026-08-11", amount: 240, status: "Approved", expected: "N/A (subscription)" },
+      ],
+      payments: [
+        { batch: "PAY-0826-A", method: "ABA / EFT", items: 6, scheduled: "2026-08-14", amount: 6120.5, status: "Queued" },
+        { batch: "PAY-0826-B", method: "BPAY", items: 2, scheduled: "2026-08-15", amount: 920, status: "Draft" },
+        { batch: "PAY-0820-C", method: "Card", items: 1, scheduled: "2026-08-11", amount: 189.9, status: "Processed" },
+      ],
+      expenses: [
+        { claim: "EX-221", employee: "Sam Lee", category: "Travel", submitted: "2026-08-09", amount: 86.4, status: "Approved", receipt: "Yes" },
+        { claim: "EX-224", employee: "Mia Chen", category: "Client lunch", submitted: "2026-08-11", amount: 124.5, status: "Pending manager", receipt: "Yes" },
+        { claim: "EX-226", employee: "Tom Nguyen", category: "Tools", submitted: "2026-08-12", amount: 59.0, status: "Needs receipt", receipt: "Missing" },
+      ],
+      ar: [
+        { customer: "Brightside Cafe Group", inv: "INV-9081", issued: "2026-07-28", due: "2026-08-11", amount: 3520, overdue: 1, status: "Overdue" },
+        { customer: "Summit Builders", inv: "INV-9090", issued: "2026-08-01", due: "2026-08-15", amount: 8750, overdue: 0, status: "Open" },
+        { customer: "Lakeview Pharmacy", inv: "INV-9094", issued: "2026-08-05", due: "2026-08-19", amount: 1460, overdue: 0, status: "Open" },
+        { customer: "Orbital Media", inv: "INV-9072", issued: "2026-07-20", due: "2026-08-03", amount: 990, overdue: 9, status: "Collections" },
+      ],
+      invoices: [
+        { inv: "INV-9094", customer: "Lakeview Pharmacy", date: "2026-08-05", net: 1327.27, gst: 132.73, total: 1460, status: "Sent" },
+        { inv: "INV-9095", customer: "Harbour Gym Co", date: "2026-08-10", net: 2100, gst: 210, total: 2310, status: "Sent" },
+        { inv: "INV-9096", customer: "Summit Builders", date: "2026-08-12", net: 4500, gst: 450, total: 4950, status: "Draft" },
+      ],
+      receipts: [
+        { rcpt: "RCT-4412", customer: "Summit Builders", method: "EFT", date: "2026-08-08", amount: 4000, allocated: "INV-9060 (part)" },
+        { rcpt: "RCT-4415", customer: "Brightside Cafe Group", method: "Card", date: "2026-08-09", amount: 880, allocated: "INV-9078" },
+        { rcpt: "RCT-4418", customer: "Lakeview Pharmacy", method: "EFT", date: "2026-08-11", amount: 1460, allocated: "INV-9094" },
+      ],
+      recon: [
+        { account: "Operating · ANZ 062-000", period: "Jul 2026", stmt: 42850.22, book: 42850.22, diff: 0, status: "Reconciled", owner: "Bookkeeper" },
+        { account: "Operating · ANZ 062-000", period: "1–12 Aug 2026", stmt: 39120.1, book: 38940.1, diff: 180, status: "In progress", owner: "Bookkeeper" },
+        { account: "Clearing · Stripe", period: "Aug W1", stmt: 6120, book: 6120, diff: 0, status: "Reconciled", owner: "Admin" },
+      ],
+      petty: [
+        { date: "2026-08-01", desc: "Float top-up", dir: "In", amount: 200, bal: 200 },
+        { date: "2026-08-04", desc: "Courier labels", dir: "Out", amount: 18.5, bal: 181.5 },
+        { date: "2026-08-07", desc: "Milk & kitchen", dir: "Out", amount: 12.4, bal: 169.1 },
+        { date: "2026-08-11", desc: "Parking (client visit)", dir: "Out", amount: 16, bal: 153.1 },
+      ],
+      budget: [
+        { cat: "Sales revenue", budget: 120000, actual: 48200 },
+        { cat: "Cost of goods", budget: 54000, actual: 22100 },
+        { cat: "Wages & super", budget: 32000, actual: 12840 },
+        { cat: "Rent & utilities", budget: 9000, actual: 4100 },
+        { cat: "Marketing", budget: 4000, actual: 2650 },
+        { cat: "Admin / software", budget: 2500, actual: 980 },
+      ],
+      cashflowWeeks: [
+        { week: "11 Aug", in: 18500, out: 15200, close: 39120 },
+        { week: "18 Aug", in: 14200, out: 16800, close: 36520 },
+        { week: "25 Aug", in: 21000, out: 14100, close: 43420 },
+        { week: "1 Sep", in: 16000, out: 17550, close: 41870 },
+      ],
+      payroll: [
+        { name: "Mia Chen", role: "Operations lead", gross: 2300, tax: 420, super: 264.5, net: 1880, status: "Ready" },
+        { name: "Tom Nguyen", role: "Warehouse", gross: 1680, tax: 250, super: 193.2, net: 1430, status: "Ready" },
+        { name: "Sam Lee", role: "Sales", gross: 1950, tax: 340, super: 224.25, net: 1610, status: "Timesheet pending" },
+        { name: "Priya Shah", role: "Admin", gross: 1750, tax: 280, super: 201.25, net: 1470, status: "Ready" },
+      ],
+      timesheets: [
+        { name: "Mia Chen", week: "10 Aug 2026", ord: 38, ot: 2, submitted: "Yes", status: "Approved" },
+        { name: "Tom Nguyen", week: "10 Aug 2026", ord: 38, ot: 4, submitted: "Yes", status: "Approved" },
+        { name: "Sam Lee", week: "10 Aug 2026", ord: 36, ot: 0, submitted: "No", status: "Missing" },
+        { name: "Priya Shah", week: "10 Aug 2026", ord: 38, ot: 0, submitted: "Yes", status: "Approved" },
+      ],
+      super: [
+        { fund: "Clearing house batch", employees: 4, period: "Jul 2026", amount: 3520.4, due: "28 Aug 2026", status: "Scheduled" },
+        { fund: "Employee choice top-ups", employees: 1, period: "Jul 2026", amount: 120, due: "28 Aug 2026", status: "Draft" },
+      ],
+      gst: [
+        { label: "G1", desc: "Total sales (incl. GST)", amount: 52800 },
+        { label: "1A", desc: "GST on sales", amount: 4800 },
+        { label: "G11", desc: "Non-capital purchases", amount: 21450 },
+        { label: "1B", desc: "GST on purchases", amount: 1950 },
+        { label: "W2", desc: "PAYG withholding", amount: 5160 },
+        { label: "9", desc: "Net amount payable (demo)", amount: 8010 },
+      ],
+      records: [
+        { name: "Sales invoice register", type: "AR / invoicing", period: "FY26 YTD", owner: "Admin", updated: "2026-08-12", status: "Current", loc: "Drive / Finance / AR" },
+        { name: "Supplier bill folder", type: "AP", period: "Aug 2026", owner: "Bookkeeper", updated: "2026-08-12", status: "Current", loc: "Drive / Finance / AP" },
+        { name: "Bank statements", type: "Reconciliation", period: "Jul 2026", owner: "Bookkeeper", updated: "2026-08-05", status: "Filed", loc: "Drive / Finance / Bank" },
+        { name: "Payroll summaries", type: "Payroll", period: "FY26", owner: "Admin", updated: "2026-08-08", status: "Current", loc: "Payroll software export" },
+        { name: "BAS working papers", type: "Tax / GST", period: "Q4 FY26 draft", owner: "Bookkeeper", updated: "2026-08-10", status: "Draft", loc: "Drive / Finance / BAS" },
+        { name: "PO log", type: "Purchase orders", period: "FY26", owner: "Ops", updated: "2026-08-11", status: "Current", loc: "Ops spreadsheet" },
+      ],
+      actions: [
+        { priority: "High", area: "Accounts payable", action: "Pay Coastal Utilities (overdue)", amount: 920 },
+        { priority: "High", area: "Accounts receivable", action: "Follow up Orbital Media INV-9072", amount: 990 },
+        { priority: "Medium", area: "Timesheets", action: "Chase Sam Lee timesheet", amount: 0 },
+        { priority: "Medium", area: "Processing payments", action: "Release PAY-0826-A batch", amount: 6120.5 },
+        { priority: "Low", area: "Expense management", action: "Request missing receipt EX-226", amount: 59 },
+      ],
+    };
+
+    function statusPill(status) {
+      const s = String(status || "").toLowerCase();
+      let cls = "info";
+      if (/reconcil|approved|processed|filed|current|ready|sent|yes/.test(s)) cls = "ok";
+      else if (/progress|pending|draft|queued|await|part|scheduled/.test(s)) cls = "warn";
+      else if (/overdue|missing|collection|due soon/.test(s)) cls = "due";
+      return `<span class="status-pill ${cls}">${esc(status)}</span>`;
+    }
+
+    function sumField(arr, key) {
+      return arr.reduce((t, r) => t + (Number(r[key]) || 0), 0);
+    }
+
+    function renderBusiness() {
+      const apOpen = sumField(BIZ.ap, "amount");
+      const arOpen = sumField(BIZ.ar, "amount");
+      const payQueued = BIZ.payments.filter((p) => /queue|draft/i.test(p.status)).reduce((t, p) => t + p.amount, 0);
+      const expPending = BIZ.expenses.filter((e) => !/approved/i.test(e.status)).reduce((t, e) => t + e.amount, 0);
+      const gross = sumField(BIZ.payroll, "gross");
+      const superAmt = sumField(BIZ.payroll, "super");
+      const gstPay = BIZ.gst.find((g) => g.label === "9")?.amount || 0;
+      const cashClose = BIZ.cashflowWeeks[0]?.close || 0;
+      const pettyBal = BIZ.petty[BIZ.petty.length - 1]?.bal || 0;
+      const recDiff = BIZ.recon.reduce((t, r) => t + Math.abs(Number(r.diff) || 0), 0);
+      const poOpen = sumField(BIZ.po, "amount");
+      const invDraft = BIZ.invoices.filter((i) => /draft/i.test(i.status)).length;
+      const rcptWeek = sumField(BIZ.receipts, "amount");
+      const tsMissing = BIZ.timesheets.filter((t) => /missing|no/i.test(t.status + t.submitted)).length;
+      const recordsOk = BIZ.records.filter((r) => /current|filed/i.test(r.status)).length;
+
+      const snap = document.getElementById("bizSnapshot");
+      if (snap) {
+        snap.innerHTML = `
+          <div class="card-metric">
+            <div class="label">Cash on hand (demo)</div>
+            <div class="value cyan">${money(cashClose)}</div>
+            <div class="note">Operating account snapshot</div>
+          </div>
+          <div class="card-metric">
+            <div class="label">Accounts receivable</div>
+            <div class="value amber">${money(arOpen)}</div>
+            <div class="note">${BIZ.ar.length} open customer invoices</div>
+          </div>
+          <div class="card-metric">
+            <div class="label">Accounts payable</div>
+            <div class="value purple">${money(apOpen)}</div>
+            <div class="note">${BIZ.ap.length} supplier bills open</div>
+          </div>
+          <div class="card-metric">
+            <div class="label">Payment run queued</div>
+            <div class="value">${money(payQueued)}</div>
+            <div class="note">Processing payments batch</div>
+          </div>
+          <div class="card-metric">
+            <div class="label">Payroll gross (cycle)</div>
+            <div class="value">${money(gross)}</div>
+            <div class="note">Super this run ${money(superAmt)}</div>
+          </div>
+          <div class="card-metric">
+            <div class="label">BAS net payable (draft)</div>
+            <div class="value ${gstPay > 0 ? "neg" : "pos"}">${money(gstPay)}</div>
+            <div class="note">Tax / GST basics demo</div>
+          </div>`;
+      }
+
+      const caps = [
+        { label: "Accounts payable", value: money(apOpen), note: `${BIZ.ap.length} open bills` },
+        { label: "Accounts receivable", value: money(arOpen), note: `${BIZ.ar.length} open invoices` },
+        { label: "Invoicing", value: `${BIZ.invoices.length} raised`, note: `${invDraft} draft` },
+        { label: "Receipting", value: money(rcptWeek), note: "Recent receipts" },
+        { label: "Purchase orders", value: money(poOpen), note: `${BIZ.po.length} active POs` },
+        { label: "Processing payments", value: money(payQueued), note: "In queue / draft" },
+        { label: "Reconciliations", value: recDiff ? money(recDiff) + " diff" : "Matched", note: recDiff ? "Clearing items" : "All clear" },
+        { label: "Petty cash", value: money(pettyBal), note: "Float balance" },
+        { label: "Budgeting", value: "MTD vs plan", note: `${BIZ.budget.length} categories` },
+        { label: "Cash flow", value: money(cashClose), note: "4-week forecast" },
+        { label: "Financial records", value: `${recordsOk}/${BIZ.records.length}`, note: "Current or filed" },
+        { label: "Payroll processing", value: money(gross), note: "Gross this cycle" },
+        { label: "Timesheets", value: tsMissing ? `${tsMissing} missing` : "All in", note: "Week ending 10 Aug" },
+        { label: "Superannuation", value: money(superAmt), note: "SG 11.5% this run" },
+        { label: "Tax / GST basics", value: money(gstPay), note: "Draft BAS payable" },
+        { label: "Expense management", value: money(expPending), note: "Claims to review" },
+      ];
+      const grid = document.getElementById("bizCapabilityGrid");
+      if (grid) {
+        grid.innerHTML = caps
+          .map(
+            (c) => `
+          <div class="biz-cap">
+            <div class="cap-label">${esc(c.label)}</div>
+            <div class="cap-value">${c.value}</div>
+            <div class="cap-note">${esc(c.note)}</div>
+          </div>`
+          )
+          .join("");
+      }
+
+      const aq = document.getElementById("bizActionQueue");
+      if (aq) {
+        aq.innerHTML = BIZ.actions
+          .map(
+            (a) => `
+          <tr>
+            <td>${statusPill(a.priority)}</td>
+            <td>${esc(a.area)}</td>
+            <td>${esc(a.action)}</td>
+            <td>${a.amount ? money(a.amount) : "—"}</td>
+          </tr>`
+          )
+          .join("");
+      }
+
+      // Cashflow bars on overview
+      const maxFlow = Math.max(...BIZ.cashflowWeeks.flatMap((w) => [w.in, w.out]), 1);
+      const bars = document.getElementById("bizCashflowBars");
+      if (bars) {
+        bars.innerHTML = BIZ.cashflowWeeks
+          .map((w) => {
+            const net = w.in - w.out;
+            return `
+            <div class="bar-row">
+              <span>Week ${esc(w.week)} in</span>
+              <div class="bar-track"><div class="bar-fill income" style="width:${(w.in / maxFlow) * 100}%"></div></div>
+              <span class="bar-amt">${money(w.in)}</span>
+            </div>
+            <div class="bar-row">
+              <span>Week ${esc(w.week)} out</span>
+              <div class="bar-track"><div class="bar-fill out" style="width:${(w.out / maxFlow) * 100}%"></div></div>
+              <span class="bar-amt">${money(w.out)}</span>
+            </div>
+            <div class="bar-row" style="margin-bottom:.55rem">
+              <span>Net / close</span>
+              <div class="bar-track"><div class="bar-fill ${net >= 0 ? "bills" : "debt"}" style="width:${(Math.abs(net) / maxFlow) * 100}%"></div></div>
+              <span class="bar-amt">${money(net)} → ${money(w.close)}</span>
+            </div>`;
+          })
+          .join("");
+      }
+      const cfHint = document.getElementById("bizCashflowHint");
+      if (cfHint) {
+        cfHint.textContent =
+          "Mock 4-week cash flow for Harbourline Supplies — links AR collections, AP payment runs, and payroll dates so operators can see pressure points early.";
+      }
+
+      // Payables tables
+      const apBody = document.getElementById("bizApBody");
+      if (apBody) {
+        apBody.innerHTML = BIZ.ap
+          .map(
+            (r) => `
+          <tr>
+            <td>${esc(r.bill)}</td>
+            <td>${esc(r.supplier)}</td>
+            <td>${esc(r.due)}</td>
+            <td>${money(r.amount)}</td>
+            <td>${money(r.gst)}</td>
+            <td>${statusPill(r.status)}</td>
+            <td>${esc(r.notes)}</td>
+          </tr>`
+          )
+          .join("");
+        document.getElementById("bizApTotal").textContent = money(apOpen);
+        document.getElementById("bizApGst").textContent = money(sumField(BIZ.ap, "gst"));
+        const sub = document.getElementById("bizPayablesSubtotal");
+        if (sub) sub.innerHTML = `AP open <strong>${money(apOpen)}</strong> · PO live <strong>${money(poOpen)}</strong>`;
+      }
+      const poBody = document.getElementById("bizPoBody");
+      if (poBody) {
+        poBody.innerHTML = BIZ.po
+          .map(
+            (r) => `
+          <tr>
+            <td>${esc(r.po)}</td>
+            <td>${esc(r.vendor)}</td>
+            <td>${esc(r.by)}</td>
+            <td>${esc(r.ordered)}</td>
+            <td>${money(r.amount)}</td>
+            <td>${statusPill(r.status)}</td>
+            <td>${esc(r.expected)}</td>
+          </tr>`
+          )
+          .join("");
+      }
+      const payBody = document.getElementById("bizPayBody");
+      if (payBody) {
+        payBody.innerHTML = BIZ.payments
+          .map(
+            (r) => `
+          <tr>
+            <td>${esc(r.batch)}</td>
+            <td>${esc(r.method)}</td>
+            <td>${r.items}</td>
+            <td>${esc(r.scheduled)}</td>
+            <td>${money(r.amount)}</td>
+            <td>${statusPill(r.status)}</td>
+          </tr>`
+          )
+          .join("");
+      }
+      const expBody = document.getElementById("bizExpBody");
+      if (expBody) {
+        expBody.innerHTML = BIZ.expenses
+          .map(
+            (r) => `
+          <tr>
+            <td>${esc(r.claim)}</td>
+            <td>${esc(r.employee)}</td>
+            <td>${esc(r.category)}</td>
+            <td>${esc(r.submitted)}</td>
+            <td>${money(r.amount)}</td>
+            <td>${statusPill(r.status)}</td>
+            <td>${esc(r.receipt)}</td>
+          </tr>`
+          )
+          .join("");
+      }
+
+      // Receivables
+      const arBody = document.getElementById("bizArBody");
+      if (arBody) {
+        arBody.innerHTML = BIZ.ar
+          .map(
+            (r) => `
+          <tr>
+            <td>${esc(r.customer)}</td>
+            <td>${esc(r.inv)}</td>
+            <td>${esc(r.issued)}</td>
+            <td>${esc(r.due)}</td>
+            <td>${money(r.amount)}</td>
+            <td>${r.overdue}</td>
+            <td>${statusPill(r.status)}</td>
+          </tr>`
+          )
+          .join("");
+        document.getElementById("bizArTotal").textContent = money(arOpen);
+        const overdue = BIZ.ar.filter((r) => r.overdue > 0).reduce((t, r) => t + r.amount, 0);
+        document.getElementById("bizArAging").textContent = `Overdue ${money(overdue)}`;
+        const sub = document.getElementById("bizReceivablesSubtotal");
+        if (sub) sub.innerHTML = `AR open <strong>${money(arOpen)}</strong> · Receipts logged <strong>${money(rcptWeek)}</strong>`;
+      }
+      const invBody = document.getElementById("bizInvBody");
+      if (invBody) {
+        invBody.innerHTML = BIZ.invoices
+          .map(
+            (r) => `
+          <tr>
+            <td>${esc(r.inv)}</td>
+            <td>${esc(r.customer)}</td>
+            <td>${esc(r.date)}</td>
+            <td>${money(r.net)}</td>
+            <td>${money(r.gst)}</td>
+            <td>${money(r.total)}</td>
+            <td>${statusPill(r.status)}</td>
+          </tr>`
+          )
+          .join("");
+      }
+      const rcBody = document.getElementById("bizRcptBody");
+      if (rcBody) {
+        rcBody.innerHTML = BIZ.receipts
+          .map(
+            (r) => `
+          <tr>
+            <td>${esc(r.rcpt)}</td>
+            <td>${esc(r.customer)}</td>
+            <td>${esc(r.method)}</td>
+            <td>${esc(r.date)}</td>
+            <td>${money(r.amount)}</td>
+            <td>${esc(r.allocated)}</td>
+          </tr>`
+          )
+          .join("");
+      }
+
+      // Cash control
+      const recBody = document.getElementById("bizRecBody");
+      if (recBody) {
+        recBody.innerHTML = BIZ.recon
+          .map(
+            (r) => `
+          <tr>
+            <td>${esc(r.account)}</td>
+            <td>${esc(r.period)}</td>
+            <td>${money(r.stmt)}</td>
+            <td>${money(r.book)}</td>
+            <td class="${r.diff ? "value neg" : ""}">${money(r.diff)}</td>
+            <td>${statusPill(r.status)}</td>
+            <td>${esc(r.owner)}</td>
+          </tr>`
+          )
+          .join("");
+      }
+      const pettyBody = document.getElementById("bizPettyBody");
+      if (pettyBody) {
+        pettyBody.innerHTML = BIZ.petty
+          .map(
+            (r) => `
+          <tr>
+            <td>${esc(r.date)}</td>
+            <td>${esc(r.desc)}</td>
+            <td>${esc(r.dir)}</td>
+            <td>${money(r.amount)}</td>
+            <td>${money(r.bal)}</td>
+          </tr>`
+          )
+          .join("");
+        const ph = document.getElementById("bizPettyHint");
+        if (ph) ph.textContent = `Float balance ${money(pettyBal)} · receipts required for all outgoings.`;
+      }
+      const budBody = document.getElementById("bizBudgetBody");
+      if (budBody) {
+        budBody.innerHTML = BIZ.budget
+          .map((r) => {
+            const variance = r.actual - r.budget * (12 / 12) * (12 / 31); // rough MTD not needed - use simple variance vs monthly budget pro-rata ~40% month
+            // Better: show variance as actual vs budget MTD assuming ~40% through month
+            const mtdBudget = r.budget * 0.4;
+            const v = r.actual - mtdBudget;
+            const pct = mtdBudget ? ((r.actual / mtdBudget) * 100).toFixed(0) + "%" : "—";
+            return `
+            <tr>
+              <td>${esc(r.cat)}</td>
+              <td>${money(mtdBudget)} <span style="color:var(--muted);font-size:.72rem">MTD</span></td>
+              <td>${money(r.actual)}</td>
+              <td class="${v > 0 && r.cat !== "Sales revenue" ? "value neg" : "value pos"}">${money(v)}</td>
+              <td>${pct}</td>
+            </tr>`;
+          })
+          .join("");
+      }
+      const cfBody = document.getElementById("bizCfBody");
+      if (cfBody) {
+        cfBody.innerHTML = BIZ.cashflowWeeks
+          .map((w) => {
+            const net = w.in - w.out;
+            return `
+            <tr>
+              <td>${esc(w.week)}</td>
+              <td>${money(w.in)}</td>
+              <td>${money(w.out)}</td>
+              <td class="${net >= 0 ? "value pos" : "value neg"}">${money(net)}</td>
+              <td>${money(w.close)}</td>
+            </tr>`;
+          })
+          .join("");
+      }
+
+      // Payroll & tax
+      const prBody = document.getElementById("bizPayrunBody");
+      if (prBody) {
+        prBody.innerHTML = BIZ.payroll
+          .map(
+            (r) => `
+          <tr>
+            <td>${esc(r.name)}</td>
+            <td>${esc(r.role)}</td>
+            <td>${money(r.gross)}</td>
+            <td>${money(r.tax)}</td>
+            <td>${money(r.super)}</td>
+            <td>${money(r.net)}</td>
+            <td>${statusPill(r.status)}</td>
+          </tr>`
+          )
+          .join("");
+        document.getElementById("bizGrossTotal").textContent = money(sumField(BIZ.payroll, "gross"));
+        document.getElementById("bizTaxTotal").textContent = money(sumField(BIZ.payroll, "tax"));
+        document.getElementById("bizSuperTotal").textContent = money(sumField(BIZ.payroll, "super"));
+        document.getElementById("bizNetTotal").textContent = money(sumField(BIZ.payroll, "net"));
+      }
+      const tsBody = document.getElementById("bizTsBody");
+      if (tsBody) {
+        tsBody.innerHTML = BIZ.timesheets
+          .map(
+            (r) => `
+          <tr>
+            <td>${esc(r.name)}</td>
+            <td>${esc(r.week)}</td>
+            <td>${r.ord}</td>
+            <td>${r.ot}</td>
+            <td>${esc(r.submitted)}</td>
+            <td>${statusPill(r.status)}</td>
+          </tr>`
+          )
+          .join("");
+      }
+      const superBody = document.getElementById("bizSuperBody");
+      if (superBody) {
+        superBody.innerHTML = BIZ.super
+          .map(
+            (r) => `
+          <tr>
+            <td>${esc(r.fund)}</td>
+            <td>${r.employees}</td>
+            <td>${esc(r.period)}</td>
+            <td>${money(r.amount)}</td>
+            <td>${esc(r.due)}</td>
+            <td>${statusPill(r.status)}</td>
+          </tr>`
+          )
+          .join("");
+      }
+      const gstBody = document.getElementById("bizGstBody");
+      if (gstBody) {
+        gstBody.innerHTML = BIZ.gst
+          .map(
+            (r) => `
+          <tr>
+            <td><strong>${esc(r.label)}</strong></td>
+            <td>${esc(r.desc)}</td>
+            <td>${money(r.amount)}</td>
+          </tr>`
+          )
+          .join("");
+      }
+
+      // Records
+      const recs = document.getElementById("bizRecordsBody");
+      if (recs) {
+        recs.innerHTML = BIZ.records
+          .map(
+            (r) => `
+          <tr>
+            <td>${esc(r.name)}</td>
+            <td>${esc(r.type)}</td>
+            <td>${esc(r.period)}</td>
+            <td>${esc(r.owner)}</td>
+            <td>${esc(r.updated)}</td>
+            <td>${statusPill(r.status)}</td>
+            <td>${esc(r.loc)}</td>
+          </tr>`
+          )
+          .join("");
+      }
+    }
+
+    // Mode tabs: Personal vs Business
+    function setMode(mode) {
+      document.querySelectorAll(".mode-tab").forEach((t) => {
+        t.classList.toggle("active", t.dataset.mode === mode);
+      });
+      document.querySelectorAll(".mode-panel").forEach((p) => {
+        p.classList.toggle("active", p.dataset.modePanel === mode);
+      });
+      if (mode === "business") renderBusiness();
+    }
+
+    document.querySelectorAll(".mode-tab").forEach((tab) => {
+      tab.addEventListener("click", () => setMode(tab.dataset.mode));
+    });
+
+    // Personal sub-tabs
+    document.querySelectorAll(".personal-tab").forEach((tab) => {
       tab.addEventListener("click", () => {
-        document.querySelectorAll(".tab").forEach((t) => t.classList.remove("active"));
-        document.querySelectorAll(".panel").forEach((p) => p.classList.remove("active"));
+        document.querySelectorAll(".personal-tab").forEach((t) => t.classList.remove("active"));
+        document.querySelectorAll(".personal-panel").forEach((p) => p.classList.remove("active"));
         tab.classList.add("active");
-        document.getElementById("panel-" + tab.dataset.tab).classList.add("active");
+        const panel = document.getElementById("panel-" + tab.dataset.tab);
+        if (panel) panel.classList.add("active");
+      });
+    });
+
+    // Business sub-tabs
+    document.querySelectorAll(".biz-tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".biz-tab").forEach((t) => t.classList.remove("active"));
+        document.querySelectorAll(".biz-panel").forEach((p) => p.classList.remove("active"));
+        tab.classList.add("active");
+        const panel = document.getElementById("biz-panel-" + tab.dataset.bizTab);
+        if (panel) panel.classList.add("active");
       });
     });
 
@@ -2357,15 +3445,16 @@
     // While the print dialog is open, force every section visible even if
     // a browser ignores some @media print display rules on .panel
     window.addEventListener("beforeprint", () => {
-      document.querySelectorAll(".panel").forEach((p) => {
+      document.querySelectorAll(".mode-panel, .panel, .biz-panel").forEach((p) => {
         p.dataset.wasActive = p.classList.contains("active") ? "1" : "0";
         p.classList.add("active");
         p.style.display = "block";
       });
+      renderBusiness();
     });
 
     window.addEventListener("afterprint", () => {
-      document.querySelectorAll(".panel").forEach((p) => {
+      document.querySelectorAll(".mode-panel, .panel, .biz-panel").forEach((p) => {
         p.style.display = "";
         if (p.dataset.wasActive !== "1") {
           p.classList.remove("active");
@@ -2414,7 +3503,7 @@
     };
 
     document.getElementById("btnReset").onclick = () => {
-      if (!confirm("Reset all figures to the original PDF values? Your edits will be lost.")) return;
+      if (!confirm("Reset personal finance figures to demo defaults? Your edits will be lost.")) return;
       localStorage.removeItem(STORAGE_KEY);
       data = deepClone(DEFAULT_DATA);
       data.debts.forEach((r) => (r.id = uid()));
@@ -2422,7 +3511,7 @@
       data.living.forEach((r) => (r.id = uid()));
       fullRender();
       save();
-      toast("Reset to PDF baseline");
+      toast("Reset to demo baseline");
     };
 
     // Init
@@ -2431,6 +3520,7 @@
     wireTable("billsBody", "bills");
     wireTable("livingBody", "living");
     fullRender();
+    if (location.hash === "#business") setMode("business");
     document.getElementById("saveStatus").textContent = "Saved";
     document.getElementById("saveStatus").className = "save-status saved";
   </script>

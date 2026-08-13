@@ -12,7 +12,9 @@ Portfolio for the **Team 400 · AI Trainer & AI Agent Consultant** role (Seek jo
 - Role fit for Team 400
 - AI skill stack (OpenClaw, Google AI Studio, ChatGPT, Grok)
 - Workflow pipelines
-- **Full financial tracker UI** (same as personal tool, with **mock sample data**)
+- **Finance UI showcase** with two top-level tabs and **mock data only**:
+  - **Personal finances** — household bills, debts, income, cashflow
+  - **Business operations** — AP, AR, invoicing, receipting, POs, payments, reconciliations, petty cash, budgeting, cash flow, financial records, payroll, timesheets, superannuation, tax/GST, expense management
 - Tailored resume + cover letter
 - Contact actions
 
