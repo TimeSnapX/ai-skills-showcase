@@ -33,7 +33,8 @@
         <a href="#pack">This pack</a>
         <a href="#fit">Job Fit</a>
         <a href="#skills">Skills</a>
-        <a href="#budget-ui">Live UI</a>
+        <a href="#markets">Markets</a>
+        <a href="#budget-ui">Finance UI</a>
         <a href="#documents">Resume</a>
         <a href="#contact">Contact</a>
       </nav>
@@ -64,7 +65,7 @@
         <div class="pack-banner-actions">
           <button type="button" class="btn btn-primary btn-sm" id="copyShareUrlBanner">Copy application link</button>
           <a class="btn btn-secondary btn-sm" href="#documents">Jump to resume</a>
-          <a class="btn btn-ghost btn-sm" href="#budget-ui">Jump to live UI</a>
+          <a class="btn btn-ghost btn-sm" href="#markets">Jump to markets</a>
         </div>
       </div>
     </section>
@@ -93,7 +94,7 @@
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
             <a href="#skills" class="btn btn-secondary btn-lg">AI skill stack</a>
-            <a href="#budget-ui" class="btn btn-ghost btn-lg">Live finance UI</a>
+            <a href="#markets" class="btn btn-ghost btn-lg">Market research UI</a>
           </div>
           <div class="hero-meta">
             <div class="meta-chip">
@@ -457,23 +458,163 @@
         </ul>
       </div>
     </section>
-    <!-- PROOF -->
-    <section class="section" id="proof">
+
+    <!-- MARKET RESEARCH UI -->
+    <section class="section" id="markets">
       <div class="container">
         <div class="section-head">
-          <span class="section-tag">05 · Proof of work</span>
+          <span class="section-tag">05 · Market research UI</span>
+          <h2>Crypto · Stocks · Commodities</h2>
+          <p class="section-lead">
+            Interactive market research board — top 10 assets by class, performance snapshots, and sector heat.
+            Built to show how I turn research data into a clear operator UI (the same skill used for client enablement demos).
+            <span class="demo-badge">Illustrative snapshot · demo data</span>
+          </p>
+        </div>
+
+        <div class="market-board" id="marketBoard" aria-label="Market research dashboard">
+          <header class="market-board-header">
+            <div>
+              <p class="market-kicker">Research desk</p>
+              <h3>Global markets overview</h3>
+            </div>
+            <div class="market-meta">
+              <span class="market-asof" id="marketAsOf">Snapshot loading…</span>
+              <span class="live-badge">Demo board</span>
+            </div>
+          </header>
+
+          <div class="market-summary" id="marketSummary" aria-label="Market performance summary"></div>
+
+          <div class="market-tabs" role="tablist" aria-label="Asset classes">
+            <button class="market-tab is-active" type="button" role="tab" aria-selected="true" data-market="crypto">Crypto</button>
+            <button class="market-tab" type="button" role="tab" aria-selected="false" data-market="stocks">Stocks</button>
+            <button class="market-tab" type="button" role="tab" aria-selected="false" data-market="commodities">Commodities</button>
+          </div>
+
+          <div class="market-panel is-active" id="market-panel-crypto" role="tabpanel">
+            <div class="market-panel-head">
+              <h4>Top 10 cryptocurrencies</h4>
+              <span class="market-panel-note">Ranked by market cap · 24h performance</span>
+            </div>
+            <div class="market-table-wrap">
+              <table class="market-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Asset</th>
+                    <th>Price (USD)</th>
+                    <th>24h</th>
+                    <th>7d</th>
+                    <th>Market cap</th>
+                    <th>Volume 24h</th>
+                    <th>Spark</th>
+                  </tr>
+                </thead>
+                <tbody id="marketCryptoBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="market-panel" id="market-panel-stocks" role="tabpanel" hidden>
+            <div class="market-panel-head">
+              <h4>Top 10 equities (global blue chips)</h4>
+              <span class="market-panel-note">Large-cap leaders · session performance</span>
+            </div>
+            <div class="market-table-wrap">
+              <table class="market-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Ticker</th>
+                    <th>Price (USD)</th>
+                    <th>1d</th>
+                    <th>1w</th>
+                    <th>Market cap</th>
+                    <th>Volume</th>
+                    <th>Spark</th>
+                  </tr>
+                </thead>
+                <tbody id="marketStocksBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="market-panel" id="market-panel-commodities" role="tabpanel" hidden>
+            <div class="market-panel-head">
+              <h4>Top 10 commodities</h4>
+              <span class="market-panel-note">Energy · metals · agriculture</span>
+            </div>
+            <div class="market-table-wrap">
+              <table class="market-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Contract</th>
+                    <th>Price</th>
+                    <th>1d</th>
+                    <th>1w</th>
+                    <th>Unit</th>
+                    <th>Region / note</th>
+                    <th>Spark</th>
+                  </tr>
+                </thead>
+                <tbody id="marketCommoditiesBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="market-insights">
+            <article class="market-insight">
+              <h4>Research signal</h4>
+              <p id="marketInsightText">
+                Demo narrative: risk assets mixed — watch BTC dominance vs equities beta, and energy vs precious metals for macro regime clues.
+              </p>
+            </article>
+            <article class="market-insight">
+              <h4>How this maps to client work</h4>
+              <p>
+                Same pattern as Team 400 delivery: gather data → structure it → surface decisions in a clean UI →
+                explain it without buzzwords so operators can act.
+              </p>
+            </article>
+          </div>
+        </div>
+
+        <ul class="ui-capability-strip" aria-label="Market research UI capabilities">
+          <li>Multi-asset research desk</li>
+          <li>Top 10 rankings</li>
+          <li>Performance % with colour cues</li>
+          <li>Market summary cards</li>
+          <li>Tabbed asset classes</li>
+          <li>Client-demo ready layout</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PROOF -->
+    <section class="section section-alt" id="proof">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-tag">06 · Proof of work</span>
           <h2>Things you can open and inspect</h2>
           <p class="section-lead">
-            Team 400 asks for examples of agents, workflows, and demos. Here is a selection you can click through.
+            Team 400 asks for examples of agents, workflows, and demos. Everything below is on this one pack.
           </p>
         </div>
 
         <div class="proof-grid">
+          <a class="proof-card" href="#markets">
+            <span class="proof-type">On this page</span>
+            <h3>Market research UI</h3>
+            <p>Crypto, stocks, and commodities — top 10 tables and performance snapshots.</p>
+            <span class="proof-cta">Open markets board →</span>
+          </a>
           <a class="proof-card" href="#budget-ui">
             <span class="proof-type">On this page</span>
             <h3>Personal &amp; business finance UI</h3>
-            <p>Editable mock data: household cashflow plus AP/AR/payroll/GST/POs — interact without leaving this pack.</p>
-            <span class="proof-cta">Scroll to live UI →</span>
+            <p>Editable mock data: household cashflow plus AP/AR/payroll/GST/POs.</p>
+            <span class="proof-cta">Scroll to finance UI →</span>
           </a>
           <a class="proof-card" href="#documents">
             <span class="proof-type">On this page</span>
@@ -487,20 +628,15 @@
             <p>Track and measure the value of items. Built and published via Google AI Studio.</p>
             <span class="proof-cta">Open AI Studio app →</span>
           </a>
-          <div class="proof-card static">
-            <span class="proof-type">Automation</span>
-            <h3>OpenClaw agent systems</h3>
-            <p>Multi-agent research, job packaging, Shopify pipelines, Discord/Telegram bots, email &amp; SMS triggers.</p>
-            <span class="proof-cta">Live walkthrough on request</span>
-          </div>
-        </div></div>
+        </div>
+      </div>
     </section>
 
     <!-- DOCUMENTS -->
-    <section class="section section-alt" id="documents">
+    <section class="section" id="documents">
       <div class="container">
         <div class="section-head">
-          <span class="section-tag">06 · Application documents</span>
+          <span class="section-tag">07 · Application documents</span>
           <h2>Resume &amp; cover letter</h2>
           <p class="section-lead">
             Tailored specifically for <strong>Team 400 — AI Trainer &amp; AI Agent Consultant</strong> (Seek job 93718261).
@@ -716,7 +852,7 @@
     <section class="section section-contact" id="contact">
       <div class="container contact-grid">
         <div>
-          <span class="section-tag">07 · Next step</span>
+          <span class="section-tag">08 · Next step</span>
           <h2>Ready to walk through live systems</h2>
           <p class="section-lead">
             Happy to demo OpenClaw agents, the budget UI above, Shopify pipelines, TimeSnap, document automation, and this portfolio stack on a call or in person at short notice.
