@@ -640,6 +640,17 @@
       margin-bottom: 1.25rem;
     }
 
+    #bizCompanyName {
+      outline: none;
+      border-bottom: 1px dashed var(--border);
+      padding: 0 0.15rem;
+      cursor: text;
+    }
+    #bizCompanyName:focus {
+      border-bottom-color: var(--accent);
+      color: var(--cyan);
+    }
+
     .biz-section-block h3 {
       font-size: 0.95rem;
       margin-bottom: 0.55rem;
@@ -1376,7 +1387,8 @@
       <div class="biz-intro">
         <h2>Business finance operations — what matters to running a company</h2>
         <p>
-          Mock company: <strong>Harbourline Supplies Pty Ltd</strong> (demo only).
+          Mock company: <strong contenteditable="true" id="bizCompanyName" spellcheck="false" title="Click to edit company name">Harbourline Supplies Pty Ltd</strong>
+          · editable tables (add / edit / delete) · saves in this browser.
           This tab shows initiative in surfacing the operational finance areas businesses rely on daily —
           payables, receivables, cash control, payroll compliance, and tax basics —
           the same practical visibility AI agents and training should support.
@@ -1414,11 +1426,14 @@
             </p>
           </div>
           <div class="form-card">
-            <h3>This week’s action queue</h3>
+            <div class="section-head" style="margin:0 0 .5rem;align-items:center">
+              <h3 style="margin:0;color:var(--cyan)">This week’s action queue</h3>
+              <button class="btn btn-primary btn-sm" type="button" data-biz-add="actions">+ Add action</button>
+            </div>
             <div class="table-wrap" style="box-shadow:none;margin-top:.35rem">
               <table style="min-width:0">
                 <thead>
-                  <tr><th>Priority</th><th>Area</th><th>Action</th><th>Amount</th></tr>
+                  <tr><th>Priority</th><th>Area</th><th>Action</th><th>Amount</th><th></th></tr>
                 </thead>
                 <tbody id="bizActionQueue"></tbody>
               </table>
@@ -1442,12 +1457,15 @@
         </div>
 
         <div class="biz-section-block">
-          <h3>Accounts payable — supplier bills to pay</h3>
+          <div class="section-head" style="margin-top:0">
+            <h3 style="margin:0;color:var(--cyan)">Accounts payable — supplier bills to pay</h3>
+            <button class="btn btn-primary btn-sm" type="button" data-biz-add="ap">+ Add bill</button>
+          </div>
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>Bill #</th><th>Supplier</th><th>Due</th><th>Amount (inc GST)</th><th>GST</th><th>Status</th><th>Notes</th>
+                  <th>Bill #</th><th>Supplier</th><th>Due</th><th>Amount (inc GST)</th><th>GST</th><th>Status</th><th>Notes</th><th></th>
                 </tr>
               </thead>
               <tbody id="bizApBody"></tbody>
@@ -1456,7 +1474,7 @@
                   <td colspan="3">Open AP total</td>
                   <td id="bizApTotal">$0.00</td>
                   <td id="bizApGst">$0.00</td>
-                  <td colspan="2"></td>
+                  <td colspan="3"></td>
                 </tr>
               </tfoot>
             </table>
@@ -1464,12 +1482,15 @@
         </div>
 
         <div class="biz-section-block">
-          <h3>Purchase orders — approved / awaiting goods</h3>
+          <div class="section-head" style="margin-top:0">
+            <h3 style="margin:0;color:var(--cyan)">Purchase orders — approved / awaiting goods</h3>
+            <button class="btn btn-primary btn-sm" type="button" data-biz-add="po">+ Add PO</button>
+          </div>
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>PO #</th><th>Vendor</th><th>Requested by</th><th>Ordered</th><th>Amount</th><th>Status</th><th>Expected</th>
+                  <th>PO #</th><th>Vendor</th><th>Requested by</th><th>Ordered</th><th>Amount</th><th>Status</th><th>Expected</th><th></th>
                 </tr>
               </thead>
               <tbody id="bizPoBody"></tbody>
@@ -1478,12 +1499,15 @@
         </div>
 
         <div class="biz-section-block">
-          <h3>Processing payments — payment run queue</h3>
+          <div class="section-head" style="margin-top:0">
+            <h3 style="margin:0;color:var(--cyan)">Processing payments — payment run queue</h3>
+            <button class="btn btn-primary btn-sm" type="button" data-biz-add="payments">+ Add batch</button>
+          </div>
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>Batch</th><th>Method</th><th>Items</th><th>Scheduled</th><th>Amount</th><th>Status</th>
+                  <th>Batch</th><th>Method</th><th>Items</th><th>Scheduled</th><th>Amount</th><th>Status</th><th></th>
                 </tr>
               </thead>
               <tbody id="bizPayBody"></tbody>
@@ -1492,12 +1516,15 @@
         </div>
 
         <div class="biz-section-block">
-          <h3>Expense management — staff claims</h3>
+          <div class="section-head" style="margin-top:0">
+            <h3 style="margin:0;color:var(--cyan)">Expense management — staff claims</h3>
+            <button class="btn btn-primary btn-sm" type="button" data-biz-add="expenses">+ Add claim</button>
+          </div>
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>Claim #</th><th>Employee</th><th>Category</th><th>Submitted</th><th>Amount</th><th>Status</th><th>Receipt</th>
+                  <th>Claim #</th><th>Employee</th><th>Category</th><th>Submitted</th><th>Amount</th><th>Status</th><th>Receipt</th><th></th>
                 </tr>
               </thead>
               <tbody id="bizExpBody"></tbody>
@@ -1514,12 +1541,15 @@
         </div>
 
         <div class="biz-section-block">
-          <h3>Accounts receivable — customer balances</h3>
+          <div class="section-head" style="margin-top:0">
+            <h3 style="margin:0;color:var(--cyan)">Accounts receivable — customer balances</h3>
+            <button class="btn btn-primary btn-sm" type="button" data-biz-add="ar">+ Add AR</button>
+          </div>
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>Customer</th><th>Invoice #</th><th>Issued</th><th>Due</th><th>Amount</th><th>Days overdue</th><th>Status</th>
+                  <th>Customer</th><th>Invoice #</th><th>Issued</th><th>Due</th><th>Amount</th><th>Days overdue</th><th>Status</th><th></th>
                 </tr>
               </thead>
               <tbody id="bizArBody"></tbody>
@@ -1527,7 +1557,7 @@
                 <tr>
                   <td colspan="4">Outstanding AR</td>
                   <td id="bizArTotal">$0.00</td>
-                  <td colspan="2" id="bizArAging"></td>
+                  <td colspan="3" id="bizArAging"></td>
                 </tr>
               </tfoot>
             </table>
@@ -1535,12 +1565,15 @@
         </div>
 
         <div class="biz-section-block">
-          <h3>Invoicing — recently raised</h3>
+          <div class="section-head" style="margin-top:0">
+            <h3 style="margin:0;color:var(--cyan)">Invoicing — recently raised</h3>
+            <button class="btn btn-primary btn-sm" type="button" data-biz-add="invoices">+ Add invoice</button>
+          </div>
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>Invoice #</th><th>Customer</th><th>Date</th><th>Net</th><th>GST</th><th>Total</th><th>Status</th>
+                  <th>Invoice #</th><th>Customer</th><th>Date</th><th>Net</th><th>GST</th><th>Total</th><th>Status</th><th></th>
                 </tr>
               </thead>
               <tbody id="bizInvBody"></tbody>
@@ -1549,12 +1582,15 @@
         </div>
 
         <div class="biz-section-block">
-          <h3>Receipting — payments received</h3>
+          <div class="section-head" style="margin-top:0">
+            <h3 style="margin:0;color:var(--cyan)">Receipting — payments received</h3>
+            <button class="btn btn-primary btn-sm" type="button" data-biz-add="receipts">+ Add receipt</button>
+          </div>
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>Receipt #</th><th>Customer</th><th>Method</th><th>Date</th><th>Amount</th><th>Allocated to</th>
+                  <th>Receipt #</th><th>Customer</th><th>Method</th><th>Date</th><th>Amount</th><th>Allocated to</th><th></th>
                 </tr>
               </thead>
               <tbody id="bizRcptBody"></tbody>
@@ -1571,12 +1607,15 @@
         </div>
 
         <div class="biz-section-block">
-          <h3>Reconciliations — bank &amp; clearing</h3>
+          <div class="section-head" style="margin-top:0">
+            <h3 style="margin:0;color:var(--cyan)">Reconciliations — bank &amp; clearing</h3>
+            <button class="btn btn-primary btn-sm" type="button" data-biz-add="recon">+ Add recon</button>
+          </div>
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>Account</th><th>Period</th><th>Statement bal.</th><th>Book bal.</th><th>Difference</th><th>Status</th><th>Owner</th>
+                  <th>Account</th><th>Period</th><th>Statement bal.</th><th>Book bal.</th><th>Difference</th><th>Status</th><th>Owner</th><th></th>
                 </tr>
               </thead>
               <tbody id="bizRecBody"></tbody>
@@ -1586,11 +1625,14 @@
 
         <div class="biz-two-col">
           <div class="biz-section-block">
-            <h3>Petty cash</h3>
+            <div class="section-head" style="margin-top:0">
+              <h3 style="margin:0;color:var(--cyan)">Petty cash</h3>
+              <button class="btn btn-primary btn-sm" type="button" data-biz-add="petty">+ Add entry</button>
+            </div>
             <div class="table-wrap">
               <table style="min-width:0">
                 <thead>
-                  <tr><th>Date</th><th>Description</th><th>In / Out</th><th>Amount</th><th>Balance</th></tr>
+                  <tr><th>Date</th><th>Description</th><th>In / Out</th><th>Amount</th><th>Balance</th><th></th></tr>
                 </thead>
                 <tbody id="bizPettyBody"></tbody>
               </table>
@@ -1598,11 +1640,14 @@
             <p class="hint" id="bizPettyHint"></p>
           </div>
           <div class="biz-section-block">
-            <h3>Budgeting — month to date vs budget</h3>
+            <div class="section-head" style="margin-top:0">
+              <h3 style="margin:0;color:var(--cyan)">Budgeting — month to date vs budget</h3>
+              <button class="btn btn-primary btn-sm" type="button" data-biz-add="budget">+ Add line</button>
+            </div>
             <div class="table-wrap">
               <table style="min-width:0">
                 <thead>
-                  <tr><th>Category</th><th>Budget</th><th>Actual</th><th>Variance</th><th>%</th></tr>
+                  <tr><th>Category</th><th>Budget (mo)</th><th>Actual MTD</th><th>Variance</th><th>%</th><th></th></tr>
                 </thead>
                 <tbody id="bizBudgetBody"></tbody>
               </table>
@@ -1611,12 +1656,15 @@
         </div>
 
         <div class="biz-section-block">
-          <h3>Cash flow — weekly forecast</h3>
+          <div class="section-head" style="margin-top:0">
+            <h3 style="margin:0;color:var(--cyan)">Cash flow — weekly forecast</h3>
+            <button class="btn btn-primary btn-sm" type="button" data-biz-add="cashflowWeeks">+ Add week</button>
+          </div>
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>Week starting</th><th>Inflows</th><th>Outflows</th><th>Net</th><th>Closing cash</th>
+                  <th>Week starting</th><th>Inflows</th><th>Outflows</th><th>Net</th><th>Closing cash</th><th></th>
                 </tr>
               </thead>
               <tbody id="bizCfBody"></tbody>
@@ -1633,12 +1681,15 @@
         </div>
 
         <div class="biz-section-block">
-          <h3>Payroll processing — current pay run</h3>
+          <div class="section-head" style="margin-top:0">
+            <h3 style="margin:0;color:var(--cyan)">Payroll processing — current pay run</h3>
+            <button class="btn btn-primary btn-sm" type="button" data-biz-add="payroll">+ Add employee</button>
+          </div>
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>Employee</th><th>Role</th><th>Gross</th><th>Tax withheld</th><th>Super (11.5%)</th><th>Net pay</th><th>Status</th>
+                  <th>Employee</th><th>Role</th><th>Gross</th><th>Tax withheld</th><th>Super (11.5%)</th><th>Net pay</th><th>Status</th><th></th>
                 </tr>
               </thead>
               <tbody id="bizPayrunBody"></tbody>
@@ -1649,7 +1700,7 @@
                   <td id="bizTaxTotal">$0</td>
                   <td id="bizSuperTotal">$0</td>
                   <td id="bizNetTotal">$0</td>
-                  <td></td>
+                  <td colspan="2"></td>
                 </tr>
               </tfoot>
             </table>
@@ -1657,12 +1708,15 @@
         </div>
 
         <div class="biz-section-block">
-          <h3>Timesheets — approval status</h3>
+          <div class="section-head" style="margin-top:0">
+            <h3 style="margin:0;color:var(--cyan)">Timesheets — approval status</h3>
+            <button class="btn btn-primary btn-sm" type="button" data-biz-add="timesheets">+ Add timesheet</button>
+          </div>
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>Employee</th><th>Week ending</th><th>Ordinary hrs</th><th>OT hrs</th><th>Submitted</th><th>Status</th>
+                  <th>Employee</th><th>Week ending</th><th>Ordinary hrs</th><th>OT hrs</th><th>Submitted</th><th>Status</th><th></th>
                 </tr>
               </thead>
               <tbody id="bizTsBody"></tbody>
@@ -1672,22 +1726,28 @@
 
         <div class="biz-two-col">
           <div class="biz-section-block">
-            <h3>Superannuation — SG contributions</h3>
+            <div class="section-head" style="margin-top:0">
+              <h3 style="margin:0;color:var(--cyan)">Superannuation — SG contributions</h3>
+              <button class="btn btn-primary btn-sm" type="button" data-biz-add="super">+ Add super line</button>
+            </div>
             <div class="table-wrap">
               <table style="min-width:0">
                 <thead>
-                  <tr><th>Fund / clearing</th><th>Employees</th><th>Period</th><th>Amount</th><th>Due</th><th>Status</th></tr>
+                  <tr><th>Fund / clearing</th><th>Employees</th><th>Period</th><th>Amount</th><th>Due</th><th>Status</th><th></th></tr>
                 </thead>
                 <tbody id="bizSuperBody"></tbody>
               </table>
             </div>
           </div>
           <div class="biz-section-block">
-            <h3>Tax / GST basics — BAS draft</h3>
+            <div class="section-head" style="margin-top:0">
+              <h3 style="margin:0;color:var(--cyan)">Tax / GST basics — BAS draft</h3>
+              <button class="btn btn-primary btn-sm" type="button" data-biz-add="gst">+ Add line</button>
+            </div>
             <div class="table-wrap">
               <table style="min-width:0">
                 <thead>
-                  <tr><th>Label</th><th>Description</th><th>Amount</th></tr>
+                  <tr><th>Label</th><th>Description</th><th>Amount</th><th></th></tr>
                 </thead>
                 <tbody id="bizGstBody"></tbody>
               </table>
@@ -1701,13 +1761,16 @@
       <section class="panel biz-panel" id="biz-panel-records">
         <div class="section-head">
           <h2>Financial records</h2>
-          <span class="subtotal">Document register · audit-ready trail</span>
+          <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
+            <span class="subtotal">Document register · audit-ready trail</span>
+            <button class="btn btn-primary btn-sm" type="button" data-biz-add="records">+ Add record</button>
+          </div>
         </div>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Record</th><th>Type</th><th>Period</th><th>Owner</th><th>Last updated</th><th>Status</th><th>Location</th>
+                <th>Record</th><th>Type</th><th>Period</th><th>Owner</th><th>Last updated</th><th>Status</th><th>Location</th><th></th>
               </tr>
             </thead>
             <tbody id="bizRecordsBody"></tbody>
@@ -2790,164 +2853,348 @@
       renderBusiness();
     }
 
-    // ---------- Business operations mock data ----------
-    const BIZ = {
+
+    // ---------- Business operations (editable mock data) ----------
+    const BIZ_STORAGE_KEY = "financial-tracker-biz-showcase-v1";
+
+    const DEFAULT_BIZ = {
       company: "Harbourline Supplies Pty Ltd",
       ap: [
-        { bill: "AP-1042", supplier: "Pacific Packaging Co", due: "2026-08-15", amount: 2860, gst: 260, status: "Due soon", notes: "Cartons & tape" },
-        { bill: "AP-1048", supplier: "Metro Freight Group", due: "2026-08-18", amount: 1540, gst: 140, status: "Open", notes: "Outbound freight" },
-        { bill: "AP-1051", supplier: "Office Hub Supplies", due: "2026-08-22", amount: 486.2, gst: 44.2, status: "Open", notes: "Stationery restock" },
-        { bill: "AP-1039", supplier: "Coastal Utilities", due: "2026-08-12", amount: 920, gst: 83.64, status: "Overdue", notes: "Warehouse power" },
+        { id: "ap1", bill: "AP-1042", supplier: "Pacific Packaging Co", due: "2026-08-15", amount: 2860, gst: 260, status: "Due soon", notes: "Cartons & tape" },
+        { id: "ap2", bill: "AP-1048", supplier: "Metro Freight Group", due: "2026-08-18", amount: 1540, gst: 140, status: "Open", notes: "Outbound freight" },
+        { id: "ap3", bill: "AP-1051", supplier: "Office Hub Supplies", due: "2026-08-22", amount: 486.2, gst: 44.2, status: "Open", notes: "Stationery restock" },
+        { id: "ap4", bill: "AP-1039", supplier: "Coastal Utilities", due: "2026-08-12", amount: 920, gst: 83.64, status: "Overdue", notes: "Warehouse power" },
       ],
       po: [
-        { po: "PO-331", vendor: "Northline Plastics", by: "Ops · Mia", ordered: "2026-08-08", amount: 4200, status: "Awaiting delivery", expected: "2026-08-19" },
-        { po: "PO-334", vendor: "SafeStep PPE", by: "WHS · Tom", ordered: "2026-08-10", amount: 980, status: "Part received", expected: "2026-08-16" },
-        { po: "PO-336", vendor: "ByteCloud SaaS", by: "Admin · Priya", ordered: "2026-08-11", amount: 240, status: "Approved", expected: "N/A (subscription)" },
+        { id: "po1", po: "PO-331", vendor: "Northline Plastics", by: "Ops · Mia", ordered: "2026-08-08", amount: 4200, status: "Awaiting delivery", expected: "2026-08-19" },
+        { id: "po2", po: "PO-334", vendor: "SafeStep PPE", by: "WHS · Tom", ordered: "2026-08-10", amount: 980, status: "Part received", expected: "2026-08-16" },
+        { id: "po3", po: "PO-336", vendor: "ByteCloud SaaS", by: "Admin · Priya", ordered: "2026-08-11", amount: 240, status: "Approved", expected: "N/A (subscription)" },
       ],
       payments: [
-        { batch: "PAY-0826-A", method: "ABA / EFT", items: 6, scheduled: "2026-08-14", amount: 6120.5, status: "Queued" },
-        { batch: "PAY-0826-B", method: "BPAY", items: 2, scheduled: "2026-08-15", amount: 920, status: "Draft" },
-        { batch: "PAY-0820-C", method: "Card", items: 1, scheduled: "2026-08-11", amount: 189.9, status: "Processed" },
+        { id: "pay1", batch: "PAY-0826-A", method: "ABA / EFT", items: 6, scheduled: "2026-08-14", amount: 6120.5, status: "Queued" },
+        { id: "pay2", batch: "PAY-0826-B", method: "BPAY", items: 2, scheduled: "2026-08-15", amount: 920, status: "Draft" },
+        { id: "pay3", batch: "PAY-0820-C", method: "Card", items: 1, scheduled: "2026-08-11", amount: 189.9, status: "Processed" },
       ],
       expenses: [
-        { claim: "EX-221", employee: "Sam Lee", category: "Travel", submitted: "2026-08-09", amount: 86.4, status: "Approved", receipt: "Yes" },
-        { claim: "EX-224", employee: "Mia Chen", category: "Client lunch", submitted: "2026-08-11", amount: 124.5, status: "Pending manager", receipt: "Yes" },
-        { claim: "EX-226", employee: "Tom Nguyen", category: "Tools", submitted: "2026-08-12", amount: 59.0, status: "Needs receipt", receipt: "Missing" },
+        { id: "ex1", claim: "EX-221", employee: "Sam Lee", category: "Travel", submitted: "2026-08-09", amount: 86.4, status: "Approved", receipt: "Yes" },
+        { id: "ex2", claim: "EX-224", employee: "Mia Chen", category: "Client lunch", submitted: "2026-08-11", amount: 124.5, status: "Pending manager", receipt: "Yes" },
+        { id: "ex3", claim: "EX-226", employee: "Tom Nguyen", category: "Tools", submitted: "2026-08-12", amount: 59.0, status: "Needs receipt", receipt: "Missing" },
       ],
       ar: [
-        { customer: "Brightside Cafe Group", inv: "INV-9081", issued: "2026-07-28", due: "2026-08-11", amount: 3520, overdue: 1, status: "Overdue" },
-        { customer: "Summit Builders", inv: "INV-9090", issued: "2026-08-01", due: "2026-08-15", amount: 8750, overdue: 0, status: "Open" },
-        { customer: "Lakeview Pharmacy", inv: "INV-9094", issued: "2026-08-05", due: "2026-08-19", amount: 1460, overdue: 0, status: "Open" },
-        { customer: "Orbital Media", inv: "INV-9072", issued: "2026-07-20", due: "2026-08-03", amount: 990, overdue: 9, status: "Collections" },
+        { id: "ar1", customer: "Brightside Cafe Group", inv: "INV-9081", issued: "2026-07-28", due: "2026-08-11", amount: 3520, overdue: 1, status: "Overdue" },
+        { id: "ar2", customer: "Summit Builders", inv: "INV-9090", issued: "2026-08-01", due: "2026-08-15", amount: 8750, overdue: 0, status: "Open" },
+        { id: "ar3", customer: "Lakeview Pharmacy", inv: "INV-9094", issued: "2026-08-05", due: "2026-08-19", amount: 1460, overdue: 0, status: "Open" },
+        { id: "ar4", customer: "Orbital Media", inv: "INV-9072", issued: "2026-07-20", due: "2026-08-03", amount: 990, overdue: 9, status: "Collections" },
       ],
       invoices: [
-        { inv: "INV-9094", customer: "Lakeview Pharmacy", date: "2026-08-05", net: 1327.27, gst: 132.73, total: 1460, status: "Sent" },
-        { inv: "INV-9095", customer: "Harbour Gym Co", date: "2026-08-10", net: 2100, gst: 210, total: 2310, status: "Sent" },
-        { inv: "INV-9096", customer: "Summit Builders", date: "2026-08-12", net: 4500, gst: 450, total: 4950, status: "Draft" },
+        { id: "inv1", inv: "INV-9094", customer: "Lakeview Pharmacy", date: "2026-08-05", net: 1327.27, gst: 132.73, total: 1460, status: "Sent" },
+        { id: "inv2", inv: "INV-9095", customer: "Harbour Gym Co", date: "2026-08-10", net: 2100, gst: 210, total: 2310, status: "Sent" },
+        { id: "inv3", inv: "INV-9096", customer: "Summit Builders", date: "2026-08-12", net: 4500, gst: 450, total: 4950, status: "Draft" },
       ],
       receipts: [
-        { rcpt: "RCT-4412", customer: "Summit Builders", method: "EFT", date: "2026-08-08", amount: 4000, allocated: "INV-9060 (part)" },
-        { rcpt: "RCT-4415", customer: "Brightside Cafe Group", method: "Card", date: "2026-08-09", amount: 880, allocated: "INV-9078" },
-        { rcpt: "RCT-4418", customer: "Lakeview Pharmacy", method: "EFT", date: "2026-08-11", amount: 1460, allocated: "INV-9094" },
+        { id: "rc1", rcpt: "RCT-4412", customer: "Summit Builders", method: "EFT", date: "2026-08-08", amount: 4000, allocated: "INV-9060 (part)" },
+        { id: "rc2", rcpt: "RCT-4415", customer: "Brightside Cafe Group", method: "Card", date: "2026-08-09", amount: 880, allocated: "INV-9078" },
+        { id: "rc3", rcpt: "RCT-4418", customer: "Lakeview Pharmacy", method: "EFT", date: "2026-08-11", amount: 1460, allocated: "INV-9094" },
       ],
       recon: [
-        { account: "Operating · ANZ 062-000", period: "Jul 2026", stmt: 42850.22, book: 42850.22, diff: 0, status: "Reconciled", owner: "Bookkeeper" },
-        { account: "Operating · ANZ 062-000", period: "1–12 Aug 2026", stmt: 39120.1, book: 38940.1, diff: 180, status: "In progress", owner: "Bookkeeper" },
-        { account: "Clearing · Stripe", period: "Aug W1", stmt: 6120, book: 6120, diff: 0, status: "Reconciled", owner: "Admin" },
+        { id: "re1", account: "Operating · ANZ 062-000", period: "Jul 2026", stmt: 42850.22, book: 42850.22, diff: 0, status: "Reconciled", owner: "Bookkeeper" },
+        { id: "re2", account: "Operating · ANZ 062-000", period: "1–12 Aug 2026", stmt: 39120.1, book: 38940.1, diff: 180, status: "In progress", owner: "Bookkeeper" },
+        { id: "re3", account: "Clearing · Stripe", period: "Aug W1", stmt: 6120, book: 6120, diff: 0, status: "Reconciled", owner: "Admin" },
       ],
       petty: [
-        { date: "2026-08-01", desc: "Float top-up", dir: "In", amount: 200, bal: 200 },
-        { date: "2026-08-04", desc: "Courier labels", dir: "Out", amount: 18.5, bal: 181.5 },
-        { date: "2026-08-07", desc: "Milk & kitchen", dir: "Out", amount: 12.4, bal: 169.1 },
-        { date: "2026-08-11", desc: "Parking (client visit)", dir: "Out", amount: 16, bal: 153.1 },
+        { id: "pt1", date: "2026-08-01", desc: "Float top-up", dir: "In", amount: 200, bal: 200 },
+        { id: "pt2", date: "2026-08-04", desc: "Courier labels", dir: "Out", amount: 18.5, bal: 181.5 },
+        { id: "pt3", date: "2026-08-07", desc: "Milk & kitchen", dir: "Out", amount: 12.4, bal: 169.1 },
+        { id: "pt4", date: "2026-08-11", desc: "Parking (client visit)", dir: "Out", amount: 16, bal: 153.1 },
       ],
       budget: [
-        { cat: "Sales revenue", budget: 120000, actual: 48200 },
-        { cat: "Cost of goods", budget: 54000, actual: 22100 },
-        { cat: "Wages & super", budget: 32000, actual: 12840 },
-        { cat: "Rent & utilities", budget: 9000, actual: 4100 },
-        { cat: "Marketing", budget: 4000, actual: 2650 },
-        { cat: "Admin / software", budget: 2500, actual: 980 },
+        { id: "bd1", cat: "Sales revenue", budget: 120000, actual: 48200 },
+        { id: "bd2", cat: "Cost of goods", budget: 54000, actual: 22100 },
+        { id: "bd3", cat: "Wages & super", budget: 32000, actual: 12840 },
+        { id: "bd4", cat: "Rent & utilities", budget: 9000, actual: 4100 },
+        { id: "bd5", cat: "Marketing", budget: 4000, actual: 2650 },
+        { id: "bd6", cat: "Admin / software", budget: 2500, actual: 980 },
       ],
       cashflowWeeks: [
-        { week: "11 Aug", in: 18500, out: 15200, close: 39120 },
-        { week: "18 Aug", in: 14200, out: 16800, close: 36520 },
-        { week: "25 Aug", in: 21000, out: 14100, close: 43420 },
-        { week: "1 Sep", in: 16000, out: 17550, close: 41870 },
+        { id: "cf1", week: "11 Aug", in: 18500, out: 15200, close: 39120 },
+        { id: "cf2", week: "18 Aug", in: 14200, out: 16800, close: 36520 },
+        { id: "cf3", week: "25 Aug", in: 21000, out: 14100, close: 43420 },
+        { id: "cf4", week: "1 Sep", in: 16000, out: 17550, close: 41870 },
       ],
       payroll: [
-        { name: "Mia Chen", role: "Operations lead", gross: 2300, tax: 420, super: 264.5, net: 1880, status: "Ready" },
-        { name: "Tom Nguyen", role: "Warehouse", gross: 1680, tax: 250, super: 193.2, net: 1430, status: "Ready" },
-        { name: "Sam Lee", role: "Sales", gross: 1950, tax: 340, super: 224.25, net: 1610, status: "Timesheet pending" },
-        { name: "Priya Shah", role: "Admin", gross: 1750, tax: 280, super: 201.25, net: 1470, status: "Ready" },
+        { id: "pr1", name: "Mia Chen", role: "Operations lead", gross: 2300, tax: 420, super: 264.5, net: 1880, status: "Ready" },
+        { id: "pr2", name: "Tom Nguyen", role: "Warehouse", gross: 1680, tax: 250, super: 193.2, net: 1430, status: "Ready" },
+        { id: "pr3", name: "Sam Lee", role: "Sales", gross: 1950, tax: 340, super: 224.25, net: 1610, status: "Timesheet pending" },
+        { id: "pr4", name: "Priya Shah", role: "Admin", gross: 1750, tax: 280, super: 201.25, net: 1470, status: "Ready" },
       ],
       timesheets: [
-        { name: "Mia Chen", week: "10 Aug 2026", ord: 38, ot: 2, submitted: "Yes", status: "Approved" },
-        { name: "Tom Nguyen", week: "10 Aug 2026", ord: 38, ot: 4, submitted: "Yes", status: "Approved" },
-        { name: "Sam Lee", week: "10 Aug 2026", ord: 36, ot: 0, submitted: "No", status: "Missing" },
-        { name: "Priya Shah", week: "10 Aug 2026", ord: 38, ot: 0, submitted: "Yes", status: "Approved" },
+        { id: "ts1", name: "Mia Chen", week: "10 Aug 2026", ord: 38, ot: 2, submitted: "Yes", status: "Approved" },
+        { id: "ts2", name: "Tom Nguyen", week: "10 Aug 2026", ord: 38, ot: 4, submitted: "Yes", status: "Approved" },
+        { id: "ts3", name: "Sam Lee", week: "10 Aug 2026", ord: 36, ot: 0, submitted: "No", status: "Missing" },
+        { id: "ts4", name: "Priya Shah", week: "10 Aug 2026", ord: 38, ot: 0, submitted: "Yes", status: "Approved" },
       ],
       super: [
-        { fund: "Clearing house batch", employees: 4, period: "Jul 2026", amount: 3520.4, due: "28 Aug 2026", status: "Scheduled" },
-        { fund: "Employee choice top-ups", employees: 1, period: "Jul 2026", amount: 120, due: "28 Aug 2026", status: "Draft" },
+        { id: "su1", fund: "Clearing house batch", employees: 4, period: "Jul 2026", amount: 3520.4, due: "28 Aug 2026", status: "Scheduled" },
+        { id: "su2", fund: "Employee choice top-ups", employees: 1, period: "Jul 2026", amount: 120, due: "28 Aug 2026", status: "Draft" },
       ],
       gst: [
-        { label: "G1", desc: "Total sales (incl. GST)", amount: 52800 },
-        { label: "1A", desc: "GST on sales", amount: 4800 },
-        { label: "G11", desc: "Non-capital purchases", amount: 21450 },
-        { label: "1B", desc: "GST on purchases", amount: 1950 },
-        { label: "W2", desc: "PAYG withholding", amount: 5160 },
-        { label: "9", desc: "Net amount payable (demo)", amount: 8010 },
+        { id: "g1", label: "G1", desc: "Total sales (incl. GST)", amount: 52800 },
+        { id: "g2", label: "1A", desc: "GST on sales", amount: 4800 },
+        { id: "g3", label: "G11", desc: "Non-capital purchases", amount: 21450 },
+        { id: "g4", label: "1B", desc: "GST on purchases", amount: 1950 },
+        { id: "g5", label: "W2", desc: "PAYG withholding", amount: 5160 },
+        { id: "g6", label: "9", desc: "Net amount payable (demo)", amount: 8010 },
       ],
       records: [
-        { name: "Sales invoice register", type: "AR / invoicing", period: "FY26 YTD", owner: "Admin", updated: "2026-08-12", status: "Current", loc: "Drive / Finance / AR" },
-        { name: "Supplier bill folder", type: "AP", period: "Aug 2026", owner: "Bookkeeper", updated: "2026-08-12", status: "Current", loc: "Drive / Finance / AP" },
-        { name: "Bank statements", type: "Reconciliation", period: "Jul 2026", owner: "Bookkeeper", updated: "2026-08-05", status: "Filed", loc: "Drive / Finance / Bank" },
-        { name: "Payroll summaries", type: "Payroll", period: "FY26", owner: "Admin", updated: "2026-08-08", status: "Current", loc: "Payroll software export" },
-        { name: "BAS working papers", type: "Tax / GST", period: "Q4 FY26 draft", owner: "Bookkeeper", updated: "2026-08-10", status: "Draft", loc: "Drive / Finance / BAS" },
-        { name: "PO log", type: "Purchase orders", period: "FY26", owner: "Ops", updated: "2026-08-11", status: "Current", loc: "Ops spreadsheet" },
+        { id: "rd1", name: "Sales invoice register", type: "AR / invoicing", period: "FY26 YTD", owner: "Admin", updated: "2026-08-12", status: "Current", loc: "Drive / Finance / AR" },
+        { id: "rd2", name: "Supplier bill folder", type: "AP", period: "Aug 2026", owner: "Bookkeeper", updated: "2026-08-12", status: "Current", loc: "Drive / Finance / AP" },
+        { id: "rd3", name: "Bank statements", type: "Reconciliation", period: "Jul 2026", owner: "Bookkeeper", updated: "2026-08-05", status: "Filed", loc: "Drive / Finance / Bank" },
+        { id: "rd4", name: "Payroll summaries", type: "Payroll", period: "FY26", owner: "Admin", updated: "2026-08-08", status: "Current", loc: "Payroll software export" },
+        { id: "rd5", name: "BAS working papers", type: "Tax / GST", period: "Q4 FY26 draft", owner: "Bookkeeper", updated: "2026-08-10", status: "Draft", loc: "Drive / Finance / BAS" },
+        { id: "rd6", name: "PO log", type: "Purchase orders", period: "FY26", owner: "Ops", updated: "2026-08-11", status: "Current", loc: "Ops spreadsheet" },
       ],
       actions: [
-        { priority: "High", area: "Accounts payable", action: "Pay Coastal Utilities (overdue)", amount: 920 },
-        { priority: "High", area: "Accounts receivable", action: "Follow up Orbital Media INV-9072", amount: 990 },
-        { priority: "Medium", area: "Timesheets", action: "Chase Sam Lee timesheet", amount: 0 },
-        { priority: "Medium", area: "Processing payments", action: "Release PAY-0826-A batch", amount: 6120.5 },
-        { priority: "Low", area: "Expense management", action: "Request missing receipt EX-226", amount: 59 },
+        { id: "ac1", priority: "High", area: "Accounts payable", action: "Pay Coastal Utilities (overdue)", amount: 920 },
+        { id: "ac2", priority: "High", area: "Accounts receivable", action: "Follow up Orbital Media INV-9072", amount: 990 },
+        { id: "ac3", priority: "Medium", area: "Timesheets", action: "Chase Sam Lee timesheet", amount: 0 },
+        { id: "ac4", priority: "Medium", area: "Processing payments", action: "Release PAY-0826-A batch", amount: 6120.5 },
+        { id: "ac5", priority: "Low", area: "Expense management", action: "Request missing receipt EX-226", amount: 59 },
       ],
     };
+
+    const BIZ_SCHEMAS = {
+      ap: [
+        { key: "bill", type: "text" }, { key: "supplier", type: "text" }, { key: "due", type: "text" },
+        { key: "amount", type: "number" }, { key: "gst", type: "number" }, { key: "status", type: "text" }, { key: "notes", type: "text" },
+      ],
+      po: [
+        { key: "po", type: "text" }, { key: "vendor", type: "text" }, { key: "by", type: "text" },
+        { key: "ordered", type: "text" }, { key: "amount", type: "number" }, { key: "status", type: "text" }, { key: "expected", type: "text" },
+      ],
+      payments: [
+        { key: "batch", type: "text" }, { key: "method", type: "text" }, { key: "items", type: "number" },
+        { key: "scheduled", type: "text" }, { key: "amount", type: "number" }, { key: "status", type: "text" },
+      ],
+      expenses: [
+        { key: "claim", type: "text" }, { key: "employee", type: "text" }, { key: "category", type: "text" },
+        { key: "submitted", type: "text" }, { key: "amount", type: "number" }, { key: "status", type: "text" }, { key: "receipt", type: "text" },
+      ],
+      ar: [
+        { key: "customer", type: "text" }, { key: "inv", type: "text" }, { key: "issued", type: "text" },
+        { key: "due", type: "text" }, { key: "amount", type: "number" }, { key: "overdue", type: "number" }, { key: "status", type: "text" },
+      ],
+      invoices: [
+        { key: "inv", type: "text" }, { key: "customer", type: "text" }, { key: "date", type: "text" },
+        { key: "net", type: "number" }, { key: "gst", type: "number" }, { key: "total", type: "number" }, { key: "status", type: "text" },
+      ],
+      receipts: [
+        { key: "rcpt", type: "text" }, { key: "customer", type: "text" }, { key: "method", type: "text" },
+        { key: "date", type: "text" }, { key: "amount", type: "number" }, { key: "allocated", type: "text" },
+      ],
+      recon: [
+        { key: "account", type: "text" }, { key: "period", type: "text" }, { key: "stmt", type: "number" },
+        { key: "book", type: "number" }, { key: "diff", type: "number" }, { key: "status", type: "text" }, { key: "owner", type: "text" },
+      ],
+      petty: [
+        { key: "date", type: "text" }, { key: "desc", type: "text" }, { key: "dir", type: "text" },
+        { key: "amount", type: "number" }, { key: "bal", type: "number" },
+      ],
+      budget: [
+        { key: "cat", type: "text" }, { key: "budget", type: "number" }, { key: "actual", type: "number" },
+      ],
+      cashflowWeeks: [
+        { key: "week", type: "text" }, { key: "in", type: "number" }, { key: "out", type: "number" }, { key: "close", type: "number" },
+      ],
+      payroll: [
+        { key: "name", type: "text" }, { key: "role", type: "text" }, { key: "gross", type: "number" },
+        { key: "tax", type: "number" }, { key: "super", type: "number" }, { key: "net", type: "number" }, { key: "status", type: "text" },
+      ],
+      timesheets: [
+        { key: "name", type: "text" }, { key: "week", type: "text" }, { key: "ord", type: "number" },
+        { key: "ot", type: "number" }, { key: "submitted", type: "text" }, { key: "status", type: "text" },
+      ],
+      super: [
+        { key: "fund", type: "text" }, { key: "employees", type: "number" }, { key: "period", type: "text" },
+        { key: "amount", type: "number" }, { key: "due", type: "text" }, { key: "status", type: "text" },
+      ],
+      gst: [
+        { key: "label", type: "text" }, { key: "desc", type: "text" }, { key: "amount", type: "number" },
+      ],
+      records: [
+        { key: "name", type: "text" }, { key: "type", type: "text" }, { key: "period", type: "text" },
+        { key: "owner", type: "text" }, { key: "updated", type: "text" }, { key: "status", type: "text" }, { key: "loc", type: "text" },
+      ],
+      actions: [
+        { key: "priority", type: "text" }, { key: "area", type: "text" }, { key: "action", type: "text" }, { key: "amount", type: "number" },
+      ],
+    };
+
+    const BIZ_DEFAULTS = {
+      ap: { bill: "AP-NEW", supplier: "New supplier", due: "", amount: 0, gst: 0, status: "Open", notes: "" },
+      po: { po: "PO-NEW", vendor: "New vendor", by: "", ordered: "", amount: 0, status: "Draft", expected: "" },
+      payments: { batch: "PAY-NEW", method: "EFT", items: 1, scheduled: "", amount: 0, status: "Draft" },
+      expenses: { claim: "EX-NEW", employee: "", category: "General", submitted: "", amount: 0, status: "Pending", receipt: "No" },
+      ar: { customer: "New customer", inv: "INV-NEW", issued: "", due: "", amount: 0, overdue: 0, status: "Open" },
+      invoices: { inv: "INV-NEW", customer: "", date: "", net: 0, gst: 0, total: 0, status: "Draft" },
+      receipts: { rcpt: "RCT-NEW", customer: "", method: "EFT", date: "", amount: 0, allocated: "" },
+      recon: { account: "Operating", period: "", stmt: 0, book: 0, diff: 0, status: "In progress", owner: "" },
+      petty: { date: "", desc: "New entry", dir: "Out", amount: 0, bal: 0 },
+      budget: { cat: "New category", budget: 0, actual: 0 },
+      cashflowWeeks: { week: "New week", in: 0, out: 0, close: 0 },
+      payroll: { name: "New employee", role: "", gross: 0, tax: 0, super: 0, net: 0, status: "Ready" },
+      timesheets: { name: "", week: "", ord: 38, ot: 0, submitted: "No", status: "Pending" },
+      super: { fund: "New fund", employees: 1, period: "", amount: 0, due: "", status: "Draft" },
+      gst: { label: "X", desc: "New line", amount: 0 },
+      records: { name: "New record", type: "General", period: "", owner: "", updated: "", status: "Draft", loc: "" },
+      actions: { priority: "Medium", area: "General", action: "New action", amount: 0 },
+    };
+
+    let bizData = null;
+    let bizWired = false;
+
+    function ensureBizIds(store) {
+      Object.keys(BIZ_SCHEMAS).forEach((k) => {
+        (store[k] || []).forEach((row) => {
+          if (!row.id) row.id = uid();
+        });
+      });
+      if (!store.company) store.company = DEFAULT_BIZ.company;
+      return store;
+    }
+
+    function loadBiz() {
+      try {
+        const raw = localStorage.getItem(BIZ_STORAGE_KEY);
+        if (raw) {
+          bizData = ensureBizIds(JSON.parse(raw));
+          return;
+        }
+      } catch (e) {
+        console.warn("Could not load business data", e);
+      }
+      bizData = ensureBizIds(deepClone(DEFAULT_BIZ));
+    }
+
+    function saveBiz() {
+      try {
+        localStorage.setItem(BIZ_STORAGE_KEY, JSON.stringify(bizData));
+        dirty = false;
+        const el = document.getElementById("saveStatus");
+        if (el) {
+          el.textContent = "Saved";
+          el.className = "save-status saved";
+        }
+      } catch (e) {
+        toast("Business save failed — storage may be full");
+      }
+    }
+
+    function markBizDirty() {
+      dirty = true;
+      const el = document.getElementById("saveStatus");
+      if (el) {
+        el.textContent = "Unsaved…";
+        el.className = "save-status dirty";
+      }
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => {
+        save();
+        saveBiz();
+      }, 400);
+    }
 
     function statusPill(status) {
       const s = String(status || "").toLowerCase();
       let cls = "info";
       if (/reconcil|approved|processed|filed|current|ready|sent|yes/.test(s)) cls = "ok";
-      else if (/progress|pending|draft|queued|await|part|scheduled/.test(s)) cls = "warn";
-      else if (/overdue|missing|collection|due soon/.test(s)) cls = "due";
+      else if (/progress|pending|draft|queued|await|part|scheduled|medium|low/.test(s)) cls = "warn";
+      else if (/overdue|missing|collection|due soon|high/.test(s)) cls = "due";
       return `<span class="status-pill ${cls}">${esc(status)}</span>`;
     }
 
     function sumField(arr, key) {
-      return arr.reduce((t, r) => t + (Number(r[key]) || 0), 0);
+      return (arr || []).reduce((t, r) => t + (Number(r[key]) || 0), 0);
+    }
+
+    function bizInput(row, field) {
+      const val = row[field.key];
+      if (field.type === "number") {
+        return `<input type="number" step="0.01" data-field="${field.key}" value="${num(val)}" />`;
+      }
+      return `<input type="text" data-field="${field.key}" value="${esc(val ?? "")}" />`;
+    }
+
+    function bizDelBtn(collection, id) {
+      return `<td class="actions-cell"><button class="btn btn-icon btn-danger btn-sm" type="button" data-biz-del="${collection}" data-id="${id}" title="Delete">×</button></td>`;
+    }
+
+    function renderBizRows(collection, extraCellsFn) {
+      const schema = BIZ_SCHEMAS[collection];
+      const rows = bizData[collection] || [];
+      if (!rows.length) {
+        return `<tr><td colspan="${schema.length + 1 + (extraCellsFn ? 2 : 0)}" class="empty">No rows — click + Add to create one.</td></tr>`;
+      }
+      return rows
+        .map((row) => {
+          const cells = schema.map((f) => `<td>${bizInput(row, f)}</td>`).join("");
+          const extra = extraCellsFn ? extraCellsFn(row) : "";
+          return `<tr data-id="${row.id}" data-biz-collection="${collection}">${cells}${extra}${bizDelBtn(collection, row.id)}</tr>`;
+        })
+        .join("");
     }
 
     function renderBusiness() {
-      const apOpen = sumField(BIZ.ap, "amount");
-      const arOpen = sumField(BIZ.ar, "amount");
-      const payQueued = BIZ.payments.filter((p) => /queue|draft/i.test(p.status)).reduce((t, p) => t + p.amount, 0);
-      const expPending = BIZ.expenses.filter((e) => !/approved/i.test(e.status)).reduce((t, e) => t + e.amount, 0);
-      const gross = sumField(BIZ.payroll, "gross");
-      const superAmt = sumField(BIZ.payroll, "super");
-      const gstPay = BIZ.gst.find((g) => g.label === "9")?.amount || 0;
-      const cashClose = BIZ.cashflowWeeks[0]?.close || 0;
-      const pettyBal = BIZ.petty[BIZ.petty.length - 1]?.bal || 0;
-      const recDiff = BIZ.recon.reduce((t, r) => t + Math.abs(Number(r.diff) || 0), 0);
-      const poOpen = sumField(BIZ.po, "amount");
-      const invDraft = BIZ.invoices.filter((i) => /draft/i.test(i.status)).length;
-      const rcptWeek = sumField(BIZ.receipts, "amount");
-      const tsMissing = BIZ.timesheets.filter((t) => /missing|no/i.test(t.status + t.submitted)).length;
-      const recordsOk = BIZ.records.filter((r) => /current|filed/i.test(r.status)).length;
+      if (!bizData) loadBiz();
+      const B = bizData;
+
+      const companyEl = document.getElementById("bizCompanyName");
+      if (companyEl && document.activeElement !== companyEl) {
+        companyEl.textContent = B.company || "Sample company";
+      }
+
+      const apOpen = sumField(B.ap, "amount");
+      const arOpen = sumField(B.ar, "amount");
+      const payQueued = (B.payments || [])
+        .filter((p) => /queue|draft/i.test(p.status || ""))
+        .reduce((t, p) => t + (Number(p.amount) || 0), 0);
+      const expPending = (B.expenses || [])
+        .filter((e) => !/approved/i.test(e.status || ""))
+        .reduce((t, e) => t + (Number(e.amount) || 0), 0);
+      const gross = sumField(B.payroll, "gross");
+      const superAmt = sumField(B.payroll, "super");
+      const gstPayRow = (B.gst || []).find((g) => String(g.label) === "9");
+      const gstPay = gstPayRow ? Number(gstPayRow.amount) || 0 : sumField(B.gst, "amount");
+      const cashClose = B.cashflowWeeks?.[0] ? Number(B.cashflowWeeks[0].close) || 0 : 0;
+      const pettyBal = B.petty?.length ? Number(B.petty[B.petty.length - 1].bal) || 0 : 0;
+      const recDiff = (B.recon || []).reduce((t, r) => t + Math.abs(Number(r.diff) || 0), 0);
+      const poOpen = sumField(B.po, "amount");
+      const invDraft = (B.invoices || []).filter((i) => /draft/i.test(i.status || "")).length;
+      const rcptWeek = sumField(B.receipts, "amount");
+      const tsMissing = (B.timesheets || []).filter((t) => /missing|no/i.test((t.status || "") + (t.submitted || ""))).length;
+      const recordsOk = (B.records || []).filter((r) => /current|filed/i.test(r.status || "")).length;
 
       const snap = document.getElementById("bizSnapshot");
       if (snap) {
         snap.innerHTML = `
           <div class="card-metric">
-            <div class="label">Cash on hand (demo)</div>
+            <div class="label">Cash on hand</div>
             <div class="value cyan">${money(cashClose)}</div>
-            <div class="note">Operating account snapshot</div>
+            <div class="note">From first cash-flow week close</div>
           </div>
           <div class="card-metric">
             <div class="label">Accounts receivable</div>
             <div class="value amber">${money(arOpen)}</div>
-            <div class="note">${BIZ.ar.length} open customer invoices</div>
+            <div class="note">${(B.ar || []).length} open customer invoices</div>
           </div>
           <div class="card-metric">
             <div class="label">Accounts payable</div>
             <div class="value purple">${money(apOpen)}</div>
-            <div class="note">${BIZ.ap.length} supplier bills open</div>
+            <div class="note">${(B.ap || []).length} supplier bills open</div>
           </div>
           <div class="card-metric">
             <div class="label">Payment run queued</div>
             <div class="value">${money(payQueued)}</div>
-            <div class="note">Processing payments batch</div>
+            <div class="note">Draft / queued batches</div>
           </div>
           <div class="card-metric">
             <div class="label">Payroll gross (cycle)</div>
@@ -2955,28 +3202,28 @@
             <div class="note">Super this run ${money(superAmt)}</div>
           </div>
           <div class="card-metric">
-            <div class="label">BAS net payable (draft)</div>
+            <div class="label">BAS net payable</div>
             <div class="value ${gstPay > 0 ? "neg" : "pos"}">${money(gstPay)}</div>
-            <div class="note">Tax / GST basics demo</div>
+            <div class="note">Tax / GST (label 9 if present)</div>
           </div>`;
       }
 
       const caps = [
-        { label: "Accounts payable", value: money(apOpen), note: `${BIZ.ap.length} open bills` },
-        { label: "Accounts receivable", value: money(arOpen), note: `${BIZ.ar.length} open invoices` },
-        { label: "Invoicing", value: `${BIZ.invoices.length} raised`, note: `${invDraft} draft` },
-        { label: "Receipting", value: money(rcptWeek), note: "Recent receipts" },
-        { label: "Purchase orders", value: money(poOpen), note: `${BIZ.po.length} active POs` },
+        { label: "Accounts payable", value: money(apOpen), note: `${(B.ap || []).length} open bills` },
+        { label: "Accounts receivable", value: money(arOpen), note: `${(B.ar || []).length} open invoices` },
+        { label: "Invoicing", value: `${(B.invoices || []).length} raised`, note: `${invDraft} draft` },
+        { label: "Receipting", value: money(rcptWeek), note: "Receipt totals" },
+        { label: "Purchase orders", value: money(poOpen), note: `${(B.po || []).length} active POs` },
         { label: "Processing payments", value: money(payQueued), note: "In queue / draft" },
         { label: "Reconciliations", value: recDiff ? money(recDiff) + " diff" : "Matched", note: recDiff ? "Clearing items" : "All clear" },
-        { label: "Petty cash", value: money(pettyBal), note: "Float balance" },
-        { label: "Budgeting", value: "MTD vs plan", note: `${BIZ.budget.length} categories` },
-        { label: "Cash flow", value: money(cashClose), note: "4-week forecast" },
-        { label: "Financial records", value: `${recordsOk}/${BIZ.records.length}`, note: "Current or filed" },
+        { label: "Petty cash", value: money(pettyBal), note: "Last float balance" },
+        { label: "Budgeting", value: "MTD vs plan", note: `${(B.budget || []).length} categories` },
+        { label: "Cash flow", value: money(cashClose), note: `${(B.cashflowWeeks || []).length} weeks` },
+        { label: "Financial records", value: `${recordsOk}/${(B.records || []).length}`, note: "Current or filed" },
         { label: "Payroll processing", value: money(gross), note: "Gross this cycle" },
-        { label: "Timesheets", value: tsMissing ? `${tsMissing} missing` : "All in", note: "Week ending 10 Aug" },
-        { label: "Superannuation", value: money(superAmt), note: "SG 11.5% this run" },
-        { label: "Tax / GST basics", value: money(gstPay), note: "Draft BAS payable" },
+        { label: "Timesheets", value: tsMissing ? `${tsMissing} missing` : "All in", note: "Approval status" },
+        { label: "Superannuation", value: money(superAmt), note: "From payroll lines" },
+        { label: "Tax / GST basics", value: money(gstPay), note: "Editable BAS lines" },
         { label: "Expense management", value: money(expPending), note: "Claims to review" },
       ];
       const grid = document.getElementById("bizCapabilityGrid");
@@ -2993,340 +3240,244 @@
           .join("");
       }
 
-      const aq = document.getElementById("bizActionQueue");
-      if (aq) {
-        aq.innerHTML = BIZ.actions
-          .map(
-            (a) => `
-          <tr>
-            <td>${statusPill(a.priority)}</td>
-            <td>${esc(a.area)}</td>
-            <td>${esc(a.action)}</td>
-            <td>${a.amount ? money(a.amount) : "—"}</td>
-          </tr>`
-          )
-          .join("");
+      const setBody = (id, collection, extraFn) => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = renderBizRows(collection, extraFn);
+      };
+
+      setBody("bizActionQueue", "actions");
+      setBody("bizApBody", "ap");
+      setBody("bizPoBody", "po");
+      setBody("bizPayBody", "payments");
+      setBody("bizExpBody", "expenses");
+      setBody("bizArBody", "ar");
+      setBody("bizInvBody", "invoices");
+      setBody("bizRcptBody", "receipts");
+      setBody("bizRecBody", "recon");
+      setBody("bizPettyBody", "petty");
+      setBody("bizPayrunBody", "payroll");
+      setBody("bizTsBody", "timesheets");
+      setBody("bizSuperBody", "super");
+      setBody("bizGstBody", "gst");
+      setBody("bizRecordsBody", "records");
+
+      // Budget with computed variance columns
+      const budBody = document.getElementById("bizBudgetBody");
+      if (budBody) {
+        const rows = B.budget || [];
+        if (!rows.length) {
+          budBody.innerHTML = `<tr><td colspan="6" class="empty">No budget lines — click + Add line.</td></tr>`;
+        } else {
+          budBody.innerHTML = rows
+            .map((r) => {
+              const mtdBudget = (Number(r.budget) || 0) * 0.4;
+              const actual = Number(r.actual) || 0;
+              const v = actual - mtdBudget;
+              const pct = mtdBudget ? ((actual / mtdBudget) * 100).toFixed(0) + "%" : "—";
+              const neg = v > 0 && !/sales|revenue/i.test(r.cat || "");
+              return `<tr data-id="${r.id}" data-biz-collection="budget">
+                <td><input type="text" data-field="cat" value="${esc(r.cat || "")}" /></td>
+                <td><input type="number" step="0.01" data-field="budget" value="${num(r.budget)}" /></td>
+                <td><input type="number" step="0.01" data-field="actual" value="${num(r.actual)}" /></td>
+                <td class="${neg ? "value neg" : "value pos"}">${money(v)}</td>
+                <td>${pct}</td>
+                ${bizDelBtn("budget", r.id)}
+              </tr>`;
+            })
+            .join("");
+        }
       }
 
-      // Cashflow bars on overview
-      const maxFlow = Math.max(...BIZ.cashflowWeeks.flatMap((w) => [w.in, w.out]), 1);
+      // Cash flow with computed net
+      const cfBody = document.getElementById("bizCfBody");
+      if (cfBody) {
+        const rows = B.cashflowWeeks || [];
+        if (!rows.length) {
+          cfBody.innerHTML = `<tr><td colspan="6" class="empty">No weeks — click + Add week.</td></tr>`;
+        } else {
+          cfBody.innerHTML = rows
+            .map((w) => {
+              const net = (Number(w.in) || 0) - (Number(w.out) || 0);
+              return `<tr data-id="${w.id}" data-biz-collection="cashflowWeeks">
+                <td><input type="text" data-field="week" value="${esc(w.week || "")}" /></td>
+                <td><input type="number" step="0.01" data-field="in" value="${num(w.in)}" /></td>
+                <td><input type="number" step="0.01" data-field="out" value="${num(w.out)}" /></td>
+                <td class="${net >= 0 ? "value pos" : "value neg"}">${money(net)}</td>
+                <td><input type="number" step="0.01" data-field="close" value="${num(w.close)}" /></td>
+                ${bizDelBtn("cashflowWeeks", w.id)}
+              </tr>`;
+            })
+            .join("");
+        }
+      }
+
+      // Totals
+      const apTotal = document.getElementById("bizApTotal");
+      if (apTotal) apTotal.textContent = money(apOpen);
+      const apGst = document.getElementById("bizApGst");
+      if (apGst) apGst.textContent = money(sumField(B.ap, "gst"));
+      const paySub = document.getElementById("bizPayablesSubtotal");
+      if (paySub) paySub.innerHTML = `AP open <strong>${money(apOpen)}</strong> · PO live <strong>${money(poOpen)}</strong>`;
+      const arTotal = document.getElementById("bizArTotal");
+      if (arTotal) arTotal.textContent = money(arOpen);
+      const overdue = (B.ar || []).filter((r) => Number(r.overdue) > 0).reduce((t, r) => t + (Number(r.amount) || 0), 0);
+      const arAging = document.getElementById("bizArAging");
+      if (arAging) arAging.textContent = `Overdue ${money(overdue)}`;
+      const recSub = document.getElementById("bizReceivablesSubtotal");
+      if (recSub) recSub.innerHTML = `AR open <strong>${money(arOpen)}</strong> · Receipts <strong>${money(rcptWeek)}</strong>`;
+
+      const ph = document.getElementById("bizPettyHint");
+      if (ph) ph.textContent = `Float balance ${money(pettyBal)} · edit amounts freely; delete rows you don't need.`;
+
+      const g = (id, v) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = money(v);
+      };
+      g("bizGrossTotal", sumField(B.payroll, "gross"));
+      g("bizTaxTotal", sumField(B.payroll, "tax"));
+      g("bizSuperTotal", sumField(B.payroll, "super"));
+      g("bizNetTotal", sumField(B.payroll, "net"));
+
+      // Overview cashflow bars
+      const weeks = B.cashflowWeeks || [];
+      const maxFlow = Math.max(...weeks.flatMap((w) => [Number(w.in) || 0, Number(w.out) || 0]), 1);
       const bars = document.getElementById("bizCashflowBars");
       if (bars) {
-        bars.innerHTML = BIZ.cashflowWeeks
-          .map((w) => {
-            const net = w.in - w.out;
-            return `
-            <div class="bar-row">
-              <span>Week ${esc(w.week)} in</span>
-              <div class="bar-track"><div class="bar-fill income" style="width:${(w.in / maxFlow) * 100}%"></div></div>
-              <span class="bar-amt">${money(w.in)}</span>
-            </div>
-            <div class="bar-row">
-              <span>Week ${esc(w.week)} out</span>
-              <div class="bar-track"><div class="bar-fill out" style="width:${(w.out / maxFlow) * 100}%"></div></div>
-              <span class="bar-amt">${money(w.out)}</span>
-            </div>
-            <div class="bar-row" style="margin-bottom:.55rem">
-              <span>Net / close</span>
-              <div class="bar-track"><div class="bar-fill ${net >= 0 ? "bills" : "debt"}" style="width:${(Math.abs(net) / maxFlow) * 100}%"></div></div>
-              <span class="bar-amt">${money(net)} → ${money(w.close)}</span>
-            </div>`;
-          })
-          .join("");
+        if (!weeks.length) {
+          bars.innerHTML = `<p class="hint">Add cash-flow weeks under Cash &amp; control to chart them here.</p>`;
+        } else {
+          bars.innerHTML = weeks
+            .map((w) => {
+              const inn = Number(w.in) || 0;
+              const out = Number(w.out) || 0;
+              const net = inn - out;
+              return `
+              <div class="bar-row">
+                <span>Week ${esc(w.week)} in</span>
+                <div class="bar-track"><div class="bar-fill income" style="width:${(inn / maxFlow) * 100}%"></div></div>
+                <span class="bar-amt">${money(inn)}</span>
+              </div>
+              <div class="bar-row">
+                <span>Week ${esc(w.week)} out</span>
+                <div class="bar-track"><div class="bar-fill out" style="width:${(out / maxFlow) * 100}%"></div></div>
+                <span class="bar-amt">${money(out)}</span>
+              </div>
+              <div class="bar-row" style="margin-bottom:.55rem">
+                <span>Net / close</span>
+                <div class="bar-track"><div class="bar-fill ${net >= 0 ? "bills" : "debt"}" style="width:${(Math.abs(net) / maxFlow) * 100}%"></div></div>
+                <span class="bar-amt">${money(net)} → ${money(w.close)}</span>
+              </div>`;
+            })
+            .join("");
+        }
       }
       const cfHint = document.getElementById("bizCashflowHint");
       if (cfHint) {
         cfHint.textContent =
-          "Mock 4-week cash flow for Harbourline Supplies — links AR collections, AP payment runs, and payroll dates so operators can see pressure points early.";
+          "Editable business mock data for " +
+          (B.company || "your company") +
+          " — change any cell, add rows, or delete rows. Saves automatically in this browser.";
       }
+    }
 
-      // Payables tables
-      const apBody = document.getElementById("bizApBody");
-      if (apBody) {
-        apBody.innerHTML = BIZ.ap
-          .map(
-            (r) => `
-          <tr>
-            <td>${esc(r.bill)}</td>
-            <td>${esc(r.supplier)}</td>
-            <td>${esc(r.due)}</td>
-            <td>${money(r.amount)}</td>
-            <td>${money(r.gst)}</td>
-            <td>${statusPill(r.status)}</td>
-            <td>${esc(r.notes)}</td>
-          </tr>`
-          )
-          .join("");
-        document.getElementById("bizApTotal").textContent = money(apOpen);
-        document.getElementById("bizApGst").textContent = money(sumField(BIZ.ap, "gst"));
-        const sub = document.getElementById("bizPayablesSubtotal");
-        if (sub) sub.innerHTML = `AP open <strong>${money(apOpen)}</strong> · PO live <strong>${money(poOpen)}</strong>`;
-      }
-      const poBody = document.getElementById("bizPoBody");
-      if (poBody) {
-        poBody.innerHTML = BIZ.po
-          .map(
-            (r) => `
-          <tr>
-            <td>${esc(r.po)}</td>
-            <td>${esc(r.vendor)}</td>
-            <td>${esc(r.by)}</td>
-            <td>${esc(r.ordered)}</td>
-            <td>${money(r.amount)}</td>
-            <td>${statusPill(r.status)}</td>
-            <td>${esc(r.expected)}</td>
-          </tr>`
-          )
-          .join("");
-      }
-      const payBody = document.getElementById("bizPayBody");
-      if (payBody) {
-        payBody.innerHTML = BIZ.payments
-          .map(
-            (r) => `
-          <tr>
-            <td>${esc(r.batch)}</td>
-            <td>${esc(r.method)}</td>
-            <td>${r.items}</td>
-            <td>${esc(r.scheduled)}</td>
-            <td>${money(r.amount)}</td>
-            <td>${statusPill(r.status)}</td>
-          </tr>`
-          )
-          .join("");
-      }
-      const expBody = document.getElementById("bizExpBody");
-      if (expBody) {
-        expBody.innerHTML = BIZ.expenses
-          .map(
-            (r) => `
-          <tr>
-            <td>${esc(r.claim)}</td>
-            <td>${esc(r.employee)}</td>
-            <td>${esc(r.category)}</td>
-            <td>${esc(r.submitted)}</td>
-            <td>${money(r.amount)}</td>
-            <td>${statusPill(r.status)}</td>
-            <td>${esc(r.receipt)}</td>
-          </tr>`
-          )
-          .join("");
-      }
+    function wireBusinessEditing() {
+      if (bizWired) return;
+      bizWired = true;
+      const root = document.getElementById("mode-business");
+      if (!root) return;
 
-      // Receivables
-      const arBody = document.getElementById("bizArBody");
-      if (arBody) {
-        arBody.innerHTML = BIZ.ar
-          .map(
-            (r) => `
-          <tr>
-            <td>${esc(r.customer)}</td>
-            <td>${esc(r.inv)}</td>
-            <td>${esc(r.issued)}</td>
-            <td>${esc(r.due)}</td>
-            <td>${money(r.amount)}</td>
-            <td>${r.overdue}</td>
-            <td>${statusPill(r.status)}</td>
-          </tr>`
-          )
-          .join("");
-        document.getElementById("bizArTotal").textContent = money(arOpen);
-        const overdue = BIZ.ar.filter((r) => r.overdue > 0).reduce((t, r) => t + r.amount, 0);
-        document.getElementById("bizArAging").textContent = `Overdue ${money(overdue)}`;
-        const sub = document.getElementById("bizReceivablesSubtotal");
-        if (sub) sub.innerHTML = `AR open <strong>${money(arOpen)}</strong> · Receipts logged <strong>${money(rcptWeek)}</strong>`;
-      }
-      const invBody = document.getElementById("bizInvBody");
-      if (invBody) {
-        invBody.innerHTML = BIZ.invoices
-          .map(
-            (r) => `
-          <tr>
-            <td>${esc(r.inv)}</td>
-            <td>${esc(r.customer)}</td>
-            <td>${esc(r.date)}</td>
-            <td>${money(r.net)}</td>
-            <td>${money(r.gst)}</td>
-            <td>${money(r.total)}</td>
-            <td>${statusPill(r.status)}</td>
-          </tr>`
-          )
-          .join("");
-      }
-      const rcBody = document.getElementById("bizRcptBody");
-      if (rcBody) {
-        rcBody.innerHTML = BIZ.receipts
-          .map(
-            (r) => `
-          <tr>
-            <td>${esc(r.rcpt)}</td>
-            <td>${esc(r.customer)}</td>
-            <td>${esc(r.method)}</td>
-            <td>${esc(r.date)}</td>
-            <td>${money(r.amount)}</td>
-            <td>${esc(r.allocated)}</td>
-          </tr>`
-          )
-          .join("");
-      }
+      root.addEventListener("input", (e) => {
+        const input = e.target.closest("input[data-field]");
+        if (!input) return;
+        const tr = input.closest("tr[data-id]");
+        if (!tr) return;
+        const collection = tr.dataset.bizCollection;
+        const id = tr.dataset.id;
+        const field = input.dataset.field;
+        const row = (bizData[collection] || []).find((r) => r.id === id);
+        if (!row) return;
+        const schema = (BIZ_SCHEMAS[collection] || []).find((f) => f.key === field);
+        if (schema && schema.type === "number") {
+          row[field] = input.value === "" ? 0 : Number(input.value);
+        } else {
+          row[field] = input.value;
+        }
+        // Auto-calc recon diff when stmt/book change
+        if (collection === "recon" && (field === "stmt" || field === "book")) {
+          row.diff = (Number(row.stmt) || 0) - (Number(row.book) || 0);
+        }
+        // Auto-calc invoice total
+        if (collection === "invoices" && (field === "net" || field === "gst")) {
+          row.total = (Number(row.net) || 0) + (Number(row.gst) || 0);
+        }
+        // Auto super 11.5% when gross changes (optional helper)
+        if (collection === "payroll" && field === "gross") {
+          const g = Number(row.gross) || 0;
+          row.super = Math.round(g * 0.115 * 100) / 100;
+          row.net = Math.round((g - (Number(row.tax) || 0)) * 100) / 100;
+        }
+        markBizDirty();
+        // Refresh totals / derived columns while keeping caret in place
+        const activeId = id;
+        const activeField = field;
+        const selStart = input.selectionStart;
+        const selEnd = input.selectionEnd;
+        renderBusiness();
+        requestAnimationFrame(() => {
+          const next = root.querySelector(
+            `tr[data-id="${activeId}"] [data-field="${activeField}"]`
+          );
+          if (next) {
+            next.focus();
+            if (typeof next.setSelectionRange === "function" && next.type !== "number") {
+              try {
+                next.setSelectionRange(selStart ?? next.value.length, selEnd ?? next.value.length);
+              } catch (_) {}
+            }
+          }
+        });
+      });
 
-      // Cash control
-      const recBody = document.getElementById("bizRecBody");
-      if (recBody) {
-        recBody.innerHTML = BIZ.recon
-          .map(
-            (r) => `
-          <tr>
-            <td>${esc(r.account)}</td>
-            <td>${esc(r.period)}</td>
-            <td>${money(r.stmt)}</td>
-            <td>${money(r.book)}</td>
-            <td class="${r.diff ? "value neg" : ""}">${money(r.diff)}</td>
-            <td>${statusPill(r.status)}</td>
-            <td>${esc(r.owner)}</td>
-          </tr>`
-          )
-          .join("");
-      }
-      const pettyBody = document.getElementById("bizPettyBody");
-      if (pettyBody) {
-        pettyBody.innerHTML = BIZ.petty
-          .map(
-            (r) => `
-          <tr>
-            <td>${esc(r.date)}</td>
-            <td>${esc(r.desc)}</td>
-            <td>${esc(r.dir)}</td>
-            <td>${money(r.amount)}</td>
-            <td>${money(r.bal)}</td>
-          </tr>`
-          )
-          .join("");
-        const ph = document.getElementById("bizPettyHint");
-        if (ph) ph.textContent = `Float balance ${money(pettyBal)} · receipts required for all outgoings.`;
-      }
-      const budBody = document.getElementById("bizBudgetBody");
-      if (budBody) {
-        budBody.innerHTML = BIZ.budget
-          .map((r) => {
-            const variance = r.actual - r.budget * (12 / 12) * (12 / 31); // rough MTD not needed - use simple variance vs monthly budget pro-rata ~40% month
-            // Better: show variance as actual vs budget MTD assuming ~40% through month
-            const mtdBudget = r.budget * 0.4;
-            const v = r.actual - mtdBudget;
-            const pct = mtdBudget ? ((r.actual / mtdBudget) * 100).toFixed(0) + "%" : "—";
-            return `
-            <tr>
-              <td>${esc(r.cat)}</td>
-              <td>${money(mtdBudget)} <span style="color:var(--muted);font-size:.72rem">MTD</span></td>
-              <td>${money(r.actual)}</td>
-              <td class="${v > 0 && r.cat !== "Sales revenue" ? "value neg" : "value pos"}">${money(v)}</td>
-              <td>${pct}</td>
-            </tr>`;
-          })
-          .join("");
-      }
-      const cfBody = document.getElementById("bizCfBody");
-      if (cfBody) {
-        cfBody.innerHTML = BIZ.cashflowWeeks
-          .map((w) => {
-            const net = w.in - w.out;
-            return `
-            <tr>
-              <td>${esc(w.week)}</td>
-              <td>${money(w.in)}</td>
-              <td>${money(w.out)}</td>
-              <td class="${net >= 0 ? "value pos" : "value neg"}">${money(net)}</td>
-              <td>${money(w.close)}</td>
-            </tr>`;
-          })
-          .join("");
-      }
+      root.addEventListener("click", (e) => {
+        const del = e.target.closest("[data-biz-del]");
+        if (del) {
+          const collection = del.getAttribute("data-biz-del");
+          const id = del.getAttribute("data-id");
+          if (!collection || !id) return;
+          if (!confirm("Delete this row?")) return;
+          bizData[collection] = (bizData[collection] || []).filter((r) => r.id !== id);
+          markBizDirty();
+          renderBusiness();
+          toast("Row deleted");
+          return;
+        }
+        const add = e.target.closest("[data-biz-add]");
+        if (add) {
+          const collection = add.getAttribute("data-biz-add");
+          if (!collection || !BIZ_DEFAULTS[collection]) return;
+          const row = { id: uid(), ...deepClone(BIZ_DEFAULTS[collection]) };
+          if (!bizData[collection]) bizData[collection] = [];
+          bizData[collection].unshift(row);
+          markBizDirty();
+          renderBusiness();
+          toast("Row added — edit the fields");
+          requestAnimationFrame(() => {
+            const first = root.querySelector(`tr[data-id="${row.id}"] input`);
+            if (first) first.focus();
+          });
+        }
+      });
 
-      // Payroll & tax
-      const prBody = document.getElementById("bizPayrunBody");
-      if (prBody) {
-        prBody.innerHTML = BIZ.payroll
-          .map(
-            (r) => `
-          <tr>
-            <td>${esc(r.name)}</td>
-            <td>${esc(r.role)}</td>
-            <td>${money(r.gross)}</td>
-            <td>${money(r.tax)}</td>
-            <td>${money(r.super)}</td>
-            <td>${money(r.net)}</td>
-            <td>${statusPill(r.status)}</td>
-          </tr>`
-          )
-          .join("");
-        document.getElementById("bizGrossTotal").textContent = money(sumField(BIZ.payroll, "gross"));
-        document.getElementById("bizTaxTotal").textContent = money(sumField(BIZ.payroll, "tax"));
-        document.getElementById("bizSuperTotal").textContent = money(sumField(BIZ.payroll, "super"));
-        document.getElementById("bizNetTotal").textContent = money(sumField(BIZ.payroll, "net"));
-      }
-      const tsBody = document.getElementById("bizTsBody");
-      if (tsBody) {
-        tsBody.innerHTML = BIZ.timesheets
-          .map(
-            (r) => `
-          <tr>
-            <td>${esc(r.name)}</td>
-            <td>${esc(r.week)}</td>
-            <td>${r.ord}</td>
-            <td>${r.ot}</td>
-            <td>${esc(r.submitted)}</td>
-            <td>${statusPill(r.status)}</td>
-          </tr>`
-          )
-          .join("");
-      }
-      const superBody = document.getElementById("bizSuperBody");
-      if (superBody) {
-        superBody.innerHTML = BIZ.super
-          .map(
-            (r) => `
-          <tr>
-            <td>${esc(r.fund)}</td>
-            <td>${r.employees}</td>
-            <td>${esc(r.period)}</td>
-            <td>${money(r.amount)}</td>
-            <td>${esc(r.due)}</td>
-            <td>${statusPill(r.status)}</td>
-          </tr>`
-          )
-          .join("");
-      }
-      const gstBody = document.getElementById("bizGstBody");
-      if (gstBody) {
-        gstBody.innerHTML = BIZ.gst
-          .map(
-            (r) => `
-          <tr>
-            <td><strong>${esc(r.label)}</strong></td>
-            <td>${esc(r.desc)}</td>
-            <td>${money(r.amount)}</td>
-          </tr>`
-          )
-          .join("");
-      }
-
-      // Records
-      const recs = document.getElementById("bizRecordsBody");
-      if (recs) {
-        recs.innerHTML = BIZ.records
-          .map(
-            (r) => `
-          <tr>
-            <td>${esc(r.name)}</td>
-            <td>${esc(r.type)}</td>
-            <td>${esc(r.period)}</td>
-            <td>${esc(r.owner)}</td>
-            <td>${esc(r.updated)}</td>
-            <td>${statusPill(r.status)}</td>
-            <td>${esc(r.loc)}</td>
-          </tr>`
-          )
-          .join("");
+      const companyEl = document.getElementById("bizCompanyName");
+      if (companyEl) {
+        companyEl.addEventListener("input", () => {
+          bizData.company = companyEl.textContent.trim() || "Sample company";
+          markBizDirty();
+        });
+        companyEl.addEventListener("blur", () => {
+          bizData.company = companyEl.textContent.trim() || "Sample company";
+          saveBiz();
+        });
       }
     }
 
@@ -3503,22 +3654,27 @@
     };
 
     document.getElementById("btnReset").onclick = () => {
-      if (!confirm("Reset personal finance figures to demo defaults? Your edits will be lost.")) return;
+      if (!confirm("Reset ALL personal and business figures to demo defaults? Your edits will be lost.")) return;
       localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(BIZ_STORAGE_KEY);
       data = deepClone(DEFAULT_DATA);
       data.debts.forEach((r) => (r.id = uid()));
       data.bills.forEach((r) => (r.id = uid()));
       data.living.forEach((r) => (r.id = uid()));
+      bizData = ensureBizIds(deepClone(DEFAULT_BIZ));
       fullRender();
       save();
+      saveBiz();
       toast("Reset to demo baseline");
     };
 
     // Init
     load();
+    loadBiz();
     wireTable("debtsBody", "debts");
     wireTable("billsBody", "bills");
     wireTable("livingBody", "living");
+    wireBusinessEditing();
     fullRender();
     if (location.hash === "#business") setMode("business");
     document.getElementById("saveStatus").textContent = "Saved";
