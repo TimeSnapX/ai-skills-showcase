@@ -260,9 +260,79 @@ main, .site-header, .site-footer { position: relative; z-index: 1; }
   background: rgba(255, 255, 255, 0.04);
 }
 
+/* Application pack banner */
+.pack-banner {
+  padding: 1rem 0 0;
+}
+
+.pack-banner-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+  padding: 1rem 1.2rem;
+  border: 1px solid rgba(91, 140, 255, 0.35);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, rgba(91, 140, 255, 0.14), rgba(34, 211, 166, 0.06));
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+.pack-kicker {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  margin-bottom: 0.35rem;
+}
+
+.pack-banner-copy p {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  max-width: 40rem;
+  margin-bottom: 0.55rem;
+}
+
+.pack-banner-copy strong { color: var(--text); }
+
+.pack-url {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.4rem 0.65rem;
+  word-break: break-all;
+}
+
+.pack-banner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.footer-copy-btn {
+  font: inherit;
+  font-size: 0.82rem;
+  color: var(--accent);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.footer-copy-btn:hover {
+  text-decoration: underline;
+}
+
 /* Hero */
 .hero {
-  padding: 3.5rem 0 4.5rem;
+  padding: 2rem 0 4.5rem;
 }
 
 .hero-grid {

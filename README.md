@@ -1,31 +1,30 @@
-# Jarrad Kenny — AI Skills Showcase
+# Jarrad Kenny — Team 400 Application Pack
 
-Portfolio for the **Team 400 · AI Trainer & AI Agent Consultant** role (Seek job [93718261](https://au.seek.com/job/93718261)).
+**Send this one link only:**
 
-## Live site (GitHub Pages)
+### https://timesnapx.github.io/ai-skills-showcase/
 
-- **Portfolio:** https://timesnapx.github.io/ai-skills-showcase/
-- **Financial tracker UI demo:** https://timesnapx.github.io/ai-skills-showcase/financial-tracker.html
+Everything for the **Team 400 · AI Trainer & AI Agent Consultant** application lives on that page:
 
-## What's included
-
-- Role fit for Team 400
+- Job fit for Team 400 (Seek [93718261](https://au.seek.com/job/93718261))
 - AI skill stack (OpenClaw, Google AI Studio, ChatGPT, Grok)
 - Workflow pipelines
-- **Finance UI showcase** with two top-level tabs and **mock data only**:
-  - **Personal finances** — household bills, debts, income, cashflow
-  - **Business operations** — AP, AR, invoicing, receipting, POs, payments, reconciliations, petty cash, budgeting, cash flow, financial records, payroll, timesheets, superannuation, tax/GST, expense management
-- Tailored resume + cover letter
-- Contact actions
+- **Live finance UI** (personal + business operations, editable mock data)
+- Tailored **resume** and **cover letter** (print / copy)
+- Contact details
+
+Optional deep links (not required for the application):
+
+- Fullscreen finance demo: https://timesnapx.github.io/ai-skills-showcase/financial-tracker.html
+- Repo: https://github.com/TimeSnapX/ai-skills-showcase
 
 ## Local
 
-Open `index.html`, or:
-
 ```powershell
+cd ai-skills-showcase
 npx --yes serve . -l 5173
 ```
 
 ## Note
 
-The financial tracker demo uses **fictional household data** only — not real personal finances.
+Finance demo data is **fictional / mock** unless you edit it in your own browser.

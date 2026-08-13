@@ -3,8 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jarrad Kenny — AI Agent Builder &amp; Trainer | Portfolio</title>
-  <meta name="description" content="Portfolio for Team 400 AI Trainer &amp; AI Agent Consultant. OpenClaw agents, automation workflows, UI systems, and practical AI enablement — Brisbane, travel-ready." />
+  <title>Jarrad Kenny — Team 400 Application Pack | AI Skills, Resume &amp; Live Demos</title>
+  <meta name="description" content="One-link application pack for Team 400 AI Trainer &amp; AI Agent Consultant: skills, live UI demos, tailored resume and cover letter. Brisbane, travel-ready." />
+  <meta property="og:title" content="Jarrad Kenny — Team 400 Application Pack" />
+  <meta property="og:description" content="AI agents, automation, finance UI demos, resume and cover letter — one link for the full application." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://timesnapx.github.io/ai-skills-showcase/" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
@@ -26,18 +30,17 @@
       </a>
 
       <nav class="nav" id="nav" aria-label="Primary">
+        <a href="#pack">This pack</a>
         <a href="#fit">Job Fit</a>
         <a href="#skills">Skills</a>
-        <a href="#workflows">Workflows</a>
-        <a href="#budget-ui">Budget UI</a>
-        <a href="#proof">Proof</a>
-        <a href="#documents">Resume &amp; Letter</a>
+        <a href="#budget-ui">Live UI</a>
+        <a href="#documents">Resume</a>
         <a href="#contact">Contact</a>
       </nav>
 
       <div class="header-actions">
-        <a href="#documents" class="btn btn-ghost btn-sm">Documents</a>
-        <a href="#contact" class="btn btn-primary btn-sm">Hire me</a>
+        <button type="button" class="btn btn-ghost btn-sm" id="copyShareUrl" title="Copy the one application URL">Copy link</button>
+        <a href="#documents" class="btn btn-primary btn-sm">Resume</a>
       </div>
 
       <button class="mobile-toggle" id="mobileToggle" aria-label="Open menu" aria-expanded="false">
@@ -47,13 +50,32 @@
   </header>
 
   <main id="top">
+    <!-- ONE-LINK APPLICATION PACK -->
+    <section class="pack-banner" id="pack" aria-label="Application pack share link">
+      <div class="container pack-banner-inner">
+        <div class="pack-banner-copy">
+          <span class="pack-kicker">One link · full application pack</span>
+          <p>
+            Send this URL only — skills, live UI demos, tailored resume and cover letter for
+            <strong>Team 400 · AI Trainer &amp; AI Agent Consultant</strong>.
+          </p>
+          <code class="pack-url" id="shareUrlDisplay">https://timesnapx.github.io/ai-skills-showcase/</code>
+        </div>
+        <div class="pack-banner-actions">
+          <button type="button" class="btn btn-primary btn-sm" id="copyShareUrlBanner">Copy application link</button>
+          <a class="btn btn-secondary btn-sm" href="#documents">Jump to resume</a>
+          <a class="btn btn-ghost btn-sm" href="#budget-ui">Jump to live UI</a>
+        </div>
+      </div>
+    </section>
+
     <!-- HERO -->
     <section class="hero">
       <div class="container hero-grid">
         <div class="hero-content">
           <div class="eyebrow">
             <span class="pulse"></span>
-            Application · Team 400 · Seek 93718261
+            Application pack · Team 400 · Seek 93718261
           </div>
           <h1>
             I build AI agents that work.<br />
@@ -63,13 +85,15 @@
             Hands-on AI Agent Orchestrator for the <strong>AI Trainer &amp; AI Agent Consultant</strong> role at Team 400.
             OpenClaw multi-agent systems, real business automations, polished UIs, and clear enablement —
             Brisbane-based, full-time, interstate travel ready.
+            Everything you need is on this page.
           </p>
           <div class="hero-ctas">
-            <a href="#skills" class="btn btn-primary btn-lg">
-              Explore AI skill stack
+            <a href="#documents" class="btn btn-primary btn-lg">
+              Resume &amp; cover letter
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
-            <a href="#documents" class="btn btn-secondary btn-lg">Resume &amp; cover letter</a>
+            <a href="#skills" class="btn btn-secondary btn-lg">AI skill stack</a>
+            <a href="#budget-ui" class="btn btn-ghost btn-lg">Live finance UI</a>
           </div>
           <div class="hero-meta">
             <div class="meta-chip">
@@ -406,12 +430,11 @@
 
         <div class="tracker-toolbar">
           <div class="tracker-toolbar-copy">
-            <strong>Finance UI Showcase</strong>
-            <span>Personal finances tab · Business operations tab (16 finance functions)</span>
+            <strong>Embedded on this page</strong>
+            <span>Use the Personal / Business tabs inside the demo · edit mock numbers live</span>
           </div>
           <div class="tracker-toolbar-actions">
-            <a class="btn btn-secondary btn-sm" href="financial-tracker.html" target="_blank" rel="noopener noreferrer">Personal tab</a>
-            <a class="btn btn-primary btn-sm" href="financial-tracker.html#business" target="_blank" rel="noopener noreferrer">Business tab</a>
+            <a class="btn btn-ghost btn-sm" href="financial-tracker.html" target="_blank" rel="noopener noreferrer">Fullscreen (optional)</a>
           </div>
         </div>
 
@@ -446,11 +469,17 @@
         </div>
 
         <div class="proof-grid">
-                    <a class="proof-card" href="financial-tracker.html#business" target="_blank" rel="noopener noreferrer">
-            <span class="proof-type">Interactive UI</span>
+          <a class="proof-card" href="#budget-ui">
+            <span class="proof-type">On this page</span>
             <h3>Personal &amp; business finance UI</h3>
-            <p>Two tabs: household finances plus business AP/AR/payroll/GST/POs — mock data, fully clickable.</p>
-            <span class="proof-cta">Open business operations tab →</span>
+            <p>Editable mock data: household cashflow plus AP/AR/payroll/GST/POs — interact without leaving this pack.</p>
+            <span class="proof-cta">Scroll to live UI →</span>
+          </a>
+          <a class="proof-card" href="#documents">
+            <span class="proof-type">On this page</span>
+            <h3>Resume &amp; cover letter</h3>
+            <p>Tailored for Team 400 — print/PDF and copy-text actions included.</p>
+            <span class="proof-cta">Open documents →</span>
           </a>
           <a class="proof-card" href="https://ai.studio/apps/890e7565-68e1-4e34-b2cd-bc14cb272db1" target="_blank" rel="noopener noreferrer">
             <span class="proof-type">Published app</span>
@@ -459,19 +488,12 @@
             <span class="proof-cta">Open AI Studio app →</span>
           </a>
           <div class="proof-card static">
-            <span class="proof-type">This portfolio</span>
-            <h3>Grok Build UI</h3>
-            <p>Client-facing skill showcase with embedded resume and cover letter — built in Grok Build mode.</p>
-            <span class="proof-cta">You're looking at it</span>
-          </div>
-          <div class="proof-card static">
             <span class="proof-type">Automation</span>
             <h3>OpenClaw agent systems</h3>
             <p>Multi-agent research, job packaging, Shopify pipelines, Discord/Telegram bots, email &amp; SMS triggers.</p>
-            <span class="proof-cta">Available as live walkthrough</span>
+            <span class="proof-cta">Live walkthrough on request</span>
           </div>
-        </div>
-      </div>
+        </div></div>
     </section>
 
     <!-- DOCUMENTS -->
@@ -725,15 +747,16 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>© <span id="year"></span> Jarrad Kenny · Portfolio for Team 400 application · Built with Grok Build</p>
+      <p>© <span id="year"></span> Jarrad Kenny · Team 400 application pack · Built with Grok Build</p>
       <p class="footer-links">
-        <a href="https://timesnapx.github.io/ai-skills-showcase/" target="_blank" rel="noopener noreferrer">Live site</a>
-        <a href="https://timesnapx.github.io/ai-skills-showcase/financial-tracker.html" target="_blank" rel="noopener noreferrer">Financial tracker demo</a>
-        <a href="https://github.com/TimeSnapX/ai-skills-showcase" target="_blank" rel="noopener noreferrer">GitHub repo</a>
+        <a href="https://timesnapx.github.io/ai-skills-showcase/" id="footerShareUrl">Application pack (send this link)</a>
+        <button type="button" class="footer-copy-btn" id="copyShareUrlFooter">Copy link</button>
+        <a href="https://github.com/TimeSnapX/ai-skills-showcase" target="_blank" rel="noopener noreferrer">Source on GitHub</a>
       </p>
-      <p class="footer-note">Practical AI delivery · Not AI theatre</p>
+      <p class="footer-note">One URL · skills · live UI · resume · cover letter</p>
     </div>
   </footer>
+  <p class="copy-toast" id="shareToast" role="status" aria-live="polite" hidden>Application link copied</p>
 
   <script src="js/main.js"></script>
 </body>

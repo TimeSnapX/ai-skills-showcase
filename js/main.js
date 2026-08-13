@@ -8,6 +8,50 @@
   const yearEl = $("#year");
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
+  // One-link application pack URL
+  const SHARE_URL = "https://timesnapx.github.io/ai-skills-showcase/";
+  const shareDisplay = $("#shareUrlDisplay");
+  if (shareDisplay) shareDisplay.textContent = SHARE_URL;
+
+  const shareToast = $("#shareToast");
+  const showShareToast = (msg) => {
+    const el = shareToast || $("#copyToast");
+    if (!el) return;
+    el.textContent = msg;
+    el.hidden = false;
+    clearTimeout(showShareToast._t);
+    showShareToast._t = setTimeout(() => {
+      el.hidden = true;
+    }, 2000);
+  };
+
+  const copyShareUrl = async () => {
+    try {
+      await navigator.clipboard.writeText(SHARE_URL);
+      showShareToast("Application link copied");
+    } catch {
+      // Fallback for older browsers
+      const ta = document.createElement("textarea");
+      ta.value = SHARE_URL;
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand("copy");
+        showShareToast("Application link copied");
+      } catch {
+        showShareToast("Copy failed — select the URL manually");
+      }
+      document.body.removeChild(ta);
+    }
+  };
+
+  ["copyShareUrl", "copyShareUrlBanner", "copyShareUrlFooter"].forEach((id) => {
+    const btn = document.getElementById(id);
+    if (btn) btn.addEventListener("click", copyShareUrl);
+  });
+
   const letterDate = $("#letterDate");
   if (letterDate) {
     letterDate.textContent = new Date().toLocaleDateString("en-AU", {
