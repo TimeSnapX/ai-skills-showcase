@@ -9,6 +9,7 @@ Everything for the **Team 400 · AI Trainer & AI Agent Consultant** application 
 - Job fit for Team 400 (Seek [93718261](https://au.seek.com/job/93718261))
 - AI skill stack (OpenClaw, Google AI Studio, ChatGPT, Grok)
 - Workflow pipelines
+- **Market research UI** (crypto · stocks · commodities top 10 + performance)
 - **Live finance UI** (personal + business operations, editable mock data)
 - Tailored **resume** and **cover letter** (print / copy)
 - Contact details
